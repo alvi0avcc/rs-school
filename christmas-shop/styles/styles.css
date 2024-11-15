@@ -244,3 +244,13 @@ body{
     border-radius: 20px;
     overflow: hidden;
 }
+/* end about-section */
+
+/* slider-section */
+.slider-section{
+    padding: 60px 8px;
+    height: 488px; 
+    background-color: var(--primary);
+    background-image: url("../images/bg-snow.png");
+}
+/* end slider-section */
