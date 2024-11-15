@@ -34,6 +34,16 @@ body{
     width: 1440px;
 }
 
+h2 {
+    font-family: var(--font-family);
+    font-weight: 600;
+    font-size: 24px;
+    line-height: 152%;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    text-align: center;
+}
+
 /* header */
 .header{
     display: flex;
@@ -223,12 +233,6 @@ body{
 }
 
 .article-container article h2{
-    font-family: var(--font-family);
-    font-weight: 600;
-    font-size: 24px;
-    line-height: 152%;
-    letter-spacing: 0.16em;
-    text-transform: uppercase;
     color: var(--dark);
 }
 
@@ -248,9 +252,92 @@ body{
 
 /* slider-section */
 .slider-section{
+    display: flex;
+    justify-content: center;
     padding: 60px 8px;
-    height: 488px; 
     background-color: var(--primary);
     background-image: url("../images/bg-snow.png");
+    overflow: hidden;
 }
+
+.slider-container{
+    display: flex;
+    flex-direction: column;
+    row-gap: 20px;
+    width: 100%;
+    max-width: 1276px;
+}
+
+.slider-title{
+    display: flex;
+    flex-direction: column;
+    align-self: center;
+    row-gap: 12px;
+    width: 426px;
+    height: 72px;
+    max-width: 426px;
+}
+
+.slider-title p{
+    font-family: var(--second-family);
+    font-weight: 400;
+    font-size: 24px;
+    line-height: 100%;
+    letter-spacing: 0.05em;
+    text-align: center;
+    color: var(--static-white);
+}
+
+.slider-title h2{
+    color: var(--static-white);
+}
+
+.slider-row{
+    width: 100%;
+}
+
+.slider{
+    display: flex;
+    flex-direction: row;
+    column-gap: 20px;
+    align-items: center;
+}
+
+.slider p{
+    font-family: var(--font-family);
+    font-weight: 600;
+    font-size: 80px;
+    text-transform: uppercase;
+    text-align: center;
+    color: var(--static-white);
+}
+
+.slider img{
+    border-radius: 20px;
+    width: 200px;
+    height: 200px;
+}
+
+.slider-controls-slice{
+    width: 100px;
+    height: 100px;
+}
+.slider-controls{
+    display: flex;
+    justify-content: flex-end;
+    column-gap: 20px;
+}
+
+.slider-button{
+    border: 1px solid var(--static-white-40);
+    border-radius: 20px;
+    width: 56px;
+    height: 56px;
+    background-color: transparent;
+}
+
+.slider-controls .slider-button:last-child{
+    border: 1px solid var(--static-white);
+}
+
 /* end slider-section */
