@@ -27,6 +27,7 @@ html{
     display: flex;
     justify-content: center;
     min-width: 1440px;
+    background: var(--static-white);
     scroll-behavior: smooth;
 }
 
@@ -41,6 +42,15 @@ h2 {
     line-height: 152%;
     letter-spacing: 0.16em;
     text-transform: uppercase;
+    text-align: center;
+}
+
+.italic-font{
+    font-family: var(--second-family);
+    font-weight: 400;
+    font-size: 24px;
+    line-height: 100%;
+    letter-spacing: 0.05em;
     text-align: center;
 }
 
@@ -154,12 +164,6 @@ h2 {
 }
 
 .hero-container p{
-    font-family: var(--second-family);
-    font-weight: 400;
-    font-size: 24px;
-    line-height: 100%;
-    letter-spacing: 0.05em;
-    text-align: center;
     color: var(--static-white);
 }
 
@@ -224,15 +228,12 @@ h2 {
 }
 
 .article-container article>p:first-child{
-    font-family: var(--second-family);
-    font-weight: 400;
-    font-size: 24px;
-    line-height: 100%;
-    letter-spacing: 0.05em;
+    text-align: left;
     color: var(--primary);
 }
 
 .article-container article h2{
+    text-align: left;
     color: var(--dark);
 }
 
@@ -279,12 +280,6 @@ h2 {
 }
 
 .slider-title p{
-    font-family: var(--second-family);
-    font-weight: 400;
-    font-size: 24px;
-    line-height: 100%;
-    letter-spacing: 0.05em;
-    text-align: center;
     color: var(--static-white);
 }
 
