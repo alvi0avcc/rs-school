@@ -99,14 +99,14 @@ body{
     border-radius: 12px;
     padding: 12px 20px;
 }
-/* end header */
+/* end of header */
 
 .nav-list a:hover{
     background: var(--primary-10);
     color: var(--primary); 
 }
 
-/* section-title */
+/* hero-section */
 .hero-section{
     display: flex;
     justify-content: center;
@@ -122,7 +122,7 @@ body{
     background-size: cover;
 }
 
-.hero-article{
+.hero-container{
     display: flex;
     row-gap: 12px;
     flex-direction: column;
@@ -132,7 +132,7 @@ body{
     max-width: 426px;
 }
 
-.hero-article h1{
+.hero-container h1{
     font-family: var(--font-family);
     font-weight: 600;
     font-size: 32px;
@@ -143,7 +143,7 @@ body{
     color: var(--static-white);
 }
 
-.hero-article p{
+.hero-container p{
     font-family: var(--second-family);
     font-weight: 400;
     font-size: 24px;
@@ -153,7 +153,7 @@ body{
     color: var(--static-white);
 }
 
-.hero-article a{
+.hero-container a{
     /* border-width: 0; */
     align-self: center;
     border-radius: 20px;
@@ -172,5 +172,75 @@ body{
     color: var(--static-white);
     /* text-wrap: nowrap; Baseline 2024 Newly available  "it's too early to use" */
 }
+/* end of hero-section */
 
-/* end section-title */
+/* about-section */
+.about-section{
+    display: flex;
+    justify-content: center;
+    padding: 60px 8px;
+    height: 648px;
+    background-color: var(--primary);
+    background-image: url("../images/bg-snow.png");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+}
+
+.about-container{
+    display: flex;
+    border-radius: 20px;
+
+    max-width: 1276px;
+    background: var(--static-white);
+}
+
+.article-container{
+    display: flex;
+    padding: 0px 60px;
+    width: 100%;
+    height: 100%;
+}
+
+.article-container article{
+    display: flex;
+    flex-direction: column;
+    align-self: center;
+    row-gap: 20px;
+    padding: 60px 0px;
+    width: 100%;
+    height: fit-content;
+    max-width: 426px;
+}
+
+.article-container article>p:first-child{
+    font-family: var(--second-family);
+    font-weight: 400;
+    font-size: 24px;
+    line-height: 100%;
+    letter-spacing: 0.05em;
+    color: var(--primary);
+}
+
+.article-container article h2{
+    font-family: var(--font-family);
+    font-weight: 600;
+    font-size: 24px;
+    line-height: 152%;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--dark);
+}
+
+.article-container article p:last-child{
+    font-family: var(--font-family);
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 148%;
+    color: var(--dark);
+}
+
+.about-container picture img{
+    border-radius: 20px;
+    overflow: hidden;
+}
