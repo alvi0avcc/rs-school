@@ -23,11 +23,18 @@
     /* --third-family: "SF Pro", sans-serif; */
 }
 
-body{
-    width: 1440px;
-    border: 1px solid black;
+html{
+    display: flex;
+    justify-content: center;
+    min-width: 1440px;
+    scroll-behavior: smooth;
 }
 
+body{
+    width: 1440px;
+}
+
+/* header */
 .header{
     display: flex;
     justify-content: center;
@@ -92,8 +99,78 @@ body{
     border-radius: 12px;
     padding: 12px 20px;
 }
+/* end header */
 
 .nav-list a:hover{
     background: var(--primary-10);
     color: var(--primary); 
 }
+
+/* section-title */
+.hero-section{
+    display: flex;
+    justify-content: center;
+    border-radius: 20px 20px 0 0;
+    padding: 60px 8px;
+    height: 524px;
+    background-color: var(--primary);
+    background-image:
+        url("../images/bg-snow.png"),
+        url("../images/bg-ball.png");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+}
+
+.hero-article{
+    display: flex;
+    row-gap: 12px;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    padding: 60px 0px;
+    max-width: 426px;
+}
+
+.hero-article h1{
+    font-family: var(--font-family);
+    font-weight: 600;
+    font-size: 32px;
+    line-height: 150%;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    text-align: center;
+    color: var(--static-white);
+}
+
+.hero-article p{
+    font-family: var(--second-family);
+    font-weight: 400;
+    font-size: 24px;
+    line-height: 100%;
+    letter-spacing: 0.05em;
+    text-align: center;
+    color: var(--static-white);
+}
+
+.hero-article a{
+    /* border-width: 0; */
+    align-self: center;
+    border-radius: 20px;
+    padding: 20px 32px;
+    width: 235px;
+    height: 56px;
+    background: var(--dark);
+    /* text in button */
+    font-family: var(--font-family);
+    font-weight: 600;
+    font-size: 12px;
+    line-height: 130%;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    text-align: center;
+    color: var(--static-white);
+    /* text-wrap: nowrap; Baseline 2024 Newly available  "it's too early to use" */
+}
+
+/* end section-title */
