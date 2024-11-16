@@ -15,4 +15,4 @@ My repository on rs-scool (not available for me):
 
 link to gitHub code <https://github.com/alvi0avcc/rs-school/tree/gh-pages/christmas-shop>
 
-ling to gh-pages <https://alvi0avcc.github.io/rs-school/christmas-shop/>
+link to gh-pages <https://alvi0avcc.github.io/rs-school/christmas-shop/>
