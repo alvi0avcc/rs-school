@@ -156,8 +156,8 @@ h2 {
     height: 524px;
     background-color: var(--primary);
     background-image:
-        url("../images/bg-snow.png"),
-        url("../images/bg-ball.png");
+        url("../images/background/bg-snow.png"),
+        url("../images/background/bg-ball.png");
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
@@ -197,7 +197,7 @@ h2 {
     padding: 60px 8px;
     height: 648px;
     background-color: var(--primary);
-    background-image: url("../images/bg-snow.png");
+    background-image: url("../images/background/bg-snow.png");
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
@@ -251,7 +251,7 @@ h2 {
     border-radius: 20px;
     overflow: hidden;
 }
-/* end about-section */
+/* end of about-section */
 
 /* slider-section */
 .slider-section{
@@ -259,7 +259,7 @@ h2 {
     justify-content: center;
     padding: 60px 8px;
     background-color: var(--primary);
-    background-image: url("../images/bg-snow.png");
+    background-image: url("../images/background/bg-snow.png");
     overflow: hidden;
 }
 
@@ -337,7 +337,7 @@ h2 {
     border: 1px solid var(--static-white);
 }
 
-/* end slider-section */
+/* end of slider-section */
 
 /* best-gifts-section */
 .best-gifts-section{
@@ -348,7 +348,7 @@ h2 {
     width: 100%;
     height: 554px;
     background-color: var(--primary);
-    background-image: url("../images/bg-snow.png");
+    background-image: url("../images/background/bg-snow.png");
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
@@ -397,15 +397,15 @@ h2 {
 }
 
 .for-work .image-container{
-    background-image: url("../images/gift-for-work.png");
+    background-image: url("../images/content/gift-for-work.png");
 }
 
 .for-health .image-container{
-    background-image: url("../images/gift-for-health.png");
+    background-image: url("../images/content/gift-for-health.png");
 }
 
 .for-harmony .image-container{
-    background-image: url("../images/gift-for-harmony.png");
+    background-image: url("../images/content/gift-for-harmony.png");
 }
 
 .best-gifts-card-description{
@@ -416,6 +416,7 @@ h2 {
     padding: 20px;
     width: 100%;
     height: 100%;
+    min-height: 0;
     background-color: var(--static-white);
 }
 
@@ -451,7 +452,7 @@ h2 {
     color: var(--tag-pink);
 }
 
-/* end best-gifts-section */
+/* end of best-gifts-section */
 
 /* cta-section */
 .cta-section {
@@ -463,7 +464,7 @@ h2 {
     padding: 60px 8px;
     width: 100%;
     background-color: var(--primary);
-    background-image: url("../images/bg-snow.png"), url("../images/bg-forest.png");
+    background-image: url("../images/background/bg-snow.png"), url("../images/background/bg-forest.png");
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
@@ -536,4 +537,50 @@ h2 {
     height: 0px;
     transform: rotate(90deg);
 }
-/* end cta-section */
+/* end of cta-section */
+
+/* footer */
+.footer{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 60px 8px;
+    width: 100%;
+    background: var(--static-white);
+}
+
+.footer-container{
+    display: flex;
+    flex-direction: column;
+    column-gap: 60px;
+    align-items: center;
+    justify-content: flex-start;
+    width: 100%;
+    max-width: 1276px;
+}
+
+.footer-contacts{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    column-gap: 12px;
+    border-radius: 60px;
+    width: 100%;
+}
+
+.footer-contact-card{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    row-gap: 20px;
+    border-radius: 20px;
+    padding: 20px;
+    width: 100%;
+}
+
+.footer-social{
+    width: 100%;
+}
+/* end of footer */
