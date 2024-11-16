@@ -43,15 +43,17 @@ h2 {
     letter-spacing: 0.16em;
     text-transform: uppercase;
     text-align: center;
+    width: 100%;
 }
 
-.italic-font{
+.caption {
     font-family: var(--second-family);
     font-weight: 400;
     font-size: 24px;
     line-height: 100%;
     letter-spacing: 0.05em;
     text-align: center;
+    width: 100%;
 }
 
 .a-button{
@@ -78,19 +80,24 @@ h2 {
 /* header */
 .header{
     display: flex;
+    flex-direction: column;
+    align-items: center;
     justify-content: center;
-    padding: 8px 0;
+    padding: 0 8px;
     background: var(--static-white);
+    width: 100%;
+    height: 64px;
 }
 
 .logo{
     display: flex;
-    width: fit-content;
     gap: 8px;
     align-items: center;
     padding: 8px 20px;
     cursor: pointer;
     border-radius: 12px;
+    width: 141px;
+    height: 40px;
 }
 
 .logo p{
@@ -105,30 +112,35 @@ h2 {
 
 .nav-container{
     display: flex;
+    column-gap: 8px;
+    justify-content: flex-start;
+    align-items: center;
     padding: 12px 0px;
     max-width: 1276px;
-    width: 100%;
     background: var(--static-white);
+    width: 100%;
+    height: 100%;
 }
 
 .nav-menu-container{
     display: flex;
     justify-content: flex-end;
+    align-items: center;
     width: 100%;
+    height: 40px;
 }
 
 .nav-menu{
-    width: fit-content;
-}
-
-.nav-list{
-    display: flex;
-    gap: 8px;
-    padding: 12px 20px;
     list-style: none;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    column-gap: 8px;
+    width: 376px;
+    height: 100%;
 }
 
-.nav-list a {
+.nav-menu a {
     text-decoration: none;
     font-family: var(--font-family);
     font-weight: 600;
@@ -181,6 +193,7 @@ h2 {
     letter-spacing: 0.18em;
     text-transform: uppercase;
     text-align: center;
+    vertical-align: top;
     color: var(--static-white);
 }
 
@@ -194,6 +207,7 @@ h2 {
 .about-section{
     display: flex;
     justify-content: center;
+    align-items: flex-start;
     padding: 60px 8px;
     height: 648px;
     background-color: var(--primary);
@@ -205,17 +219,21 @@ h2 {
 
 .about-container{
     display: flex;
+    justify-content: flex-start;
+    align-items: center;
     border-radius: 20px;
-
+    width: 100%;
     max-width: 1276px;
+    height: 100%;
     background: var(--static-white);
 }
 
 .article-container{
     display: flex;
     padding: 0px 60px;
-    width: 100%;
+    width: 50%;
     height: 100%;
+    flex-shrink: 0;
 }
 
 .article-container article{
@@ -247,7 +265,25 @@ h2 {
     color: var(--dark);
 }
 
-.about-container picture img{
+.about-image-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 50%;
+    height: 528px;
+    border-radius: 20px;
+    overflow: hidden;
+    background: center / cover no-repeat url("../images/content/santa.png");
+}
+
+.about-container picture{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 528px;
     border-radius: 20px;
     overflow: hidden;
 }
@@ -256,16 +292,24 @@ h2 {
 /* slider-section */
 .slider-section{
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
     padding: 60px 8px;
+    width: 100%;
     background-color: var(--primary);
     background-image: url("../images/background/bg-snow.png");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
     overflow: hidden;
 }
 
 .slider-container{
     display: flex;
     flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
     row-gap: 20px;
     width: 100%;
     max-width: 1276px;
@@ -274,7 +318,8 @@ h2 {
 .slider-title{
     display: flex;
     flex-direction: column;
-    align-self: center;
+    justify-content: flex-start;
+    align-items: center;
     row-gap: 12px;
     width: 426px;
     height: 72px;
@@ -282,14 +327,21 @@ h2 {
 }
 
 .slider-title p{
+    width: 100%;
     color: var(--static-white);
 }
 
 .slider-title h2{
+    width: 100%;
     color: var(--static-white);
 }
 
 .slider-row{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    align-items: flex-start;
     width: 100%;
 }
 
@@ -322,7 +374,9 @@ h2 {
 .slider-controls{
     display: flex;
     justify-content: flex-end;
+    align-items: center;
     column-gap: 20px;
+    width: 100%;
 }
 
 .slider-button{
@@ -342,11 +396,11 @@ h2 {
 /* best-gifts-section */
 .best-gifts-section{
     display: flex;
-    justify-content: center;
-    align-content: center;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
     padding: 60px 8px;
     width: 100%;
-    height: 554px;
     background-color: var(--primary);
     background-image: url("../images/background/bg-snow.png");
     background-repeat: no-repeat;
@@ -365,6 +419,11 @@ h2 {
 }
 
 .best-gifts-title{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    row-gap: 12px;
     width: 100%;
     max-width: 426px;
     color: var(--static-white);
@@ -411,7 +470,7 @@ h2 {
 .best-gifts-card-description{
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    row-gap: 8px;
     border-radius: 20px;
     padding: 20px;
     width: 100%;
@@ -457,9 +516,9 @@ h2 {
 /* cta-section */
 .cta-section {
     display: flex;
+    flex-direction: column;
     justify-content: flex-start;
     align-items: center;
-    flex-direction: column;
     border-radius: 0 0 20px 20px;
     padding: 60px 8px;
     width: 100%;
@@ -485,6 +544,7 @@ h2 {
     display: flex;
     flex-direction: column;
     justify-content: center;
+    align-items: center;
     row-gap: 20px;
     padding: 60px 0px;
     width: 100%;
@@ -503,8 +563,8 @@ h2 {
 
 .timer{
     display: flex;
-    align-items: start;
-    justify-content: center;
+    align-items: center;
+    justify-content: flex-start;
     border-radius: 20px;
     padding: 8px 12px 12px 12px;
     background: var(--static-white-40);
@@ -531,11 +591,11 @@ h2 {
 }
 
 .separator{
-    align-self: center;
-    border: 1px solid var(--static-white-40);
-    width: 20px;
-    height: 0px;
-    transform: rotate(90deg);
+    position: relative;
+    border-left: 1px solid var(--static-white-40);
+    margin-left: -1px;
+    width: 0px;
+    height: 20px;
 }
 /* end of cta-section */
 
