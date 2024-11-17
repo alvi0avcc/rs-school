@@ -236,7 +236,7 @@ h2 {
     flex-shrink: 0;
 }
 
-.article-container article{
+.article-container>div{
     display: flex;
     flex-direction: column;
     align-self: center;
@@ -247,17 +247,17 @@ h2 {
     max-width: 426px;
 }
 
-.article-container article>p:first-child{
+.article-container>div>p:first-child{
     text-align: left;
     color: var(--primary);
 }
 
-.article-container article h2{
+.article-container>div h2{
     text-align: left;
     color: var(--dark);
 }
 
-.article-container article p:last-child{
+.article-container>div p:last-child{
     font-family: var(--font-family);
     font-weight: 400;
     font-size: 16px;
