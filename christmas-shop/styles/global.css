@@ -222,3 +222,26 @@ h1{
     color: var(--dark);
 }
 /* end of footer */
+
+/* social */
+.telegram {
+    width: 24px;
+    height: 24px;
+    background: center / cover no-repeat url("../images/socials-logo/telegram.svg");
+}
+.facebook {
+    width: 24px;
+    height: 24px;
+    background: center / cover no-repeat url("../images/socials-logo/facebook.svg");
+}
+.instagram {
+    width: 24px;
+    height: 24px;
+    background: center / cover no-repeat url("../images/socials-logo/instagram.svg");
+}
+.twitter {
+    width: 24px;
+    height: 24px;
+    background: center / cover no-repeat url("../images/socials-logo/x.svg");
+}
+/* end of social */
