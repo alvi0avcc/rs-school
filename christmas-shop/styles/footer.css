@@ -1,0 +1,129 @@
+.footer{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 60px 8px;
+    width: 100%;
+    background: var(--static-white);
+}
+
+.footer-container{
+    display: flex;
+    flex-direction: column;
+    row-gap: 60px;
+    align-items: center;
+    justify-content: flex-start;
+    width: 100%;
+    max-width: 1276px;
+}
+
+.footer-contacts{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    column-gap: 12px;
+    border-radius: 60px;
+    width: 100%;
+}
+
+.footer-contact-card{
+    text-decoration: none;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    row-gap: 12px;
+    border-radius: 20px;
+    padding: 20px;
+    width: 100%;
+    background: var(--content-background);
+}
+
+.footer-contact-card:hover{
+    cursor: pointer;
+}
+.footer-contact-card:hover :is(p, h3){
+    color: var(--primary);
+}
+
+.footer-contact-card img{
+    height: 80px;
+    width: 80px;
+    object-fit: cover;
+}
+
+.footer-contact-card p{
+    font-family: var(--font-family);
+    font-weight: 600;
+    font-size: 24px;
+    line-height: 152%;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    text-align: center;
+    color: var(--dark);
+}
+
+.footer-contact-card h3{
+    font-family: var(--font-family);
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 152%;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    text-align: center;
+    color: var(--dark);
+}
+
+.footer-socials-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    row-gap: 12px;
+    width: 100%;
+}
+
+.footer-socials{
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    column-gap: 12px;
+}
+
+.social-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 8px;
+}
+
+.social-container svg{
+    width: 24px;
+    height: 24px;
+}
+
+.footer-socials-container>p{
+    font-family: var(--font-family);
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 148%;
+    text-align: center;
+    color: var(--dark);
+}
+
+.footer-socials>li:hover{
+    cursor: pointer;
+}
+.footer-socials>li:hover path{
+    stroke: red;
+}
+
+.made-in-rsschool{
+    text-decoration: none;
+}
+.made-in-rsschool:hover{
+    cursor: pointer;
+    color: var(--primary);
+}
