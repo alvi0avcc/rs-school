@@ -121,9 +121,14 @@
 }
 
 .made-in-rsschool{
+    width: fit-content;
     text-decoration: none;
+}
+.made-in-rsschool:visited{
+    color: var(--dark);
 }
 .made-in-rsschool:hover{
     cursor: pointer;
     color: var(--primary);
 }
+
