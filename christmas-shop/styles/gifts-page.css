@@ -1,6 +1,7 @@
 .nav-menu li:first-child>a{
     color: var(--primary);
     background-color: var(--primary-10);
+    pointer-events: none;
 }
 
 .gift-section{
@@ -65,6 +66,8 @@
 
 .tab:first-child{
     background: var(--static-white-20);
+    pointer-events: none;
+
 }
 
 .tab:hover{
