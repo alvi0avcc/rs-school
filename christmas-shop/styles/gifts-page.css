@@ -1,3 +1,7 @@
+.nav-menu li:first-child>a{
+    color: var(--primary);
+    background-color: var(--primary-10);
+}
 
 .gift-section{
     display: flex;
@@ -63,6 +67,11 @@
     background: var(--static-white-20);
 }
 
+.tab:hover{
+    background: var(--static-white-20);
+    cursor: pointer;
+}
+
 .tab p{
     font-family: var(--font-family);
     font-weight: 600;
@@ -95,6 +104,13 @@
     width: 310px;
     height: 342px;
     background: var(--content-background);
+}
+
+.gift-card:hover{
+    cursor: pointer;
+}
+.gift-card:hover h3{
+    color: var(--primary);
 }
 
 .image-container{

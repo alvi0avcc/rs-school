@@ -1,0 +1,124 @@
+.best-gifts-section{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 60px 8px;
+    width: 100%;
+    background-color: var(--primary);
+    background-image: url("../images/background/bg-snow.png");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+}
+
+.best-gifts-container{
+    display: flex;
+    flex-direction: column;
+    row-gap: 20px;
+    align-items: center;
+    justify-content: flex-start;
+    width: 100%;
+    max-width: 1276px;
+}
+
+.best-gifts-title{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    row-gap: 12px;
+    width: 100%;
+    max-width: 426px;
+    color: var(--static-white);
+}
+
+.best-gifts-card-container{
+    display: grid;
+    grid-auto-flow: column;
+    width: 100%;
+    column-gap: 12px;
+    row-gap: 12px;
+}
+
+.best-gifts-card{
+    display: flex;
+    flex-direction: column;
+    border-radius: 20px;
+    width: 310px;
+    height: 342px;
+    background-color: var(--content-background);
+}
+
+.best-gifts-card .image-container{
+    flex-shrink: 0;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    width: 310px;
+    height: 230px;
+}
+
+.best-gift-card:hover{
+    cursor: pointer;
+}
+.best-gift-card:hover h3{
+    color: var(--primary);
+}
+
+
+.gift-description{
+    display: flex;
+    flex-direction: column;
+    row-gap: 8px;
+    border-radius: 20px;
+    padding: 20px;
+    width: 100%;
+    height: 100%;
+    min-height: 0;
+    background-color: var(--static-white);
+}
+
+.gift-description h3{
+    font-family: var(--font-family);
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 152%;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--dark);
+}
+
+.gift-description h4{
+    font-family: var(--font-family);
+    font-weight: 600;
+    font-size: 12px;
+    line-height: 130%;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--tag-green);
+}
+
+.for-work .gift-description h4{
+    color: var(--tag-purple);
+}
+
+.for-health .gift-description h4{
+    color: var(--tag-green);
+}
+
+.for-harmony .gift-description h4{
+    color: var(--tag-pink);
+}
+
+.for-work .image-container{
+    background-image: url("../images/content/gift-for-work.png");
+}
+
+.for-health .image-container{
+    background-image: url("../images/content/gift-for-health.png");
+}
+
+.for-harmony .image-container{
+    background-image: url("../images/content/gift-for-harmony.png");
+}
