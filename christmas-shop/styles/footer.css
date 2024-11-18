@@ -103,7 +103,7 @@
     height: 24px;
 }
 
-.footer-socials-container>p:not(.caption){
+.footer-socials-container>p{
     font-family: var(--font-family);
     font-weight: 400;
     font-size: 16px;
@@ -117,4 +117,12 @@
 }
 .footer-socials>li:hover path{
     stroke: red;
+}
+
+.made-in-rsschool{
+    text-decoration: none;
+}
+.made-in-rsschool:hover{
+    cursor: pointer;
+    color: var(--primary);
 }

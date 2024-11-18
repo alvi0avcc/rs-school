@@ -59,10 +59,10 @@
     height: 230px;
 }
 
-.best-gift-card:hover{
+.best-gifts-card:hover{
     cursor: pointer;
 }
-.best-gift-card:hover h3{
+.best-gifts-card:hover h3{
     color: var(--primary);
 }
 
