@@ -4,6 +4,10 @@
     box-sizing: border-box;
 }
 
+*:hover{
+    transition: 0.5s;
+}
+
 :root {
     --body-width: 1440px;
     /* colors */
