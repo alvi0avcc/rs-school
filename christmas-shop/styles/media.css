@@ -1,0 +1,38 @@
+@media screen and ( max-width: 379px) {
+    .nav-menu-container{
+        display: none;
+    }
+    .gift-cards{
+        grid-template-columns: 1fr;
+    }
+}
+
+@media screen and ( min-width: 380px) {
+    .nav-menu-container{
+        display: flex;
+    }
+    .gift-cards{
+        grid-template-columns: 1fr;
+    }
+}
+
+@media screen and ( min-width: 768px) {
+    .gift-cards{
+        grid-template-columns: repeat( 2, 1fr);
+    }
+    
+}
+
+@media screen and ( min-width: 1440px ){
+    .nav-menu-container{
+        display: flex;
+    }
+    .gift-cards{
+        grid-template-columns: repeat( 4, 1fr);
+    }
+    .footer-contacts{
+        column-gap: 12px;
+        row-gap: unset;
+        flex-wrap: nowrap;
+    }
+}

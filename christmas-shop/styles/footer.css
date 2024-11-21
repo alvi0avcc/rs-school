@@ -22,9 +22,11 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    column-gap: 12px;
+    /* column-gap: 12px; */
+    row-gap: 12px;
     border-radius: 60px;
     width: 100%;
+    flex-wrap: wrap;
 }
 
 .footer-contact-card{
