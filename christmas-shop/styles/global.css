@@ -72,3 +72,7 @@ h1{
     text-align: center;
     width: 100%;
 }
+
+.border-radius-20{
+    border-radius: 20px;
+}

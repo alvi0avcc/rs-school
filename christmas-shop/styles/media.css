@@ -1,26 +1,28 @@
 @media screen and ( max-width: 379px) {
-    .nav-menu-container{
-        display: none;
+    h1{
+        white-space: unset;
     }
     .gift-cards{
         grid-template-columns: 1fr;
     }
 }
 
-@media screen and ( min-width: 380px) {
+@media screen and ( min-width: 380px) and ( max-width: 767px) {
+    h1{
+        white-space: unset;
+    }
+    .gift-cards{
+        grid-template-columns: 1fr;
+    }
+}
+
+@media screen and ( min-width: 768px) and ( max-width: 1440px) {
     .nav-menu-container{
         display: flex;
     }
     .gift-cards{
-        grid-template-columns: 1fr;
-    }
-}
-
-@media screen and ( min-width: 768px) {
-    .gift-cards{
         grid-template-columns: repeat( 2, 1fr);
     }
-    
 }
 
 @media screen and ( min-width: 1440px ){

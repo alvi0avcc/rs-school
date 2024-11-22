@@ -45,7 +45,7 @@
 }
 
 .nav-menu-container{
-    display: flex;
+    display: none;
     justify-content: flex-end;
     align-items: center;
     width: 100%;

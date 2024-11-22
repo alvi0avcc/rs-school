@@ -8,19 +8,7 @@ h1{
     pointer-events: none;
 }
 
-.gift-section{
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: center;
-    column-gap: 20px;
-    border-radius: 20px;
-    padding: 60px 8px;
-    width: 100%;
-    height: 1394px;
-    background: var(--primary);
-    overflow: hidden;
-}
+
 
 .bg-garland{
     position: absolute;
@@ -28,17 +16,6 @@ h1{
     width: var(--body-width);
     height: 200px;
     background: center / cover no-repeat url("../images/background/bg-garland.png");
-}
-
-.gift-container{
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: center;
-    row-gap: 20px;
-    width: 100%;
-    height: 1274px;
-    max-width: 1276px;
 }
 
 .gift-header{
