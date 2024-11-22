@@ -1,3 +1,9 @@
+@media screen and ( min-width: 769px){
+    .nav-menu-container{
+        display: flex;
+    }
+}
+
 @media screen and ( max-width: 379px) {
     h1{
         white-space: unset;
@@ -17,11 +23,16 @@
 }
 
 @media screen and ( min-width: 768px) and ( max-width: 1440px) {
-    .nav-menu-container{
-        display: flex;
-    }
     .gift-cards{
         grid-template-columns: repeat( 2, 1fr);
+    }
+
+    .gift-card:nth-child(2n-1){
+        justify-self: right;
+    }
+    
+    .gift-card:nth-child(2n){
+        justify-self: left;
     }
 }
 
