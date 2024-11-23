@@ -42,13 +42,6 @@
     background: var(--content-background);
 }
 
-.footer-contact-card:hover{
-    cursor: pointer;
-}
-.footer-contact-card:hover :is(p, h3){
-    color: var(--primary);
-}
-
 .footer-contact-card img{
     height: 80px;
     width: 80px;
@@ -115,13 +108,6 @@
     color: var(--dark);
 }
 
-.footer-socials>li:hover{
-    cursor: pointer;
-}
-.footer-socials>li:hover path{
-    stroke: red;
-}
-
 .made-in-rsschool{
     width: fit-content;
     text-decoration: none;
@@ -129,8 +115,3 @@
 .made-in-rsschool:visited{
     color: var(--dark);
 }
-.made-in-rsschool:hover{
-    cursor: pointer;
-    color: var(--primary);
-}
-

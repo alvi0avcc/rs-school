@@ -4,9 +4,9 @@
     box-sizing: border-box;
 }
 
-/* *:hover{
+*:hover{
     transition: 0.5s;
-} */
+}
 
 :root {
     --body-width: 1440px;
@@ -33,6 +33,7 @@ html{
     justify-content: center;
     /* min-width: 1440px; */
     width: 100%;
+    min-width: 380px;
     background: var(--static-white);
     scroll-behavior: smooth;
 }

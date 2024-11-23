@@ -98,14 +98,6 @@
     height: 230px;
 }
 
-.best-gifts-card:hover{
-    cursor: pointer;
-}
-.best-gifts-card:hover h3{
-    color: var(--primary);
-}
-
-
 .gift-description{
     display: flex;
     flex-direction: column;
@@ -185,13 +177,6 @@
     width: 310px;
     height: 342px;
     background: var(--content-background);
-}
-
-.gift-card:hover{
-    cursor: pointer;
-}
-.gift-card:hover h3{
-    color: var(--primary);
 }
 
 .image-container{

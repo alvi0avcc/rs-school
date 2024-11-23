@@ -75,8 +75,4 @@
     padding: 12px 20px;
 }
 
-.nav-menu a:hover{
-    background: var(--primary-10);
-    color: var(--primary); 
-}
 /* end of header */

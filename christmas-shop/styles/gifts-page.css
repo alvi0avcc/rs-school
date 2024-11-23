@@ -51,11 +51,6 @@ h1{
 
 }
 
-.tab:hover{
-    background: var(--static-white-20);
-    cursor: pointer;
-}
-
 .tab p{
     font-family: var(--font-family);
     font-weight: 600;
