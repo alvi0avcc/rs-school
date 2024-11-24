@@ -29,8 +29,3 @@ h2 {
     text-decoration: none;
     /* text-wrap: nowrap; Baseline 2024 Newly available  "it's too early to use" */
 }
-
-.primary-button:hover{
-    color: var(--dark);
-    background: var(--static-white);
-}
