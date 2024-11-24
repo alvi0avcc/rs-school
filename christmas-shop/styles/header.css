@@ -45,7 +45,7 @@
 }
 
 .nav-menu-container{
-    display: none;
+    display: flex;
     justify-content: flex-end;
     align-items: center;
     width: 100%;
@@ -54,7 +54,8 @@
 
 .nav-menu{
     list-style: none;
-    display: flex;
+    /* display: flex; */
+    display: none;
     justify-content: flex-start;
     align-items: center;
     column-gap: 8px;

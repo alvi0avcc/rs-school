@@ -53,11 +53,15 @@
         color: var(--primary);
     }
 }
-/* 1300 - to up */
-@media screen and ( min-width: 1300px ){
-    .nav-menu-container{
+/* nav menu */
+@media screen and ( min-width: 768px ){
+    .nav-menu{
         display: flex;
     }
+}
+
+/* 1300 - to up */
+@media screen and ( min-width: 1300px ){
     .gift-cards{
         grid-template-columns: repeat( 4, 1fr);
     }
@@ -70,9 +74,6 @@
 
 /* 970 - 1299 */
 @media screen and ( max-width: 1299px ){
-    .nav-menu-container{
-        display: flex;
-    }
     .gift-cards{
         grid-template-columns: repeat( 3, 1fr);
     }
@@ -103,9 +104,6 @@
 
 /* 656 - 970 */
 @media screen and ( max-width: 970px){
-    .nav-menu-container{
-        display: none;
-    }
     .gift-cards{
         grid-template-columns: repeat( 2, 1fr);
     }
@@ -164,5 +162,19 @@
     }
     .gift-card:nth-child(n){
         justify-self: center;
+    }
+    /* gift-page */
+    .tabs{
+        column-gap: 0;
+    }
+    .tab{
+        padding: 12px 8px;
+    }
+}
+
+/* up to - 379 */
+@media screen and ( max-width: 379px){
+    .bg-garland{
+        width: 380px;
     }
 }

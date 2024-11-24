@@ -13,9 +13,11 @@ h1{
 .bg-garland{
     position: absolute;
     margin-top: -60px;
-    width: var(--body-width);
+    /* width: var(--body-width); */
+    max-width: var(--body-width);
+    width: 100%;
     height: 200px;
-    background: center / cover no-repeat url("../images/background/bg-garland.png");
+    background: top / contain no-repeat url("../images/background/bg-garland.png");
 }
 
 .gift-header{
