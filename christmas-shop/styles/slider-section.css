@@ -102,14 +102,6 @@
     opacity: 1;
 }
 
-.slider-button-active:hover{
-    background-color: var(--static-white);
-    cursor: pointer;
-}
-.slider-button-active:hover svg path{
-    stroke: var(--primary);
-}
-
 .slider-button-inactive{
     opacity: 0.4;
 }

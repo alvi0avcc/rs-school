@@ -1,40 +1,23 @@
+h1{
+    white-space: unset;
+}
+
 .nav-menu li:first-child>a{
     color: var(--primary);
     background-color: var(--primary-10);
     pointer-events: none;
 }
 
-.gift-section{
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: center;
-    column-gap: 20px;
-    border-radius: 20px;
-    padding: 60px 8px;
-    width: 100%;
-    height: 1394px;
-    background: var(--primary);
-    overflow: hidden;
-}
+
 
 .bg-garland{
     position: absolute;
     margin-top: -60px;
-    width: var(--body-width);
-    height: 200px;
-    background: center / cover no-repeat url("../images/background/bg-garland.png");
-}
-
-.gift-container{
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: center;
-    row-gap: 20px;
+    /* width: var(--body-width); */
+    max-width: var(--body-width);
     width: 100%;
-    height: 1274px;
-    max-width: 1276px;
+    height: 200px;
+    background: top / contain no-repeat url("../images/background/bg-garland.png");
 }
 
 .gift-header{
@@ -70,11 +53,6 @@
 
 }
 
-.tab:hover{
-    background: var(--static-white-20);
-    cursor: pointer;
-}
-
 .tab p{
     font-family: var(--font-family);
     font-weight: 600;
@@ -85,42 +63,4 @@
     color: var(--static-white);
     text-align: left;
     vertical-align: top;
-}
-
-.gift-cards{
-    display: grid;
-    justify-content: center;
-    align-items: flex-start;
-    justify-items: center;
-    grid-template-columns: repeat( 4, 1fr);
-    grid-auto-flow: row;
-    width: 100%;
-    gap: 12px;
-}
-
-.gift-card{
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: center;
-    border-radius: 20px;
-    width: 310px;
-    height: 342px;
-    background: var(--content-background);
-}
-
-.gift-card:hover{
-    cursor: pointer;
-}
-.gift-card:hover h3{
-    color: var(--primary);
-}
-
-.image-container{
-    flex-shrink: 0;
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-position: center;
-    width: 310px;
-    height: 230px;
 }

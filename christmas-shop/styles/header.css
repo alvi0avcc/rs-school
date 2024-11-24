@@ -54,7 +54,8 @@
 
 .nav-menu{
     list-style: none;
-    display: flex;
+    /* display: flex; */
+    display: none;
     justify-content: flex-start;
     align-items: center;
     column-gap: 8px;
@@ -75,8 +76,25 @@
     padding: 12px 20px;
 }
 
-.nav-menu a:hover{
-    background: var(--primary-10);
-    color: var(--primary); 
+.burger-menu{
+    display: flex;
+    width: 40px;
+    height: 40px;
 }
+
+.burger-menu path{
+    stroke: var(--dark);
+    /* transition: 5s; */
+}
+
+/* .burger-menu path:first-child{
+    transform-origin: center;
+    transform: rotate(45deg) translateY(4px) ;
+}
+
+.burger-menu path:last-child{
+    transform-origin: center;
+    transform: rotate(-45deg) translateY(-4px) ;
+} */
+
 /* end of header */

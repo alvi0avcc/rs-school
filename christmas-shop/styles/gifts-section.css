@@ -1,10 +1,37 @@
-.best-gifts-section{
+/* .best-gifts-section{
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
     padding: 60px 8px;
     width: 100%;
+
+    background-color: var(--primary);
+    background-image: url("../images/background/bg-snow.png");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+} */
+
+.gift-section{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 60px 8px;
+    width: 100%;
+    overflow: hidden;
+    /* column-gap: 20px; */
+    /* border-radius: 20px; */
+    /* height: 1394px; */
+    /* background: var(--primary); */
+}
+
+.gift-section-color{
+    background: var(--primary);
+}
+
+.gift-section-bg{
     background-color: var(--primary);
     background-image: url("../images/background/bg-snow.png");
     background-repeat: no-repeat;
@@ -12,13 +39,25 @@
     background-size: cover;
 }
 
-.best-gifts-container{
+
+/* .best-gifts-container{
     display: flex;
     flex-direction: column;
     row-gap: 20px;
     align-items: center;
     justify-content: flex-start;
     width: 100%;
+    max-width: 1276px;
+} */
+
+.gift-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    row-gap: 20px;
+    width: 100%;
+    /* height: 1274px; */
     max-width: 1276px;
 }
 
@@ -58,14 +97,6 @@
     width: 310px;
     height: 230px;
 }
-
-.best-gifts-card:hover{
-    cursor: pointer;
-}
-.best-gifts-card:hover h3{
-    color: var(--primary);
-}
-
 
 .gift-description{
     display: flex;
@@ -121,4 +152,38 @@
 
 .for-harmony .image-container{
     background-image: url("../images/content/gift-for-harmony.png");
+}
+
+
+/*  */
+
+.gift-cards{
+    display: grid;
+    /* justify-content: center; */
+    /* align-items: flex-start; */
+    justify-items: center;
+    grid-template-columns: repeat( 4, 1fr);
+    grid-auto-flow: row;
+    width: 100%;
+    gap: 12px;
+}
+
+.gift-card{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    border-radius: 20px;
+    width: 310px;
+    height: 342px;
+    background: var(--content-background);
+}
+
+.image-container{
+    flex-shrink: 0;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    width: 310px;
+    height: 230px;
 }

@@ -31,13 +31,24 @@
 html{
     display: flex;
     justify-content: center;
-    min-width: 1440px;
+    /* min-width: 1440px; */
+    width: 100%;
+    min-width: 380px;
     background: var(--static-white);
     scroll-behavior: smooth;
 }
 
 body{
-    width: var(--body-width);
+    max-width: var(--body-width);
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+main{
+    width: 100%;
 }
 
 h1{
@@ -50,6 +61,7 @@ h1{
     text-align: center;
     vertical-align: top;
     color: var(--static-white);
+    white-space: nowrap;
 }
 
 .caption {
@@ -60,4 +72,8 @@ h1{
     letter-spacing: 0.05em;
     text-align: center;
     width: 100%;
+}
+
+.border-radius-20{
+    border-radius: 20px;
 }

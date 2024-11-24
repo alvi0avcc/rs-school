@@ -3,7 +3,8 @@
     justify-content: center;
     align-items: flex-start;
     padding: 60px 8px;
-    height: 648px;
+    /* height: 648px; */
+    width: 100%;
     background-color: var(--primary);
     background-image: url("../images/background/bg-snow.png");
     background-repeat: no-repeat;
