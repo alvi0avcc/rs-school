@@ -16,6 +16,10 @@ function HeaderAdd(){
                         <li><a href="#gift-section">BEST</a></li>
                         <li><a href="#footer">CONTACTS</a></li>
                     </ul>
+                    <svg class="burger-menu" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M10 16H30" stroke-linecap="round" stroke-linejoin="round" />
+                        <path d="M10 24H30" stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
             </nav>
         </div>
         `;

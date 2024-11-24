@@ -76,4 +76,25 @@
     padding: 12px 20px;
 }
 
+.burger-menu{
+    display: flex;
+    width: 40px;
+    height: 40px;
+}
+
+.burger-menu path{
+    stroke: var(--dark);
+    /* transition: 5s; */
+}
+
+/* .burger-menu path:first-child{
+    transform-origin: center;
+    transform: rotate(45deg) translateY(4px) ;
+}
+
+.burger-menu path:last-child{
+    transform-origin: center;
+    transform: rotate(-45deg) translateY(-4px) ;
+} */
+
 /* end of header */
