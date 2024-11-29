@@ -28,13 +28,22 @@ function HeaderAdd(){
     
     // for burger-menu
     const burgerButton = document.querySelector('.burger-menu');
+    const navMenu = document.querySelector('.nav-menu');
+
     burgerButton.addEventListener( 'click', ()=>{
         console.log('burger :)');
-        const navMenu = document.querySelector('.nav-menu');
         navMenu.classList.toggle('show');
-        // const navMenuContainer = document.querySelector('.nav-menu-container');
         navMenu.classList.toggle('nav-menu-burger');
     });
+    
+    navMenu.addEventListener('click',(events)=>{
+        console.log(events);
+        ( events.target.localName === "a" ? (
+            navMenu.classList.remove('show'),
+            navMenu.classList.remove('nav-menu-burger')
+            ) : ''
+        );
+    })
 };
 
 // run All

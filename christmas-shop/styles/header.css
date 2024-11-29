@@ -66,6 +66,7 @@
 .nav-menu-burger{
     position: absolute;
     width: 100%;
+    min-width: 380px;
     height: calc( 100dvh - 64px );
     max-height: 960px;
     top: 64px;
