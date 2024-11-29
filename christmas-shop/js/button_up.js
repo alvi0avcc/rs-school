@@ -20,7 +20,7 @@ function ButtonUp(){
 
         window.onscroll = () => {
             if ( window.matchMedia("(max-width: 768px)").matches ) {
-                ( window.scrollY > 1 ? up.classList.add('show') : up.classList.remove('show') );
+                ( window.scrollY >= 300 ? up.classList.add('show') : up.classList.remove('show') );
             } else up.classList.remove('show');
         };
 
