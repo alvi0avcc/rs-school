@@ -5,7 +5,8 @@ h1{
 .nav-menu li:first-child>a{
     color: var(--primary);
     background-color: var(--primary-10);
-    pointer-events: none;
+    /* pointer-events: none; */
+    cursor: default;
 }
 
 
