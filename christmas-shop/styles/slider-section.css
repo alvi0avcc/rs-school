@@ -57,10 +57,13 @@
     display: flex;
     flex-direction: row;
     column-gap: 20px;
+    justify-content: flex-start;
     align-items: center;
+    transform: (-100px);
 }
 
 .slider p{
+    width: auto;
     font-family: var(--font-family);
     font-weight: 600;
     font-size: 80px;
@@ -102,6 +105,6 @@
     opacity: 1;
 }
 
-.slider-button-inactive{
+.slider-button:not(.slider-button-active){
     opacity: 0.4;
 }
