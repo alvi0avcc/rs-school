@@ -12,7 +12,3 @@
     border: 1px solid var(--primary);
     border-radius: 100px;
 }
-
-.show{
-    display: flex;
-}

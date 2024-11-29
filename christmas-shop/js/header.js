@@ -25,6 +25,17 @@ function HeaderAdd(){
         `;
 
     header.innerHTML = data;
+    
+    // for burger-menu
+    const burgerButton = document.querySelector('.burger-menu');
+    burgerButton.addEventListener( 'click', ()=>{
+        console.log('burger :)');
+        const navMenu = document.querySelector('.nav-menu');
+        navMenu.classList.toggle('show');
+        // const navMenuContainer = document.querySelector('.nav-menu-container');
+        navMenu.classList.toggle('nav-menu-burger');
+    });
 };
 
+// run All
 HeaderAdd();

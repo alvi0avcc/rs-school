@@ -63,6 +63,12 @@
     height: 100%;
 }
 
+.nav-menu-burger{
+    position: fixed;
+    top: 100px;
+    flex-direction: column;
+}
+
 .nav-menu a {
     text-decoration: none;
     font-family: var(--font-family);
