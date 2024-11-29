@@ -28,6 +28,10 @@
     /* --third-family: "SF Pro", sans-serif; */
 }
 
+.show{
+    display: flex !important;
+}
+
 html{
     display: flex;
     justify-content: center;

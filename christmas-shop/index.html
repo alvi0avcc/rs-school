@@ -31,7 +31,6 @@
         <section id="hero-section" class="hero-section">
             <div class="hero-container">
                 <p class="caption">Merry Christmas</p>
-                <!-- <h1>Gift&nbsp;yourself the&nbsp;magic&nbsp;of&nbsp;new possibilities</h1> -->
                 <h1>Gift yourself<br>the magic of new<br>possibilities</h1>
                 <a href="pages/gifts.html" class="primary-button">Explore&nbsp;Magical&nbsp;Gifts</a>
                 <p class="caption">and Happy New Year</p>
@@ -63,17 +62,17 @@
                         <img src="images/content/christmas-trees.png" alt="christmas trees">
                         <p>Love</p>
                         <img src="images/content/christmas-tree-ball.png" alt="christmas tree ball">
-                        <p>Live</p>
-                        <img src="images/content/snowman.png" alt="snowman">
+                        <p>dream</p>
+                        <img src="images/content/fairytale-house.png" alt="fairytale-house">
                     </div>
                 </div>
                 <div class="slider-controls">
-                    <div id="slider-left" class="slider-button slider-button-inactive">
+                    <div id="slider-left" class="slider-button">
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M18.5 12H6M6 12L12 6M6 12L12 18" stroke="white" stroke-linecap="round" stroke-linejoin="round" />
                         </svg>
                     </div>
-                    <div id="slider-rigth" class="slider-button slider-button-active">
+                    <div id="slider-right" class="slider-button slider-button-active">
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M6 12H18.5M18.5 12L12.5 6M18.5 12L12.5 18" stroke="white" stroke-linecap="round" stroke-linejoin="round" />
                         </svg>
@@ -81,15 +80,12 @@
                 </div>
             </div>
         </section>
-        <!-- <section id="gift-section" class="best-gifts-section gift-section-bg"> -->
         <section id="gift-section" class="gift-section gift-section-bg">
-            <!-- <div class="best-gifts-container"> -->
             <div class="gift-container">
                 <div class="best-gifts-title">
                     <p class="caption">Best Gifts</p>
                     <h2>especially for you</h2>
                 </div>
-                <!-- <div class="best-gifts-card-container"> -->
                 <div class="gift-cards">
                     <div class="gift-card for-work">
                         <div class="image-container"></div>
@@ -131,22 +127,22 @@
                         <p class="caption">The New Year is Coming Soon...</p>
                         <div class="timer">
                             <div class="timer-info">
-                                <h2>47</h2>
+                                <h2 id="counter-days">47</h2>
                                 <h4>days</h4>
                             </div>
                             <div class="separator"></div>
                             <div class="timer-info">
-                                <h2>5</h2>
+                                <h2 id="counter-hr">5</h2>
                                 <h4>hours</h4>
                             </div>
                             <div class="separator"></div>
                             <div class="timer-info">
-                                <h2>34</h2>
+                                <h2 id="counter-min">34</h2>
                                 <h4>minutes</h4>
                             </div>
                             <div class="separator"></div>
                             <div class="timer-info">
-                                <h2>12</h2>
+                                <h2 id="counter-sec">12</h2>
                                 <h4>seconds</h4>
                             </div>
                         </div>
@@ -158,5 +154,7 @@
    <footer id="footer" class="footer"></footer>
    <script src="js/header.js"></script>
    <script src="js/footer.js"></script>
+   <script src="js/slider.js"></script>
+   <script src="js/counter.js"></script>
 </body>
 </html>
