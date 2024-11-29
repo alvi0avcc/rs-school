@@ -64,9 +64,29 @@
 }
 
 .nav-menu-burger{
-    position: fixed;
-    top: 100px;
+    position: absolute;
+    width: 100%;
+    height: calc( 100dvh - 64px );
+    max-height: 960px;
+    top: 64px;
+    left: 0;
     flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    row-gap: 8px;
+    column-gap: 0;
+    background-color: var(--static-white);
+}
+
+.nav-menu-burger li{
+    border-radius: 12px;
+    padding: 12px 20px;
+}
+
+.nav-menu-burger a{
+    font-size: 24px !important;
+    line-height: 152% !important;
+    letter-spacing: 0.16em !important;
 }
 
 .nav-menu a {
