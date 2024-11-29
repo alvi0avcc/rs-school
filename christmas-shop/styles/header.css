@@ -54,64 +54,33 @@
 
 .nav-menu{
     list-style: none;
-    /* display: flex; */
     display: none;
     justify-content: flex-start;
     align-items: center;
     column-gap: 8px;
     width: 376px;
     height: 100%;
-    /* transition: 1s; */
 }
 
 .nav-menu-burger{
-    /* display: flex; */
-    position: absolute;
+    position: fixed;
     width: 100%;
     min-width: 380px;
     height: calc( 100dvh - 64px );
-    max-height: 960px;
+    /* max-height: 960px; */
     top: 64px;
-    left: 0;
-    transform: translateX(100vw);
+    left: 100vw;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     row-gap: 8px;
     column-gap: 0;
     background-color: var(--static-white);
-    /* animation: burger-menu-show 1s linear 0 1 normal; */
-    /* animation: burger-menu-show 3s ease-in 1s reverse running; */
-    /* animation-name: burger-menu-show ; */
-    /* animation-duration: 1s; */
-    transition: 1s;
+    transition: 0.5s;
 }
-
-/* .nav-menu-burger:hover{
-    background-color: lime;
-} */
 
 .nav-menu-burger.move{
-    /* left: 0; */
-    transform: translateX(0);
-}
-
-.nav-menu-burger-hide{
-    /* animation-name: burger-menu-show ; */
-    /* animation-duration: 1s; */
-    animation-name: burger-menu-show ;
-    animation-duration: 1s;
-    animation-direction: reverse;
-    /* animation-play-state: running; */
-}
-
-@keyframes burger-menu-show {
-    from{
-        left: 100vw;
-    }
-    to{
-        left: 0;
-    }
+    left: 0;
 }
 
 .nav-menu-burger li{
@@ -140,6 +109,10 @@
 
 .burger-menu{
     display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    row-gap: 8px;
     width: 40px;
     height: 40px;
 }
@@ -149,14 +122,22 @@
     /* transition: 5s; */
 }
 
-/* .burger-menu path:first-child{
-    transform-origin: center;
-    transform: rotate(45deg) translateY(4px) ;
+.burger-menu div{
+    width: 20px;
+    height: 1px;
+    background-color: var(--dark);
 }
 
-.burger-menu path:last-child{
+.burger-menu path{
     transform-origin: center;
-    transform: rotate(-45deg) translateY(-4px) ;
-} */
+    transition: 0.5s;
+}
+
+.burger-menu-x path:first-child{
+        transform: rotate(45deg) translateY(4px) ;
+    }
+.burger-menu-x path:last-child{
+        transform: rotate(-45deg) translateY(-4px) ;
+}
 
 /* end of header */
