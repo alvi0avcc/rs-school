@@ -1,7 +1,9 @@
 let giftsData = [];
 
+const tabs = document.querySelectorAll('.filter');
+let filter = 'filter-all';
+
 window.onload = ()=>{
-    // console.log('page loaded');
     let path = "";
     if ( document.URL.indexOf('/pages/') != -1 ) path = '../'; //what page loaded
 
@@ -9,15 +11,57 @@ window.onload = ()=>{
         // console.log(response);
         response.json().then( (data)=>{
             giftsData = data;
-            console.log(giftsData);
-            ( path === "" ? giftsForMain() : giftsForGifts() );
+            // console.log(giftsData);
+            if( path === "" ){
+                giftsForMain();
+             }else{
+                for( let element of tabs ) {
+                    element.addEventListener('click',(events)=>{
+                    console.log(events.target.id);
+                    filter = events.target.id;
+
+                    giftsForGifts( tabSelect() );
+                    });
+                };
+            
+                giftsForGifts( giftsData );
+             };
         });
     })
-}
+};
+
+
+function tabSelect(){
+    
+    switch (filter) {
+        case "filter-work":
+            filter = "For Work";
+            break;
+        case "filter-health":
+            filter = "For Health";
+            break;
+        case "filter-harmony":
+            filter = "For Harmony";
+            break;
+        default:
+            break;
+    };
+
+    let filteredGiftsData = [];
+
+    if (filter == "filter-all") {
+        filteredGiftsData = structuredClone(giftsData);
+    }else{
+        filteredGiftsData = giftsData.filter( function(param){ return param.category == filter; });
+    }
+
+    console.log(filteredGiftsData);
+
+    return filteredGiftsData;
+};
 
 function giftsForMain(){
     const giftsLength = giftsData.length;
-    // console.log('page 1 giftsLength = ',giftsLength);
     const lottery = [];
     for ( let i = 0; i < 4; i++){
         lottery.push( Math.floor( Math.random() * giftsLength ) );
@@ -49,23 +93,24 @@ function giftsForMain(){
     }
 }
 
-function giftsForGifts(filter){
-    const giftsLength = giftsData.length;
-    console.log('page 2 giftsLength = ',giftsLength);
+function giftsForGifts(filteredGiftsData){
+    
+    const giftsLength = filteredGiftsData.length;
     
     const giftsCards = document.getElementById('gift-cards');
+    giftsCards.innerHTML = "";
 
     for ( let i = 0; i < giftsLength; i++){
         const giftCard = document.createElement('div');
-        const category = categoryToStyle(giftsData[i].category);
+        const category = categoryToStyle(filteredGiftsData[i].category);
 
         giftCard.setAttribute('id', `card-${i+1}`);
         giftCard.classList.add( "gift-card", category );
         const data =`
                 <div class="image-container"></div>
                 <div class="gift-description">
-                    <h4>${giftsData[i].category}</h4>
-                    <h3>${giftsData[i].name}</h3>
+                    <h4>${filteredGiftsData[i].category}</h4>
+                    <h3>${filteredGiftsData[i].name}</h3>
                 </div>
         `;
 
