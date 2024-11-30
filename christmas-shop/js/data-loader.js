@@ -24,10 +24,11 @@ function giftsForMain(){
         // console.log('lottery = ',lottery);
     }
 
+    const giftsCards = document.getElementById('gift-cards');
     for ( let i = 0; i < 4; i++){
         // console.log('current card = ',giftsData[lottery[i]] );
         
-        const giftCard = document.getElementById(`card-${i+1}`);
+        const giftCard = document.createElement('div');
         let category = '';
 
         switch  (giftsData[lottery[i]].category) {
@@ -44,7 +45,8 @@ function giftsForMain(){
             console.error('error! Gift category not found');
         };
 
-        giftCard.classList.add(category);
+        giftCard.setAttribute('id', `card-${i+1}`);
+        giftCard.classList.add( "gift-card", category );
         const data =`
                 <div class="image-container"></div>
                 <div class="gift-description">
@@ -52,7 +54,12 @@ function giftsForMain(){
                     <h3>${giftsData[lottery[i]].name}</h3>
                 </div>
         `;
+
         giftCard.innerHTML = data;
+        if( i == 3 ) {
+            giftCard.classList.add('row-center');
+        }
+        giftsCards.appendChild(giftCard);
      }
 }
 
