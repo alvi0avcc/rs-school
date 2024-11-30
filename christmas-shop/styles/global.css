@@ -42,6 +42,10 @@ html{
     scroll-behavior: smooth;
 }
 
+.no-scroll{
+    overflow: hidden;
+}
+
 body{
     max-width: var(--body-width);
     width: 100%;
