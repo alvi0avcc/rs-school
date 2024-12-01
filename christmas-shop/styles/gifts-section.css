@@ -130,15 +130,15 @@
     color: var(--tag-green);
 }
 
-.for-work .gift-description h4{
+.for-work h4{
     color: var(--tag-purple);
 }
 
-.for-health .gift-description h4{
+.for-health h4{
     color: var(--tag-green);
 }
 
-.for-harmony .gift-description h4{
+.for-harmony h4{
     color: var(--tag-pink);
 }
 
@@ -151,6 +151,18 @@
 }
 
 .for-harmony .image-container{
+    background-image: url("../images/content/gift-for-harmony.png");
+}
+
+.for-work.card-info-image-container{
+    background-image: url("../images/content/gift-for-work.png");
+}
+
+.for-health.card-info-image-container{
+    background-image: url("../images/content/gift-for-health.png");
+}
+
+.for-harmony.card-info-image-container{
     background-image: url("../images/content/gift-for-harmony.png");
 }
 
