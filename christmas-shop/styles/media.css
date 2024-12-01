@@ -5,10 +5,11 @@
         background: var(--static-white);
     }
     /* gift-page */
-    .tab:hover{
+    .tab:not(.active):hover{
         background: var(--static-white-20);
         cursor: pointer;
     }
+
     /* header */
     .nav-menu a:hover{
         background: var(--primary-10);

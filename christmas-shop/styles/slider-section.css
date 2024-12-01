@@ -60,6 +60,7 @@
     justify-content: flex-start;
     align-items: center;
     transform: (-100px);
+    transition: 0.5s;
 }
 
 .slider p{

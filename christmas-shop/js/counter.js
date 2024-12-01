@@ -12,16 +12,23 @@ function Counter( ...targetDate ){
     const counterElement = findCounter();
 
     setInterval( ()=>{
-        changeCounter( counterElement, differentDate(targetDate) );
+        changeCounter( counterElement, differenceDate(targetDate) );
     },1000);
 }
 
 // difference  between date (ms) => [ days, hr, min, sec, msec ]
-function differentDate( targetDate ){
-    const currentDate = Date.now();
+function differenceDate( targetDate ){
+    let currentDate = new Date();
+    // console.log('local = ',currentDate);
+    const offset = currentDate.getTimezoneOffset(); //offset in minutes
+    // console.log('offset = ',offset);
+    currentDate = +currentDate;
+    // console.log('number = ',currentDate);
+    currentDate += offset * 60000; //correction date to UTC +0
+    // console.log('offset number = ',currentDate);
+    // console.log('date offset = ', new Date(currentDate) );
     target = new Date( ...targetDate ).getTime();
     let diff = target - currentDate;
-
     // let days = Math.trunc( diff / 1000 / 60 / 60 / 24 );
     let days = Math.trunc( diff / 86400000 );
     // diff = diff - days * 24*60*60*1000;

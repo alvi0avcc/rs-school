@@ -48,11 +48,16 @@ h1{
     padding: 12px 20px;
 }
 
-.tab:first-child{
+.tab.active{
+    cursor: default;
+    background: var(--static-white-20);
+}
+
+/* .tab:first-child{
     background: var(--static-white-20);
     pointer-events: none;
-
-}
+    cursor: default;
+} */
 
 .tab p{
     font-family: var(--font-family);

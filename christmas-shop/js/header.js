@@ -1,7 +1,7 @@
 function HeaderAdd(){
     const header = document.querySelector("#header");
     let path = "";
-    if ( document.URL.indexOf('/pages/') != -1 ) path = '../'
+    if ( document.URL.indexOf('/pages/') != -1 ) path = '../';
 
     let data = `
         <div class="nav-container">
@@ -34,7 +34,8 @@ function HeaderAdd(){
     // navMenu.classList.add('show');
 
     burgerButton.addEventListener( 'click', ()=>{
-        console.log(isOpenMenu);
+        // console.log(isOpenMenu);
+        document.querySelector('html').classList.toggle('no-scroll');
         burgerButton.classList.toggle('burger-menu-x');
 
         if ( !isOpenMenu ) {
@@ -62,22 +63,23 @@ function HeaderAdd(){
             burgerButton.classList.remove('burger-menu-x'),
             navMenu.classList.toggle('move'),
             navMenu.classList.remove('show'),
-            navMenu.classList.remove('nav-menu-burger')
+            navMenu.classList.remove('nav-menu-burger'),
+            document.querySelector('html').classList.remove('no-scroll')
             ) : ''
         );
     });
 
-    window.onscroll = ()=>{
-        if ( isOpenMenu ){
-            burgerButton.classList.remove('burger-menu-x');
-            navMenu.classList.toggle('move');
-            setTimeout(()=>{
-                navMenu.classList.toggle('nav-menu-burger');
-                navMenu.classList.toggle('show');
-            },500);
-            isOpenMenu = false;
-        }
-    };
+    // window.onscroll = ()=>{
+    //     if ( isOpenMenu ){
+    //         burgerButton.classList.remove('burger-menu-x');
+    //         navMenu.classList.toggle('move');
+    //         setTimeout(()=>{
+    //             navMenu.classList.toggle('nav-menu-burger');
+    //             navMenu.classList.toggle('show');
+    //         },500);
+    //         isOpenMenu = false;
+    //     }
+    // };
 };
 
 // run All
