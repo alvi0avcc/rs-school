@@ -17,10 +17,11 @@ window.onload = ()=>{
              }else{
                 for( let element of tabs ) {
                     element.addEventListener('click',(events)=>{
-                    console.log(events.target.id);
-                    filter = events.target.id;
-
-                    giftsForGifts( tabSelect() );
+                        console.dir(events.target);
+                        console.log('filter',events.target.attributes.filter.value);
+                        console.log(events.target.id);
+                        filter = events.target.attributes.filter.value;
+                        giftsForGifts( tabSelect() );
                     });
                 };
             
