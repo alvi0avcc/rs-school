@@ -27,10 +27,7 @@ function LoadData(){
                     element.addEventListener('click',(events)=>{
                         for( let selected of tabs ) selected.classList.remove('active'); //clear selected tab
                         element.classList.add('active'); // add current selected tab
-                        console.dir(events.target);
-                        console.log('filter',events.target.attributes.filter.value);
-                        console.log(events.target.id);
-                        filter = events.target.attributes.filter.value;
+                        filter = events.currentTarget.attributes.id.value;
                         giftsForGifts( tabSelect() );
                         getCardsForModal();
                     });
