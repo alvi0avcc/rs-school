@@ -16,9 +16,23 @@ function CheckResize(){
 
 body.onresize = () => { 
     sliderPosition = 0;
+    sliderLeft.classList.remove('slider-button-active');
+    sliderRight.classList.add('slider-button-active');
     slider.style.transform = `translateX(0px)`;
     CheckResize();
-};
+    const burger = document.querySelector('.burger-menu');
+    burger.classList.remove('burger-menu-x');
+    const navMenu = document.querySelector('.nav-menu');
+    navMenu.classList.remove('move');
+    setTimeout(()=>{
+        navMenu.classList.remove('show');
+    },500);
+
+    if (body.clientWidth > 768 ) {
+        navMenu.classList.remove('nav-menu-burger');
+    }else navMenu.classList.add('nav-menu-burger');
+    isOpenMenu = false;
+ };
 
 sliderRight.addEventListener('click', ()=>{
     if ( sliderRight.classList.contains('slider-button-active') ) {
