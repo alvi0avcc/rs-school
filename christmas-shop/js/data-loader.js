@@ -15,6 +15,10 @@ function LoadData(){
         // console.log(response);
         response.json().then( (data)=>{
             giftsData = data;
+            giftsData.forEach( (item, index) => {
+                // console.log('element =', item, index);
+                giftsData[index]['id'] = index;
+            });
             // console.log(giftsData);
             if( path === "" ){
                 giftsForMain();
@@ -105,6 +109,7 @@ function giftsForMain(){
 }
 
 function giftsForGifts(filteredGiftsData){
+    // console.log('filtered = ',filteredGiftsData);
     
     const giftsLength = filteredGiftsData.length;
     
@@ -117,7 +122,8 @@ function giftsForGifts(filteredGiftsData){
 
         giftCard.setAttribute('id', `card-${i+1}`);
         giftCard.classList.add( "gift-card", category );
-        giftCard.setAttribute('id-gift', i);
+        // giftCard.setAttribute('id-gift', i);
+        giftCard.setAttribute('id-gift', filteredGiftsData[i].id);
         const data =`
                 <div class="image-container"></div>
                 <div class="gift-description">

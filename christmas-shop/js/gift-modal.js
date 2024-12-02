@@ -1,19 +1,19 @@
 
-console.log('modal loaded');
-console.log(giftsData);
+// console.log('modal loaded');
+// console.log(giftsData);
 
 let cardsForModal;
 
 function getCardsForModal(){
-    console.log('updated');
+    // console.log('updated');
     
     let cardsForModal = document.querySelectorAll('.gift-card');
 
     for( let card of cardsForModal ) {
         card.addEventListener('click', (events)=>{
-            console.log('card click = ', events.currentTarget);
+            // console.log('card click = ', events.currentTarget);
             const idGift = events.currentTarget.getAttribute("id-gift");
-            console.log('card id = ', idGift);
+            // console.log('card id = ', idGift);
 
             const dialog = document.getElementById('card-info');
 
