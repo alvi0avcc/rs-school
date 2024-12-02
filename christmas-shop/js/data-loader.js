@@ -1,9 +1,13 @@
+// import {Modal} from './gift-modal.js';
+
 let giftsData = [];
 
 const tabs = document.querySelectorAll('.filter');
 let filter = 'filter-all';
 
-window.onload = ()=>{
+window.onload = ()=>{ LoadData(); };
+
+function LoadData(){
     let path = "";
     if ( document.URL.indexOf('/pages/') != -1 ) path = '../'; //what page loaded
 
@@ -11,6 +15,10 @@ window.onload = ()=>{
         // console.log(response);
         response.json().then( (data)=>{
             giftsData = data;
+            giftsData.forEach( (item, index) => {
+                // console.log('element =', item, index);
+                giftsData[index]['id'] = index;
+            });
             // console.log(giftsData);
             if( path === "" ){
                 giftsForMain();
@@ -24,15 +32,18 @@ window.onload = ()=>{
                         console.log(events.target.id);
                         filter = events.target.attributes.filter.value;
                         giftsForGifts( tabSelect() );
+                        getCardsForModal();
                     });
                 };
-            
                 giftsForGifts( giftsData );
              };
+            // add script for modal card after all data loaded
+            const modalCardScript = document.createElement('script');
+            modalCardScript.src = `${path}js/gift-modal.js`;
+            document.body.appendChild(modalCardScript);
         });
-    })
-};
-
+    });
+}
 
 function tabSelect(){
     
@@ -79,6 +90,7 @@ function giftsForMain(){
         const category = categoryToStyle(giftsData[lottery[i]].category);
 
         giftCard.setAttribute('id', `card-${i+1}`);
+        giftCard.setAttribute('id-gift', lottery[i]);
         giftCard.classList.add( "gift-card", category );
         const data =`
                 <div class="image-container"></div>
@@ -97,6 +109,7 @@ function giftsForMain(){
 }
 
 function giftsForGifts(filteredGiftsData){
+    // console.log('filtered = ',filteredGiftsData);
     
     const giftsLength = filteredGiftsData.length;
     
@@ -109,6 +122,8 @@ function giftsForGifts(filteredGiftsData){
 
         giftCard.setAttribute('id', `card-${i+1}`);
         giftCard.classList.add( "gift-card", category );
+        // giftCard.setAttribute('id-gift', i);
+        giftCard.setAttribute('id-gift', filteredGiftsData[i].id);
         const data =`
                 <div class="image-container"></div>
                 <div class="gift-description">
@@ -140,4 +155,4 @@ function categoryToStyle(category){
     };
 
     return style;
-}
+};
