@@ -1,3 +1,6 @@
+    // for burger-menu
+    let isOpenMenu = false;
+
 function HeaderAdd(){
     const header = document.querySelector("#header");
     let path = "";
@@ -16,18 +19,17 @@ function HeaderAdd(){
                         <li><a href="#gift-section">BEST</a></li>
                         <li><a href="#footer">CONTACTS</a></li>
                     </ul>
-                    <svg class="burger-menu" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M10 16H30" stroke-linecap="round" stroke-linejoin="round" />
-                        <path d="M10 24H30" stroke-linecap="round" stroke-linejoin="round" />
-                    </svg>
+                    <div class="burger-menu">
+                        <div class="burger-part"></div>
+                        <div class="burger-part"></div>
+                    </div>
             </nav>
         </div>
         `;
 
     header.innerHTML = data;
     
-    // for burger-menu
-    let isOpenMenu = false;
+
 
     const burgerButton = document.querySelector('.burger-menu');
     const navMenu = document.querySelector('.nav-menu');
@@ -39,16 +41,16 @@ function HeaderAdd(){
         burgerButton.classList.toggle('burger-menu-x');
 
         if ( !isOpenMenu ) {
-            navMenu.classList.toggle('nav-menu-burger');
-            navMenu.classList.toggle('show');
+            navMenu.classList.add('nav-menu-burger');
+            navMenu.classList.add('show');
             setTimeout(()=>{
-                navMenu.classList.toggle('move');
+                navMenu.classList.add('move');
             },0);
         }else{
-            navMenu.classList.toggle('move');
+            navMenu.classList.remove('move');
             setTimeout(()=>{
-                navMenu.classList.toggle('nav-menu-burger');
-                navMenu.classList.toggle('show');
+                navMenu.classList.remove('nav-menu-burger');
+                navMenu.classList.remove('show');
             },500);
         }
 
@@ -62,24 +64,16 @@ function HeaderAdd(){
             isOpenMenu = false,
             burgerButton.classList.remove('burger-menu-x'),
             navMenu.classList.toggle('move'),
-            navMenu.classList.remove('show'),
-            navMenu.classList.remove('nav-menu-burger'),
+            setTimeout(()=>{
+                navMenu.classList.remove('nav-menu-burger');
+                navMenu.classList.remove('show');
+            },500),
+            // navMenu.classList.remove('show'),
+            // navMenu.classList.remove('nav-menu-burger'),
             document.querySelector('html').classList.remove('no-scroll')
             ) : ''
         );
     });
-
-    // window.onscroll = ()=>{
-    //     if ( isOpenMenu ){
-    //         burgerButton.classList.remove('burger-menu-x');
-    //         navMenu.classList.toggle('move');
-    //         setTimeout(()=>{
-    //             navMenu.classList.toggle('nav-menu-burger');
-    //             navMenu.classList.toggle('show');
-    //         },500);
-    //         isOpenMenu = false;
-    //     }
-    // };
 };
 
 // run All
