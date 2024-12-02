@@ -17,8 +17,19 @@ function getCardsForModal(){
 
             const dialog = document.getElementById('card-info');
 
-            // document.querySelector('html').classList.add('no-scroll');
+            document.querySelector('html').classList.add('no-scroll');
             dialog.innerHTML = getCardData(idGift);
+            const dialogClose = document.querySelector('.close-x');
+            dialogClose.addEventListener('click', ()=>{
+                dialog.close();
+                document.querySelector('html').classList.remove('no-scroll');
+            })
+            dialog.addEventListener('click', (events)=>{
+                if ( events.target == dialog ) {
+                    dialog.close();
+                    document.querySelector('html').classList.remove('no-scroll');
+                }
+            });
             dialog.showModal();
         })
     }
