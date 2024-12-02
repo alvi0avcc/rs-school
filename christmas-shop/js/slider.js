@@ -22,8 +22,15 @@ body.onresize = () => {
     CheckResize();
     const burger = document.querySelector('.burger-menu');
     burger.classList.remove('burger-menu-x');
-    const burgerMenu = document.querySelector('.nav-menu');
-    burgerMenu.classList.remove('move');
+    const navMenu = document.querySelector('.nav-menu');
+    navMenu.classList.remove('move');
+    setTimeout(()=>{
+        navMenu.classList.remove('show');
+    },500);
+
+    if (body.clientWidth > 768 ) {
+        navMenu.classList.remove('nav-menu-burger');
+    }else navMenu.classList.add('nav-menu-burger');
     isOpenMenu = false;
  };
 

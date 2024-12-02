@@ -116,15 +116,13 @@
     height: 40px;
 }
 
-.burger-menu path{
-    stroke: var(--dark);
-    /* transition: 5s; */
-}
-
-.burger-menu div{
+.burger-part{
     width: 20px;
-    height: 1px;
+    height: 2px;
+    border-radius: 2px;
     background-color: var(--dark);
+    transform-origin: center;
+    transition: 0.5s;
 }
 
 .burger-menu path{
@@ -132,11 +130,11 @@
     transition: 0.5s;
 }
 
-.burger-menu-x path:first-child{
-        transform: rotate(45deg) translateY(4px) ;
+.burger-menu-x .burger-part:first-child{
+        transform: rotate(45deg) translateY(7px) ;
     }
-.burger-menu-x path:last-child{
-        transform: rotate(-45deg) translateY(-4px) ;
+.burger-menu-x .burger-part:last-child{
+        transform: rotate(-45deg) translateY(-7px) ;
 }
 
 /* end of header */
