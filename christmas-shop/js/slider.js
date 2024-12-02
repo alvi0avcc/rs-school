@@ -16,9 +16,16 @@ function CheckResize(){
 
 body.onresize = () => { 
     sliderPosition = 0;
+    sliderLeft.classList.remove('slider-button-active');
+    sliderRight.classList.add('slider-button-active');
     slider.style.transform = `translateX(0px)`;
     CheckResize();
-};
+    const burger = document.querySelector('.burger-menu');
+    burger.classList.remove('burger-menu-x');
+    const burgerMenu = document.querySelector('.nav-menu');
+    burgerMenu.classList.remove('move');
+    isOpenMenu = false;
+ };
 
 sliderRight.addEventListener('click', ()=>{
     if ( sliderRight.classList.contains('slider-button-active') ) {
