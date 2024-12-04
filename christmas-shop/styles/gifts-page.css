@@ -1,0 +1,72 @@
+h1{
+    white-space: unset;
+}
+
+.nav-menu li:first-child>a{
+    color: var(--primary);
+    background-color: var(--primary-10);
+    /* pointer-events: none; */
+    cursor: default;
+}
+
+
+
+.bg-garland{
+    position: absolute;
+    margin-top: -60px;
+    /* width: var(--body-width); */
+    max-width: var(--body-width);
+    width: 100%;
+    height: 200px;
+    background: top / contain no-repeat url("../images/background/bg-garland.png");
+}
+
+.gift-header{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    row-gap: 12px;
+    width: 100%;
+    max-width: 426px;
+}
+
+.tabs{
+    display: flex;
+    column-gap: 8px;
+    justify-content: flex-start;
+    align-items: center;
+    list-style: none;
+    height: 40px;
+}
+
+.tab{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 12px;
+    padding: 12px 20px;
+}
+
+.tab.active{
+    cursor: default;
+    background: var(--static-white-20);
+}
+
+/* .tab:first-child{
+    background: var(--static-white-20);
+    pointer-events: none;
+    cursor: default;
+} */
+
+.tab p{
+    font-family: var(--font-family);
+    font-weight: 600;
+    font-size: 12px;
+    line-height: 130%;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--static-white);
+    text-align: left;
+    vertical-align: top;
+}
