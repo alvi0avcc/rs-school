@@ -15,8 +15,8 @@ function HeaderAdd(){
             <nav class="nav-menu-container">
                     <ul class="nav-menu">
                         <li><a href="${path}pages/gifts.html">GIFTS</a></li>
-                        <li><a href="#about-section">ABOUT</a></li>
-                        <li><a href="#gift-section">BEST</a></li>
+                        <li><a href="${path}#about-section">ABOUT</a></li>
+                        <li><a href="${path}#gift-section">BEST</a></li>
                         <li><a href="#footer">CONTACTS</a></li>
                     </ul>
                     <div class="burger-menu">
