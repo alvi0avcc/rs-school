@@ -1,0 +1,67 @@
+{"dom":[
+  {
+    "tag": "h1",
+    "text": "Simon-says",
+    "classes": []
+  },
+  {
+    "tag": "fieldset",
+    "text": "",
+    "classes": [],
+    "children": [
+      {
+        "tag": "legend",
+        "text": "Select Level",
+        "classes": []
+      },
+      {
+        "tag": "label",
+        "text": "Easy",
+        "classes": [],
+        "for": "easy"
+      },
+      {
+        "tag": "input",
+        "id": "easy",
+        "text": "",
+        "classes": [],
+        "type": "radio",
+        "name": "level",
+        "checked": "checked"
+      },
+      {
+        "tag": "label",
+        "text": "Medium",
+        "classes": [],
+        "for": "medium"
+      },
+      {
+        "tag": "input",
+        "id": "medium",
+        "text": "",
+        "classes": [],
+        "type": "radio",
+        "name": "level"
+      },
+      {
+        "tag": "label",
+        "text": "Hard",
+        "classes": [],
+        "for": "hard"
+      },
+      {
+        "tag": "input",
+        "id": "hard",
+        "text": "",
+        "classes": [],
+        "type": "radio",
+        "name": "level"
+      }
+    ]
+  },
+  {
+    "tag": "button",
+    "text": "Start",
+    "classes": []
+  }
+]}
