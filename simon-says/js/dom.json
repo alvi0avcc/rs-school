@@ -86,7 +86,14 @@
     "children": [
       {
         "tag": "p",
+        "id": "pressed-keys",
         "text": "то что нажали",
+        "classes": []
+      },
+      {
+        "tag": "p",
+        "id": "memory-keys",
+        "text": "",
         "classes": []
       }
     ]

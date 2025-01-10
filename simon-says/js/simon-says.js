@@ -6,7 +6,10 @@ class Simon {
     this.round = 1;
     this.countSymbols = 10; // 2 for round 1, +2 for each next round
     this.sequence = "";
+    this.memorySequence = "";
     this.countSequence = 0;
+    this.pressedKeys = parent.querySelector("#pressed-keys");
+    this.memoryKeys = parent.querySelector("#memory-keys");
     this.kbdNum = parent.querySelector("#kbd-num");
     this.kbdNum.classList.add("show");
     this.kbdSym = parent.querySelector("#kbd-sym");
@@ -23,8 +26,7 @@ class Simon {
     this.newSequence;
   }
 
-  checkSymbol(symbol){
-    this.symbolFilter(symbol);
+  checkSymbol(symbol){ //check by symbol
     if (!this.getState) return false;
     if (!this.symbolFilter(symbol)) return false;
     if (symbol.toUpperCase() === this.sequence[this.countSequence]) {
@@ -39,6 +41,35 @@ class Simon {
       console.log("Incorrect symbol");
     }
     
+    return false;
+  }
+
+  memorySymbol(symbol){
+    if (!this.getState) return false;
+    if (!this.symbolFilter(symbol)) return false;
+    if (this.sequence.length > this.memorySequence.length) {
+      this.memorySequence += symbol.toUpperCase();
+      this.pressedKeys.textContent = this.memorySequence;
+      if (this.sequence.length === this.memorySequence.length) {
+        if (this.checkSequence){
+          this.memoryKeys.textContent = `Correct -> ${this.sequence} <- Correct`;
+        } else {
+          this.memoryKeys.textContent = `Error -> ${this.sequence} <- Error`;
+        }
+        return true;
+      }
+    }
+    return false;
+  }
+
+  get checkSequence(){ //check by all sequence
+    console.log('checking');
+    if (this.sequence === this.memorySequence)
+    {
+      console.log('checking - OK');
+      return true;
+    }
+    console.log('checking - FALSE');
     return false;
   }
 
@@ -184,7 +215,8 @@ function App(parent, elements) {
   document.addEventListener('keyup', function (event) {
     if (simon.getState) {
       // console.log('кнопка:', event.key);
-      simon.checkSymbol(event.key);
+      // simon.checkSymbol(event.key);
+      simon.memorySymbol(event.key);
     }
   });
 }
@@ -218,7 +250,8 @@ function AddKbdNum(simon) {
     btn.addEventListener("click", (events) => {
       // console.log('kbd-num-click=', events.target.id);
       // console.log(events.target.id.slice(-1));
-      if (simon.getState) simon.checkSymbol(events.target.id.slice(-1));
+      // if (simon.getState) simon.checkSymbol(events.target.id.slice(-1));
+      if (simon.getState) simon.memorySymbol(events.target.id.slice(-1));
     });
   }
 }
@@ -236,7 +269,8 @@ function AddKbdSym(simon) {
     btn.addEventListener("click", (events) => {
       // console.log('kbd-sum-click=', events.target.id);
       // console.log(events.target.id.slice(-1));
-      if (simon.getState) simon.checkSymbol(events.target.id.slice(-1));
+      // if (simon.getState) simon.checkSymbol(events.target.id.slice(-1));
+      if (simon.getState) simon.memorySymbol(events.target.id.slice(-1));
     });
   }
 }
