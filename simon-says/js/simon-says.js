@@ -244,7 +244,7 @@ function AddKbdNum(simon) {
       tag: "button",
       id: `btn-num-${i}`,
       text: i,
-      classes: [],
+      classes: ["kbd-btn"],
     });
     kbdNum.append(btn);
     btn.addEventListener("click", (events) => {
@@ -263,7 +263,7 @@ function AddKbdSym(simon) {
       tag: "button",
       id: `btn-sym-${String.fromCharCode(i)}`,
       text: String.fromCharCode(i),
-      classes: [],
+      classes: ["kbd-btn"],
     });
     kbdNum.append(btn);
     btn.addEventListener("click", (events) => {

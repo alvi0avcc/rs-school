@@ -2,6 +2,86 @@
   display: flex !important;
 }
 
-.kbd{
+html{
+  display: flex;
+  height: 100svh;
+  justify-content: center;
+  background-color: gray;
+}
+
+body{
+  width: 100%;
+  max-width: 1024px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border: 2px solid blue;
+  border-radius: 10px;
+  padding: 10px;
+  background-color: green;
+  font-size: 1.5rem;
+}
+
+.level-select{
+  border-radius: 10px;
+}
+
+.legend{
+  text-align: center;
+}
+
+.radio{
+  margin-left: 5px;
+  margin-right: 20px;
+}
+
+.round{
   display: none;
+}
+
+.nav{
+  margin: 10px;
+  display: flex;
+  gap: 10px;
+}
+
+.button{
+  background-color: lime;
+  border-radius: 10px;
+}
+
+.pressed-keys{
+  border: 1px solid white;
+  border-radius: 10px;
+  padding: 10px;
+  font-weight: 600;
+  text-align: center;
+  box-shadow: inset 5px 5px 10px grey, inset -5px -5px 10px lime;
+}
+
+.keyboards{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  row-gap: 10px;
+}
+
+.kbd{
+  display: none;  
+  flex-wrap: wrap;
+  gap: 5px;
+  justify-content: center;
+}
+
+.kbd-btn{
+  width: 9vw;
+  height: 9vw;
+  max-width: 90px;
+  max-height: 90px;
+  border-radius: 10px;
+  box-shadow: 5px 5px 10px lime;
+  font-size: 3rem;
+  font-weight: 600;
+  text-shadow: 3px 3px 5px gray;
 }
