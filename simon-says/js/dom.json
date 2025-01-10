@@ -60,8 +60,49 @@
     ]
   },
   {
-    "tag": "button",
-    "text": "Start",
-    "classes": []
+    "tag": "div",
+    "text": "",
+    "classes": [],
+    "children": [
+      {
+        "tag": "button",
+        "text": "Start",
+        "classes": []
+      }
+    ]
+  },
+  {
+    "tag": "div",
+    "text": "",
+    "classes": [],
+    "children": [
+      {
+        "tag": "p",
+        "text": "то что нажали",
+        "classes": []
+      }
+    ]
+  },
+  {
+    "tag": "div",
+    "id": "keyboards",
+    "text": "",
+    "classes": [],
+    "children": [
+      {
+        "tag": "div",
+        "id": "kbd-num",
+        "text": "",
+        "classes": [],
+        "children": []
+      },
+      {
+        "tag": "div",
+        "id": "kbd-sym",
+        "text": "",
+        "classes": [],
+        "children": []
+      }
+    ]
   }
 ]}
