@@ -13,6 +13,7 @@ class Simon {
     this.kbdNum = parent.querySelector("#kbd-num");
     this.kbdNum.classList.add("show");
     this.kbdSym = parent.querySelector("#kbd-sym");
+    this.levelSelector = parent.querySelector("#level-select");
   }
 
   get getState(){
@@ -23,6 +24,7 @@ class Simon {
     this.state = true;
     this.round = 1;
     // this.countSymbols = 2;
+    this.levelSelector.setAttribute("disabled", "");
     this.newSequence;
   }
 
@@ -140,8 +142,19 @@ class Simon {
       }
     }
     this.sequence = sequence;
-    console.log('newSequence=',sequence);
-    
+
+    let index = 0;
+    function displayNextCharacter() { //display next symbol in sequence with delay
+        if (index < sequence.length) {
+            console.log(sequence[index]);
+            const btn = document.body.querySelector(`#btn-${sequence[index]}`);
+            btn.classList.toggle('virtual-press');
+            setTimeout(displayNextCharacter, 700);
+            index++;
+            setTimeout(() => (btn.classList.toggle('virtual-press')), 500);
+        }
+    }
+    displayNextCharacter(this.parent)
     return this.sequence;
   }
 }
@@ -242,7 +255,7 @@ function AddKbdNum(simon) {
   for (let i = 0; i < 10; i++) {
     const btn = createElement({
       tag: "button",
-      id: `btn-num-${i}`,
+      id: `btn-${i}`,
       text: i,
       classes: ["kbd-btn"],
     });
@@ -261,7 +274,7 @@ function AddKbdSym(simon) {
   for (let i = 65; i <= 90; i++) {
     const btn = createElement({
       tag: "button",
-      id: `btn-sym-${String.fromCharCode(i)}`,
+      id: `btn-${String.fromCharCode(i)}`,
       text: String.fromCharCode(i),
       classes: ["kbd-btn"],
     });

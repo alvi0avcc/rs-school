@@ -2,6 +2,12 @@
   display: flex !important;
 }
 
+.virtual-press{
+  color: red;
+  box-shadow: 5px 5px 10px red;
+  background-color: lightblue;
+}
+
 html{
   display: flex;
   height: 100svh;
