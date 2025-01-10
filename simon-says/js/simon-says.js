@@ -61,6 +61,10 @@ function App(parent, elements){
   Dom(parent, elements);
   AddKbdNum();
   AddKbdSym();
+
+  document.addEventListener('keyup', function(event) {
+    console.log('кнопка:', event.key);
+});
 }
 
 function Dom(parent, elements){
@@ -89,6 +93,9 @@ function AddKbdNum() {
       classes: [],
     });
     kbdNum.append(btn);
+    btn.addEventListener("click", (events) => {
+      console.log('kbd-num-click=',events.target.id);
+    });
   }
 }
 
@@ -102,6 +109,9 @@ function AddKbdSym() {
       classes: [],
     });
     kbdNum.append(btn);
+    btn.addEventListener("click", (events) => {
+      console.log('kbd-sum-click=',events.target.id);
+    });
   }
 }
 
