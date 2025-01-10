@@ -24,7 +24,9 @@ class Simon {
   }
 
   checkSymbol(symbol){
-    if (!this.state) return false;
+    this.symbolFilter(symbol);
+    if (!this.getState) return false;
+    if (!this.symbolFilter(symbol)) return false;
     if (symbol.toUpperCase() === this.sequence[this.countSequence]) {
       console.log("OK");
       if (this.sequence[this.countSequence + 1]) {
@@ -34,8 +36,19 @@ class Simon {
       this.countSequence++;
       return true;
     } else {
-      console.error("Error");
+      console.log("Incorrect symbol");
     }
+    
+    return false;
+  }
+
+  symbolFilter(symbol){
+    const regExpNum = /^[0-9]$/;
+    const regExpSym = /^[a-zA-Z]$/;
+    const regExpAll = /^[0-1a-zA-Z]$/;
+    if (this.getLevel === 'easy') return regExpNum.test(symbol);
+    if (this.getLevel === 'medium') return regExpSym.test(symbol);
+    if (this.getLevel === 'hard') return regExpAll.test(symbol);
     
     return false;
   }
@@ -170,7 +183,7 @@ function App(parent, elements) {
 
   document.addEventListener('keyup', function (event) {
     if (simon.getState) {
-      console.log('кнопка:', event.key);
+      // console.log('кнопка:', event.key);
       simon.checkSymbol(event.key);
     }
   });
