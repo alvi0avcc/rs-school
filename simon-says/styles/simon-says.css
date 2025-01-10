@@ -53,6 +53,7 @@ body{
 }
 
 .button{
+  display: none;
   background-color: lime;
   border-radius: 10px;
 }

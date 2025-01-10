@@ -75,7 +75,7 @@
         "tag": "button",
         "id": "start",
         "text": "Start Game",
-        "classes": ["button"]
+        "classes": ["button", "show"]
       },
       {
         "tag": "button",
