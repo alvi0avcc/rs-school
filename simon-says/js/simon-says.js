@@ -4,6 +4,7 @@ class Simon {
     this.state = 0; // if 1 - game started
     this.level = "easy";
     this.round = 1;
+    this.countSymbols = 2; // 2 for round 1, +2 for each next round
     this.sequence = "";
     this.kbdNum = parent.querySelector("#kbd-num");
     this.kbdNum.classList.add("show");
@@ -52,8 +53,23 @@ class Simon {
     let count = 20;
     let sequence = "";
     for (let i = 0; i < count; i++) {
-      // sequence += Math.round(Math.random() * 9);
-      sequence += String.fromCharCode(Math.round(Math.random() * 25) + 65);
+      switch (this.getLevel) {
+        case "easy": // only number
+          sequence += Math.round(Math.random() * 9);
+          break;
+        case "medium": // only symbols
+          sequence += String.fromCharCode(Math.round(Math.random() * 25) + 65);
+          break;
+        case "hard": // numbers + symbols
+          if (Math.random() < 0.5) {
+            sequence += Math.round(Math.random() * 9);
+          } else {
+            sequence += String.fromCharCode(Math.round(Math.random() * 25) + 65);
+          }
+          break;
+        default:
+          break;
+      }
     }
     this.sequence = sequence;
     console.log('newSequence=',sequence);
