@@ -95,14 +95,14 @@
         "tag": "div",
         "id": "kbd-num",
         "text": "",
-        "classes": [],
+        "classes": ["kbd"],
         "children": []
       },
       {
         "tag": "div",
         "id": "kbd-sym",
         "text": "",
-        "classes": [],
+        "classes": ["kbd"],
         "children": []
       }
     ]

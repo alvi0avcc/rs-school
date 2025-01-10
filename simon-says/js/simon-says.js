@@ -1,9 +1,13 @@
 class Simon {
-  constructor() {
+  constructor(parent) {
+    this.parent = parent;
     this.state = 0; // if 1 - game started
     this.level = "easy";
     this.round = 1;
     this.sequence = "";
+    this.kbdNum = parent.querySelector("#kbd-num");
+    this.kbdNum.classList.add("show");
+    this.kbdSym = parent.querySelector("#kbd-sym");
   }
 
   start(){
@@ -16,7 +20,28 @@ class Simon {
   }
 
   set setLevel(data){
+    console.log(this.kbdNum);
+    
     this.level = data;
+    switch (data) {
+      case "easy":
+        this.kbdNum.classList.add("show");
+        this.kbdSym.classList.remove("show");
+        break;
+
+      case "medium":
+        this.kbdNum.classList.remove("show");
+        this.kbdSym.classList.add("show");
+        break;
+
+      case "hard":
+        this.kbdNum.classList.add("show");
+        this.kbdSym.classList.add("show");
+        break;
+    
+      default:
+        break;
+    }
   }
 
   get getSequence() {
@@ -78,11 +103,11 @@ function createElement(options) {
 }
 
 function App(parent, elements) {
-  const simon = new Simon();
   console.log(elements);
   Dom(parent, elements);
   AddKbdNum();
   AddKbdSym();
+  const simon = new Simon(parent);
 
   parent.querySelector("#start").addEventListener('click', function (event) {
     console.log('start click');

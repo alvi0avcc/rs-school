@@ -1,0 +1,7 @@
+.show{
+  display: flex !important;
+}
+
+.kbd{
+  display: none;
+}
