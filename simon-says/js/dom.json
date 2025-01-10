@@ -66,6 +66,7 @@
     "children": [
       {
         "tag": "button",
+        "id": "start",
         "text": "Start",
         "classes": []
       }

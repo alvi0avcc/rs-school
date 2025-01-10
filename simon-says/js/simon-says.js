@@ -1,3 +1,32 @@
+class Simon {
+  constructor() {
+    this.state = 0; // if 1 - game started
+    this.level = "easy";
+    this.round = 1;
+    this.sequence = "";
+  }
+
+  start(){
+    this.state = 1;
+    this.newSequence;
+  }
+  get getSequence() {
+    return this.sequence;
+  }
+
+  get newSequence() {
+    let count = 20;
+    let sequence = "";
+    for (let i = 0; i < count; i++) {
+      // sequence += Math.round(Math.random() * 9);
+      sequence += String.fromCharCode(Math.round(Math.random() * 25) + 65);
+    }
+    this.sequence = sequence;
+    console.log('newSequence=',sequence);
+    
+    return this.sequence;
+  }
+}
 
 function createElement(options) {
   // Default values
@@ -39,44 +68,33 @@ function createElement(options) {
   return element; // Returning the created element
 }
 
-
-// const buttonStart = createElement({
-//   tag: "button",
-//   text: "Start",
-//   classes: ["btn-start"],
-// });
-// buttonStart.addEventListener("click", () => {
-//   paragraphElement.classList.toggle("content--hidden");
-// });
-
-// const levelSelect = createElement({
-//   tag: "button",
-//   text: "Start",
-//   classes: ["btn-start"],
-// });
-
-
-function App(parent, elements){
+function App(parent, elements) {
+  const simon = new Simon();
   console.log(elements);
   Dom(parent, elements);
   AddKbdNum();
   AddKbdSym();
 
-  document.addEventListener('keyup', function(event) {
+  parent.querySelector("#start").addEventListener('click', function (event) {
+    console.log('start click');
+    simon.start();
+  });
+
+  document.addEventListener('keyup', function (event) {
     console.log('кнопка:', event.key);
-});
+  });
 }
 
-function Dom(parent, elements){
+function Dom(parent, elements) {
   console.log(elements);
   elements.forEach(
     (el) => {
-      console.log('el=',el);
+      console.log('el=', el);
       const node = createElement(el);
       console.log(node);
-      
+
       parent.append(node);
-      if(el.children) Dom(node, el.children);
+      if (el.children) Dom(node, el.children);
 
     }
   );
@@ -85,7 +103,7 @@ function Dom(parent, elements){
 
 function AddKbdNum() {
   const kbdNum = document.querySelector("#kbd-num");
-  for (let i = 0; i < 10; i++){
+  for (let i = 0; i < 10; i++) {
     const btn = createElement({
       tag: "button",
       id: `btn-num-${i}`,
@@ -94,14 +112,14 @@ function AddKbdNum() {
     });
     kbdNum.append(btn);
     btn.addEventListener("click", (events) => {
-      console.log('kbd-num-click=',events.target.id);
+      console.log('kbd-num-click=', events.target.id);
     });
   }
 }
 
 function AddKbdSym() {
   const kbdNum = document.querySelector("#kbd-sym");
-  for (let i = 65; i <= 90; i++){
+  for (let i = 65; i <= 90; i++) {
     const btn = createElement({
       tag: "button",
       id: `btn-sym-${i}`,
@@ -110,7 +128,7 @@ function AddKbdSym() {
     });
     kbdNum.append(btn);
     btn.addEventListener("click", (events) => {
-      console.log('kbd-sum-click=',events.target.id);
+      console.log('kbd-sum-click=', events.target.id);
     });
   }
 }
