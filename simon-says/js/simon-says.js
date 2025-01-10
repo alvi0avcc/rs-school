@@ -10,6 +10,15 @@ class Simon {
     this.state = 1;
     this.newSequence;
   }
+
+  get getLevel(){
+    return this.level;
+  }
+
+  set setLevel(data){
+    this.level = data;
+  }
+
   get getSequence() {
     return this.sequence;
   }
@@ -78,6 +87,20 @@ function App(parent, elements) {
   parent.querySelector("#start").addEventListener('click', function (event) {
     console.log('start click');
     simon.start();
+  });
+
+  parent.querySelector("#level-select").addEventListener('click', function (event) {
+    console.log('level-select click', event.target);
+    const levelSelector = parent.querySelectorAll('[name="level"]');
+    console.log('levelSelector=',levelSelector);
+    levelSelector.forEach((el)=>{
+      if (el.checked) {
+        console.log('el=',el.checked);
+        console.log('el=',el.id);
+        simon.setLevel = el.id;
+        console.log('simon level=',simon.getLevel);
+      }
+    });
   });
 
   document.addEventListener('keyup', function (event) {

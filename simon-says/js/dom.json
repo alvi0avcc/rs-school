@@ -6,6 +6,7 @@
   },
   {
     "tag": "fieldset",
+    "id": "level-select",
     "text": "",
     "classes": [],
     "children": [
