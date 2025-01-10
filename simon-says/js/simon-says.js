@@ -60,6 +60,7 @@ function App(parent, elements){
   console.log(elements);
   Dom(parent, elements);
   AddKbdNum();
+  AddKbdSym();
 }
 
 function Dom(parent, elements){
@@ -85,6 +86,19 @@ function AddKbdNum() {
       tag: "button",
       id: `btn-num-${i}`,
       text: i,
+      classes: [],
+    });
+    kbdNum.append(btn);
+  }
+}
+
+function AddKbdSym() {
+  const kbdNum = document.querySelector("#kbd-sym");
+  for (let i = 65; i <= 90; i++){
+    const btn = createElement({
+      tag: "button",
+      id: `btn-sym-${i}`,
+      text: String.fromCharCode(i),
       classes: [],
     });
     kbdNum.append(btn);
