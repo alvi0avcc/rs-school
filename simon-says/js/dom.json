@@ -74,7 +74,19 @@
       {
         "tag": "button",
         "id": "start",
-        "text": "Start",
+        "text": "Start Game",
+        "classes": []
+      },
+      {
+        "tag": "button",
+        "id": "repeat",
+        "text": "Repeat Sequence",
+        "classes": []
+      },
+      {
+        "tag": "button",
+        "id": "new",
+        "text": "New Game",
         "classes": []
       }
     ]
@@ -87,7 +99,7 @@
       {
         "tag": "p",
         "id": "pressed-keys",
-        "text": "то что нажали",
+        "text": "Type in what You remember",
         "classes": []
       },
       {
