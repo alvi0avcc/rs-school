@@ -1,19 +1,43 @@
 class Simon {
   constructor(parent) {
     this.parent = parent;
-    this.state = 0; // if 1 - game started
+    this.state = false; // if true - game started
     this.level = "easy";
     this.round = 1;
-    this.countSymbols = 2; // 2 for round 1, +2 for each next round
+    this.countSymbols = 10; // 2 for round 1, +2 for each next round
     this.sequence = "";
+    this.countSequence = 0;
     this.kbdNum = parent.querySelector("#kbd-num");
     this.kbdNum.classList.add("show");
     this.kbdSym = parent.querySelector("#kbd-sym");
   }
 
-  start(){
-    this.state = 1;
+  get getState(){
+    return this.state;
+  }
+
+  start(){ // start game & init initial state
+    this.state = true;
+    this.round = 1;
+    // this.countSymbols = 2;
     this.newSequence;
+  }
+
+  checkSymbol(symbol){
+    if (!this.state) return false;
+    if (symbol.toUpperCase() === this.sequence[this.countSequence]) {
+      console.log("OK");
+      if (this.sequence[this.countSequence + 1]) {
+        console.log('next symbol=',this.sequence[this.countSequence + 1]);
+      } else console.log('Sequence finished');
+      
+      this.countSequence++;
+      return true;
+    } else {
+      console.error("Error");
+    }
+    
+    return false;
   }
 
   get getLevel(){
@@ -50,9 +74,9 @@ class Simon {
   }
 
   get newSequence() {
-    let count = 20;
+    this.countSequence = 0;
     let sequence = "";
-    for (let i = 0; i < count; i++) {
+    for (let i = 0; i < this.countSymbols; i++) {
       switch (this.getLevel) {
         case "easy": // only number
           sequence += Math.round(Math.random() * 9);
@@ -121,11 +145,11 @@ function createElement(options) {
 function App(parent, elements) {
   console.log(elements);
   Dom(parent, elements);
-  AddKbdNum();
-  AddKbdSym();
   const simon = new Simon(parent);
+  AddKbdNum(simon);
+  AddKbdSym(simon);
 
-  parent.querySelector("#start").addEventListener('click', function (event) {
+  parent.querySelector("#start").addEventListener('click', function () {
     console.log('start click');
     simon.start();
   });
@@ -145,7 +169,10 @@ function App(parent, elements) {
   });
 
   document.addEventListener('keyup', function (event) {
-    console.log('кнопка:', event.key);
+    if (simon.getState) {
+      console.log('кнопка:', event.key);
+      simon.checkSymbol(event.key);
+    }
   });
 }
 
@@ -165,7 +192,7 @@ function Dom(parent, elements) {
 }
 
 
-function AddKbdNum() {
+function AddKbdNum(simon) {
   const kbdNum = document.querySelector("#kbd-num");
   for (let i = 0; i < 10; i++) {
     const btn = createElement({
@@ -176,23 +203,27 @@ function AddKbdNum() {
     });
     kbdNum.append(btn);
     btn.addEventListener("click", (events) => {
-      console.log('kbd-num-click=', events.target.id);
+      // console.log('kbd-num-click=', events.target.id);
+      // console.log(events.target.id.slice(-1));
+      if (simon.getState) simon.checkSymbol(events.target.id.slice(-1));
     });
   }
 }
 
-function AddKbdSym() {
+function AddKbdSym(simon) {
   const kbdNum = document.querySelector("#kbd-sym");
   for (let i = 65; i <= 90; i++) {
     const btn = createElement({
       tag: "button",
-      id: `btn-sym-${i}`,
+      id: `btn-sym-${String.fromCharCode(i)}`,
       text: String.fromCharCode(i),
       classes: [],
     });
     kbdNum.append(btn);
     btn.addEventListener("click", (events) => {
-      console.log('kbd-sum-click=', events.target.id);
+      // console.log('kbd-sum-click=', events.target.id);
+      // console.log(events.target.id.slice(-1));
+      if (simon.getState) simon.checkSymbol(events.target.id.slice(-1));
     });
   }
 }
