@@ -58,7 +58,12 @@ function createElement(options) {
 
 function App(parent, elements){
   console.log(elements);
+  Dom(parent, elements);
+  AddKbdNum();
+}
 
+function Dom(parent, elements){
+  console.log(elements);
   elements.forEach(
     (el) => {
       console.log('el=',el);
@@ -66,11 +71,24 @@ function App(parent, elements){
       console.log(node);
       
       parent.append(node);
-      if(el.children) App(node, el.children);
+      if(el.children) Dom(node, el.children);
 
     }
   );
+}
 
+
+function AddKbdNum() {
+  const kbdNum = document.querySelector("#kbd-num");
+  for (let i = 0; i < 10; i++){
+    const btn = createElement({
+      tag: "button",
+      id: `btn-num-${i}`,
+      text: i,
+      classes: [],
+    });
+    kbdNum.append(btn);
+  }
 }
 
 fetch("./js/dom.json")
