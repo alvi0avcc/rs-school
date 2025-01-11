@@ -14,6 +14,11 @@ class Simon {
     this.kbdNum.classList.add("show");
     this.kbdSym = parent.querySelector("#kbd-sym");
     this.levelSelector = parent.querySelector("#level-select");
+    this.levelSelected = {
+      "easy" : parent.querySelector("#easy"),
+      "medium" : parent.querySelector("#medium"),
+      "hard" : parent.querySelector("#hard")
+    };
     this.startBtn = parent.querySelector("#start");
     this.repeatBtn = parent.querySelector("#repeat");
     this.nextBtn = parent.querySelector("#next");
@@ -31,7 +36,6 @@ class Simon {
     this.countSymbols = 2;
     this.sequence = "";
     this.memorySequence = "";
-    return "new game"
   }
 
   get start(){ // start game & init initial state
@@ -85,7 +89,7 @@ class Simon {
       this.memorySequence += symbol.toUpperCase();
       this.pressedKeys.textContent = this.memorySequence;
       if (this.sequence.length === this.memorySequence.length) {
-        this.state = false;
+        // this.state = false;
         if (this.checkSequence){
           this.pressedKeys.textContent = "Correct";
           this.memoryKeys.textContent = `Correct -> ${this.sequence} <- Correct`;
@@ -264,17 +268,10 @@ function App(parent, elements) {
   });
 
   parent.querySelector("#level-select").addEventListener('click', function (event) {
-    console.log('level-select click', event.target);
-    const levelSelector = parent.querySelectorAll('[name="level"]');
-    console.log('levelSelector=',levelSelector);
-    levelSelector.forEach((el)=>{
-      if (el.checked) {
-        console.log('el=',el.checked);
-        console.log('el=',el.id);
-        simon.setLevel = el.id;
-        console.log('simon level=',simon.getLevel);
-      }
-    });
+    // console.log('level-select click', event.target);
+    for (const key in simon.levelSelected) {
+      if (simon.levelSelected[key].checked) simon.setLevel = key;
+    }
   });
 
   document.addEventListener('keyup', function (event) {
@@ -287,6 +284,17 @@ function App(parent, elements) {
 
   simon.nextBtn.addEventListener('click', function () {
       console.log("Round = ",simon.nextRound);
+  });
+
+  simon.newBtn.addEventListener('click', function () {
+    if (simon.state) {
+      console.log("new game");
+      simon.newBtn.classList.remove("show");
+      simon.repeatBtn.classList.remove("show");
+      simon.nextBtn.classList.remove("show");
+      simon.init;
+      simon.start;
+    }
   });
 
 }
