@@ -9,7 +9,7 @@ class Simon {
     this.memorySequence = "";
     this.countSequence = 0;
     this.pressedKeys = parent.querySelector("#pressed-keys");
-    this.memoryKeys = parent.querySelector("#memory-keys");
+    // this.memoryKeys = parent.querySelector("#memory-keys");
     this.kbdNum = parent.querySelector("#kbd-num");
     this.kbdNum.classList.add("show");
     this.kbdSym = parent.querySelector("#kbd-sym");
@@ -99,10 +99,11 @@ class Simon {
         // this.state = false;
         if (this.checkSequence){
           this.pressedKeys.textContent = "Correct";
-          this.memoryKeys.textContent = `Correct -> ${this.sequence} <- Correct`;
+          // this.memoryKeys.textContent = `Correct -> ${this.sequence} <- Correct`;
           this.nextBtn.removeAttribute("disabled");
         } else {
-          this.memoryKeys.textContent = `Error -> ${this.sequence} <- Error`;
+          this.pressedKeys.textContent = "Error";
+          // this.memoryKeys.textContent = `Error -> ${this.sequence} <- Error`;
         }
         this.memorySequence = "";
         if (this.round === 5) {
@@ -299,8 +300,12 @@ function App(parent, elements) {
       simon.newBtn.classList.remove("show");
       simon.repeatBtn.classList.remove("show");
       simon.nextBtn.classList.remove("show");
+      simon.startBtn.classList.add("show");
+      simon.levelSelector.removeAttribute("disabled");
+      simon.roundLabel.classList.remove("show");
+      simon.pressedKeys.classList.remove("show");
       simon.init;
-      simon.start;
+      // simon.start;
     }
   });
 

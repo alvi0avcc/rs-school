@@ -108,12 +108,6 @@
         "id": "pressed-keys",
         "text": "Type in what You remember",
         "classes": ["pressed-keys"]
-      },
-      {
-        "tag": "p",
-        "id": "memory-keys",
-        "text": "",
-        "classes": []
       }
     ]
   },
