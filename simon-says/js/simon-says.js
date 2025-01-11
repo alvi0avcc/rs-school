@@ -26,6 +26,9 @@ class Simon {
   get init(){
     this.state = false;
     this.round = 1;
+    this.countSymbols = 2;
+    this.sequence = "";
+    this.memorySequence = "";
     return "new game"
   }
 
@@ -44,6 +47,7 @@ class Simon {
   get nextRound(){
     if (this.round < 6) {
       this.round++;
+      this.countSymbols += 2;
       this.roundLabel.textContent = "Round " + this.round;
       this.nextBtn.setAttribute("disabled", "");
       this.start;
