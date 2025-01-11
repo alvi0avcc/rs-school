@@ -15,7 +15,9 @@ class Simon {
     this.kbdSym = parent.querySelector("#kbd-sym");
     this.levelSelector = parent.querySelector("#level-select");
     this.startBtn = parent.querySelector("#start");
+    this.repeatBtn = parent.querySelector("#repeat");
     this.nextBtn = parent.querySelector("#next");
+    this.newBtn = parent.querySelector("#new");
     this.roundLabel = parent.querySelector("#round");
   }
 
@@ -39,6 +41,8 @@ class Simon {
     this.startBtn.classList.remove("show");
     this.roundLabel.classList.add("show");
     this.roundLabel.textContent = "Round " + this.round + " of 5";
+    this.pressedKeys.classList.add("show");
+    this.pressedKeys.textContent = "Remember";
 
     this.newSequence;
     return "start current level";
@@ -49,6 +53,7 @@ class Simon {
       this.round++;
       this.countSymbols += 2;
       this.roundLabel.textContent = "Round " + this.round;
+      this.pressedKeys.textContent = "Remember";
       this.nextBtn.setAttribute("disabled", "");
       this.start;
     }
@@ -82,6 +87,7 @@ class Simon {
       if (this.sequence.length === this.memorySequence.length) {
         this.state = false;
         if (this.checkSequence){
+          this.pressedKeys.textContent = "Correct";
           this.memoryKeys.textContent = `Correct -> ${this.sequence} <- Correct`;
           this.nextBtn.removeAttribute("disabled");
         } else {
@@ -155,6 +161,7 @@ class Simon {
   }
 
   get newSequence() {
+    this.state = false;// interface ignore user
     this.countSequence = 0;
     let sequence = "";
     for (let i = 0; i < this.countSymbols; i++) {
@@ -191,9 +198,11 @@ class Simon {
       }
     }
     setTimeout(() => {
-      document.body.querySelector("#repeat").classList.add("show");
-      document.body.querySelector("#new").classList.add("show");
-      document.body.querySelector("#pressed-keys").classList.add("show");
+      this.repeatBtn.classList.add("show");
+      this.newBtn.classList.add("show");
+      // this.pressedKeys.classList.add("show");
+      this.state = true; // return normal state for interface
+      this.pressedKeys.textContent = "Type in what You remember";
     }, sequence.length * delay);
     displayNextCharacter();
     console.log('newSequence=',sequence);
