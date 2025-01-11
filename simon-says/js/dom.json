@@ -85,6 +85,12 @@
       },
       {
         "tag": "button",
+        "id": "next",
+        "text": "Next",
+        "classes": ["button"]
+      },
+      {
+        "tag": "button",
         "id": "new",
         "text": "New Game",
         "classes": ["button"]
