@@ -4,7 +4,7 @@ class Simon {
     this.state = false; // if true - game started
     this.level = "easy";
     this.round = 1;
-    this.countSymbols = 10; // 2 for round 1, +2 for each next round
+    this.countSymbols = 2; // 2 for round 1, +2 for each next round
     this.sequence = "";
     this.memorySequence = "";
     this.countSequence = 0;
@@ -14,20 +14,41 @@ class Simon {
     this.kbdNum.classList.add("show");
     this.kbdSym = parent.querySelector("#kbd-sym");
     this.levelSelector = parent.querySelector("#level-select");
+    this.startBtn = parent.querySelector("#start");
+    this.nextBtn = parent.querySelector("#next");
+    this.roundLabel = parent.querySelector("#round");
   }
 
   get getState(){
     return this.state;
   }
 
-  start(){ // start game & init initial state
-    this.state = true;
+  get init(){
+    this.state = false;
     this.round = 1;
+    return "new game"
+  }
+
+  get start(){ // start game & init initial state
+    this.state = true;
     // this.countSymbols = 2;
     this.levelSelector.setAttribute("disabled", "");
-    this.parent.querySelector("#start").classList.remove("show");
-    this.parent.querySelector("#round").classList.add("show");
+    this.startBtn.classList.remove("show");
+    this.roundLabel.classList.add("show");
+    this.roundLabel.textContent = "Round " + this.round + " of 5";
+
     this.newSequence;
+    return "start current level";
+  }
+
+  get nextRound(){
+    if (this.round < 6) {
+      this.round++;
+      this.roundLabel.textContent = "Round " + this.round;
+      this.nextBtn.setAttribute("disabled", "");
+      this.start;
+    }
+    return this.round;
   }
 
   checkSymbol(symbol){ //check by symbol
@@ -55,10 +76,17 @@ class Simon {
       this.memorySequence += symbol.toUpperCase();
       this.pressedKeys.textContent = this.memorySequence;
       if (this.sequence.length === this.memorySequence.length) {
+        this.state = false;
         if (this.checkSequence){
           this.memoryKeys.textContent = `Correct -> ${this.sequence} <- Correct`;
+          this.nextBtn.removeAttribute("disabled");
         } else {
           this.memoryKeys.textContent = `Error -> ${this.sequence} <- Error`;
+        }
+        this.memorySequence = "";
+        if (this.round === 5) {
+          this.nextBtn.classList.remove("show");
+          // TODO - hide button repeat after win in all round
         }
         return true;
       }
@@ -71,6 +99,7 @@ class Simon {
     if (this.sequence === this.memorySequence)
     {
       console.log('checking - OK');
+      this.nextBtn.classList.add("show");
       return true;
     }
     console.log('checking - FALSE');
@@ -212,12 +241,13 @@ function App(parent, elements) {
   console.log(elements);
   Dom(parent, elements);
   const simon = new Simon(parent);
+  simon.init;
   AddKbdNum(simon);
   AddKbdSym(simon);
 
   parent.querySelector("#start").addEventListener('click', function () {
     console.log('start click');
-    simon.start();
+    simon.start;
   });
 
   parent.querySelector("#level-select").addEventListener('click', function (event) {
@@ -241,6 +271,11 @@ function App(parent, elements) {
       simon.memorySymbol(event.key);
     }
   });
+
+  simon.nextBtn.addEventListener('click', function () {
+      console.log("Round = ",simon.nextRound);
+  });
+
 }
 
 function Dom(parent, elements) {
