@@ -12,6 +12,7 @@
     "children": [
       {
         "tag": "legend",
+        "id": "legend",
         "text": "Select Level",
         "classes": ["legend"]
       },

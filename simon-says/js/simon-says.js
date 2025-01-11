@@ -19,6 +19,7 @@ class Simon {
       "medium" : parent.querySelector("#medium"),
       "hard" : parent.querySelector("#hard")
     };
+    this.levelLegend = parent.querySelector("#legend");
     this.startBtn = parent.querySelector("#start");
     this.repeatBtn = parent.querySelector("#repeat");
     this.nextBtn = parent.querySelector("#next");
@@ -30,18 +31,24 @@ class Simon {
     return this.state;
   }
 
-  get init(){
+  get init(){ // init initial state
     this.state = false;
     this.round = 1;
     this.countSymbols = 2;
     this.sequence = "";
     this.memorySequence = "";
+    this.levelLegend.textContent = "Select Level";
   }
 
-  get start(){ // start game & init initial state
+  get start(){ // start game on current level
     this.state = true;
     // this.countSymbols = 2;
     this.levelSelector.setAttribute("disabled", "");
+    for (const key in this.levelSelected) {
+      if (this.levelSelected[key].checked) {
+        this.levelLegend.textContent = key;
+      }
+    }
     this.startBtn.classList.remove("show");
     this.roundLabel.classList.add("show");
     this.roundLabel.textContent = "Round " + this.round + " of 5";
