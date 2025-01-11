@@ -25,9 +25,8 @@ class Simon {
     this.round = 1;
     // this.countSymbols = 2;
     this.levelSelector.setAttribute("disabled", "");
-    this.parent.querySelector("#start").classList.toggle("show");
-    this.parent.querySelector("#repeat").classList.toggle("show");
-    this.parent.querySelector("#new").classList.toggle("show");
+    this.parent.querySelector("#start").classList.remove("show");
+    this.parent.querySelector("#round").classList.add("show");
     this.newSequence;
   }
 
@@ -147,17 +146,23 @@ class Simon {
     this.sequence = sequence;
 
     let index = 0;
+    const delay = 800;
     function displayNextCharacter() { //display next symbol in sequence with delay
-        if (index < sequence.length) {
-            // console.log(sequence[index]);
-            const btn = document.body.querySelector(`#btn-${sequence[index]}`);
-            btn.classList.toggle('virtual-press');
-            setTimeout(displayNextCharacter, 700);
-            index++;
-            setTimeout(() => (btn.classList.toggle('virtual-press')), 500);
-        }
+      if (index < sequence.length) {
+        // console.log(sequence[index]);
+        const btn = document.body.querySelector(`#btn-${sequence[index]}`);
+        btn.classList.toggle('virtual-press');
+        setTimeout(displayNextCharacter, delay);
+        index++;
+        setTimeout(() => (btn.classList.toggle('virtual-press')), delay - 200);
+      }
     }
-    displayNextCharacter(this.parent)
+    setTimeout(() => {
+      document.body.querySelector("#repeat").classList.add("show");
+      document.body.querySelector("#new").classList.add("show");
+      document.body.querySelector("#pressed-keys").classList.add("show");
+    }, sequence.length * delay);
+    displayNextCharacter();
     console.log('newSequence=',sequence);
     return this.sequence;
   }
