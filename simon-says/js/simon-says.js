@@ -38,6 +38,7 @@ class Simon {
     this.sequence = "";
     this.memorySequence = "";
     this.levelLegend.textContent = "Select Level";
+    this.repeatBtn.disabled = false;
   }
 
   get start(){ // start game on current level
@@ -217,7 +218,55 @@ class Simon {
       this.pressedKeys.textContent = "Type in what You remember";
     }, sequence.length * delay);
     displayNextCharacter();
+
     console.log('newSequence=',sequence);
+    return this.sequence;
+  }
+
+  get repeatSequence(){
+    let index = 0;
+    const delay = 800;
+    const sequence = this.sequence;
+    function displayNextCharacter() { //display next symbol in sequence with delay
+      if (index < sequence.length) {
+        const btn = document.body.querySelector(`#btn-${sequence[index]}`);
+        btn.classList.toggle('virtual-press');
+        setTimeout(displayNextCharacter, delay);
+        index++;
+        setTimeout(() => (btn.classList.toggle('virtual-press')), delay - 200);
+      }
+    }
+    setTimeout(() => {
+      this.repeatBtn.classList.add("show");
+      this.newBtn.classList.add("show");
+      this.state = true; // return normal state for interface
+      this.pressedKeys.textContent = "Type in what You remember";
+    }, sequence.length * delay);
+    displayNextCharacter();
+
+    return this.sequence;
+  }
+
+  get repeatSequenceAgain(){
+    this.repeatBtn.disabled = true;
+
+    const delay = 800;
+
+    function sleep(ms) {
+         return new Promise(resolve => setTimeout(resolve, ms));
+      }
+      
+    async function displayNextCharacter(sequence) {
+      for (var index = 0; index < sequence.length; index++) {
+        const btn = document.body.querySelector(`#btn-${sequence[index]}`);
+        btn.classList.toggle('virtual-press');
+        await sleep(delay);
+        btn.classList.toggle('virtual-press');
+      }
+    }
+    
+    displayNextCharacter(this.sequence);
+
     return this.sequence;
   }
 }
@@ -307,6 +356,11 @@ function App(parent, elements) {
       simon.init;
       // simon.start;
     }
+  });
+
+  simon.repeatBtn.addEventListener('click', function () {
+      console.log("repeat");
+      console.log(simon.repeatSequenceAgain);
   });
 
 }
