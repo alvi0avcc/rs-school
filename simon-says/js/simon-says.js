@@ -6,7 +6,7 @@ class Simon {
     this.round = 1;
     this.countSymbols = 2; // 2 for round 1, +2 for each next round
     this.sequence = "";
-    this.memorySequence = "";
+    this.memorySequence = ""; // sequence typed by user
     this.countSequence = 0;
     this.multiplePress = false; //for check MultiplePress
     this.pressedKeys = parent.querySelector("#pressed-keys");
@@ -272,6 +272,7 @@ class Simon {
     this.stateAllBtn(false); // disable all
     this.state = false; // block users input
     this.pressedKeys.textContent = "Try remember";
+    this.memorySequence = ""; // reset Sequence
 
     const delay = 800;
 
