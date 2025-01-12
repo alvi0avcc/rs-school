@@ -101,13 +101,13 @@
           {
             "tag": "button",
             "id": "start",
-            "text": "Start Game",
+            "text": "Start",
             "classes": ["button", "show"]
           },
           {
             "tag": "button",
             "id": "repeat",
-            "text": "Repeat Sequence",
+            "text": "Repeat the sequence",
             "classes": ["button"]
           },
           {
@@ -119,7 +119,7 @@
           {
             "tag": "button",
             "id": "new",
-            "text": "New Game",
+            "text": "New game",
             "classes": ["button"]
           }
         ]
