@@ -8,6 +8,7 @@ class Simon {
     this.sequence = "";
     this.memorySequence = "";
     this.countSequence = 0;
+    this.multiplePress = false; //for check MultiplePress
     this.pressedKeys = parent.querySelector("#pressed-keys");
     // this.memoryKeys = parent.querySelector("#memory-keys");
     this.kbdNum = parent.querySelector("#kbd-num");
@@ -90,7 +91,18 @@ class Simon {
     return false;
   }
 
+  checkMultiplePress (){
+    if (!this.multiplePress) {
+      this.multiplePress = true;
+      setTimeout(() => {
+        this.multiplePress = false;
+      }, 15);
+      return false;
+    } else return true;
+  }
+
   memorySymbol(symbol){
+    if (this.checkMultiplePress()) return false;
     if (!this.getState) return false;
     if (!this.symbolFilter(symbol)) return false;
     if (this.sequence.length > this.memorySequence.length) {
