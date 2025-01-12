@@ -120,7 +120,9 @@ class Simon {
         if (this.checkSequence){
           this.pressedKeys.textContent = "Correct";
           // this.memoryKeys.textContent = `Correct -> ${this.sequence} <- Correct`;
-          this.nextBtn.removeAttribute("disabled");
+          this.repeatBtn.disabled = true;
+          // this.nextBtn.removeAttribute("disabled");
+          this.nextBtn.disabled = false;
         } else {
           this.pressedKeys.textContent = "Error";
           // this.memoryKeys.textContent = `Error -> ${this.sequence} <- Error`;
@@ -128,7 +130,7 @@ class Simon {
         this.memorySequence = "";
         if (this.round === 5) {
           this.nextBtn.classList.remove("show");
-          // TODO - hide button repeat after win in all round
+          // TODO - add info about WIN!
         }
         return true;
       }
