@@ -61,6 +61,13 @@ class Simon {
     return "start current level";
   }
 
+  stateAllBtn(state){
+      this.repeatBtn.disabled = !state;
+      this.nextBtn.disabled = !state;
+      this.newBtn.disabled = !state;
+      this.levelSelector.disabled = !state;
+  }
+
   get nextRound(){
     if (this.round < 6) {
       this.round++;
@@ -243,10 +250,10 @@ class Simon {
     function displayNextCharacter() { //display next symbol in sequence with delay
       if (index < sequence.length) {
         const btn = document.body.querySelector(`#btn-${sequence[index]}`);
-        btn.classList.toggle('virtual-press');
+        btn.classList.add('virtual-press');
         setTimeout(displayNextCharacter, delay);
         index++;
-        setTimeout(() => (btn.classList.toggle('virtual-press')), delay - 200);
+        setTimeout(() => (btn.classList.remove('virtual-press')), delay - 200);
       }
     }
     setTimeout(() => {
@@ -261,24 +268,28 @@ class Simon {
   }
 
   get repeatSequenceAgain(){
-    this.repeatBtn.disabled = true;
+    this.stateAllBtn(false); // disable all
+    this.state = false; // block users input
 
     const delay = 800;
 
     function sleep(ms) {
-         return new Promise(resolve => setTimeout(resolve, ms));
-      }
+      return new Promise(resolve => setTimeout(resolve, ms));
+    }
       
     async function displayNextCharacter(sequence) {
       for (var index = 0; index < sequence.length; index++) {
         const btn = document.body.querySelector(`#btn-${sequence[index]}`);
-        btn.classList.toggle('virtual-press');
+        btn.classList.add('virtual-press');
         await sleep(delay);
-        btn.classList.toggle('virtual-press');
+        btn.classList.remove('virtual-press');
       }
     }
     
-    displayNextCharacter(this.sequence);
+    displayNextCharacter(this.sequence).then(()=>{
+      this.newBtn.disabled  = false; // enable "new game" button
+      this.state = true; // unblock users input
+    });
 
     return this.sequence;
   }
