@@ -73,8 +73,9 @@ class Simon {
       this.round++;
       this.countSymbols += 2;
       this.roundLabel.textContent = "Round " + this.round;
-      this.pressedKeys.textContent = "Remember";
-      this.nextBtn.setAttribute("disabled", "");
+      this.pressedKeys.textContent = "Try remember";
+      this.nextBtn.disabled = true;
+      this.repeatBtn.disabled = false;
       this.start;
     }
     return this.round;
@@ -375,7 +376,7 @@ function App(parent, elements) {
   });
 
   simon.nextBtn.addEventListener('click', function () {
-      console.log("Round = ",simon.nextRound);
+    simon.nextRound;
   });
 
   simon.newBtn.addEventListener('click', function () {
