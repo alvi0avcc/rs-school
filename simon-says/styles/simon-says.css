@@ -37,6 +37,8 @@ body{
 }
 
 .level{
+  display: flex;
+  align-items: center;
   border: 1px solid white;
   padding-left: 10px;
   padding-right: 10px;
@@ -54,18 +56,20 @@ body{
 
 .round{
   display: none;
+  margin: 0;
 }
 
 .nav{
   display: flex;
-  height: 155px;
+  height: 15vh;
+  max-height: 155px;
   flex-direction: column;
   align-items: center;
   justify-content: center;
 }
 
 .nav-button{
-  height: 35px;
+  min-height: 35px;
   margin: 10px;
   display: flex;
   gap: 10px;
@@ -79,6 +83,10 @@ body{
   display: none;
   background-color: lime;
   border-radius: 10px;
+  width: 200px;
+  max-width: 20vw;
+  justify-content: center;
+  align-items: center;
 }
 
 .pressed-keys{
@@ -90,6 +98,7 @@ body{
   text-align: center;
   box-shadow: inset 5px 5px 10px grey, inset -5px -5px 10px lime;
   justify-content: center;
+  margin: 0;
 }
 
 .keyboards{
