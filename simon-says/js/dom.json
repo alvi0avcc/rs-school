@@ -2,7 +2,7 @@
   {
     "tag": "h1",
     "text": "Simon-says",
-    "classes": []
+    "classes": ["h1"]
   },
   {
     "tag": "fieldset",
@@ -17,91 +17,121 @@
         "classes": ["legend"]
       },
       {
-        "tag": "label",
-        "text": "Easy",
-        "classes": [],
-        "for": "easy"
+        "tag": "div",
+        "id": "",
+        "classes": ["level"],
+        "children": [
+          {
+            "tag": "label",
+            "text": "Easy",
+            "classes": [],
+            "for": "easy"
+          },
+          {
+            "tag": "input",
+            "id": "easy",
+            "text": "",
+            "classes": ["radio"],
+            "type": "radio",
+            "name": "level",
+            "checked": "checked"
+          }
+        ]
       },
       {
-        "tag": "input",
-        "id": "easy",
-        "text": "",
-        "classes": ["radio"],
-        "type": "radio",
-        "name": "level",
-        "checked": "checked"
+        "tag": "div",
+        "id": "",
+        "classes": ["level"],
+        "children": [
+        {
+          "tag": "label",
+          "text": "Medium",
+          "classes": [],
+          "for": "medium"
+        },
+        {
+          "tag": "input",
+          "id": "medium",
+          "text": "",
+          "classes": ["radio"],
+          "type": "radio",
+          "name": "level"
+        }
+        ]
       },
       {
-        "tag": "label",
-        "text": "Medium",
-        "classes": [],
-        "for": "medium"
-      },
-      {
-        "tag": "input",
-        "id": "medium",
-        "text": "",
-        "classes": ["radio"],
-        "type": "radio",
-        "name": "level"
-      },
-      {
-        "tag": "label",
-        "text": "Hard",
-        "classes": [],
-        "for": "hard"
-      },
-      {
-        "tag": "input",
-        "id": "hard",
-        "text": "",
-        "classes": ["radio"],
-        "type": "radio",
-        "name": "level"
+        "tag": "div",
+        "id": "",
+        "classes": ["level"],
+        "children": [
+          {
+            "tag": "label",
+            "text": "Hard",
+            "classes": [],
+            "for": "hard"
+          },
+          {
+            "tag": "input",
+            "id": "hard",
+            "text": "",
+            "classes": ["radio"],
+            "type": "radio",
+            "name": "level"
+          }
+        ]
       }
     ]
   },
-  {
-    "tag": "h2",
-    "id": "round",
-    "text": "Round",
-    "classes": ["round"]
-  },
+
   {
     "tag": "nav",
-    "text": "",
     "classes": ["nav"],
     "children": [
       {
-        "tag": "button",
-        "id": "start",
-        "text": "Start Game",
-        "classes": ["button", "show"]
+      "tag": "h2",
+      "id": "round",
+      "text": "Round",
+      "classes": ["round"]
       },
       {
-        "tag": "button",
-        "id": "repeat",
-        "text": "Repeat Sequence",
-        "classes": ["button"]
-      },
-      {
-        "tag": "button",
-        "id": "next",
-        "text": "Next",
-        "classes": ["button"]
-      },
-      {
-        "tag": "button",
-        "id": "new",
-        "text": "New Game",
-        "classes": ["button"]
+        "tag": "div",
+        "text": "",
+        "classes": ["nav-button"],
+        "children": [
+          {
+            "tag": "button",
+            "id": "start",
+            "text": "Start Game",
+            "classes": ["button", "show"]
+          },
+          {
+            "tag": "button",
+            "id": "repeat",
+            "text": "Repeat Sequence",
+            "classes": ["button"]
+          },
+          {
+            "tag": "button",
+            "id": "next",
+            "text": "Next",
+            "classes": ["button"]
+          },
+          {
+            "tag": "button",
+            "id": "new",
+            "text": "New Game",
+            "classes": ["button"]
+          }
+        ]
       }
     ]
   },
+
   {
     "tag": "div",
+    "id": "info",
     "text": "",
-    "classes": [],
+    "classes": ["info"],
     "children": [
       {
         "tag": "p",

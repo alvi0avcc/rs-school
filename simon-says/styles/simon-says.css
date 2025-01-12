@@ -17,11 +17,6 @@ html{
 
 body{
   width: 100%;
-  max-width: 1024px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
   border: 2px solid blue;
   border-radius: 10px;
   padding: 10px;
@@ -29,7 +24,22 @@ body{
   font-size: 1.5rem;
 }
 
+.h1{
+  text-align: center;
+}
+
 .level-select{
+  margin: auto;
+  display: flex;
+  width: fit-content;
+  gap: 20px;
+  border-radius: 10px;
+}
+
+.level{
+  border: 1px solid white;
+  padding-left: 10px;
+  padding-right: 10px;
   border-radius: 10px;
 }
 
@@ -40,7 +50,6 @@ body{
 
 .radio{
   margin-left: 5px;
-  margin-right: 20px;
 }
 
 .round{
@@ -48,9 +57,22 @@ body{
 }
 
 .nav{
+  display: flex;
+  height: 155px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.nav-button{
+  height: 35px;
   margin: 10px;
   display: flex;
   gap: 10px;
+}
+
+.info{
+  height: 100px;
 }
 
 .button{
@@ -85,13 +107,11 @@ body{
 }
 
 .kbd-btn{
-  width: 9vw;
-  height: 9vw;
-  max-width: 90px;
-  max-height: 90px;
+  width: 70px;
+  height: 70px;
   border-radius: 10px;
   box-shadow: 5px 5px 10px lime;
-  font-size: 3rem;
+  font-size: 2em;
   font-weight: 600;
   text-shadow: 3px 3px 5px gray;
 }
