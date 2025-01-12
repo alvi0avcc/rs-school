@@ -7,10 +7,8 @@ class Simon {
     this.countSymbols = 2; // 2 for round 1, +2 for each next round
     this.sequence = "";
     this.memorySequence = ""; // sequence typed by user
-    // this.countSequence = 0;
     this.multiplePress = false; //for check MultiplePress
     this.pressedKeys = parent.querySelector("#pressed-keys");
-    // this.memoryKeys = parent.querySelector("#memory-keys");
     this.kbdNum = parent.querySelector("#kbd-num");
     this.kbdNum.classList.add("show");
     this.kbdSym = parent.querySelector("#kbd-sym");
@@ -44,7 +42,6 @@ class Simon {
 
   get start(){ // start game on current level
     this.state = true;
-    // this.countSymbols = 2;
     this.levelSelector.setAttribute("disabled", "");
     for (const key in this.levelSelected) {
       if (this.levelSelected[key].checked) {
@@ -85,10 +82,8 @@ class Simon {
     if (!this.getState) return false;
     if (!this.symbolFilter(symbol)) return false;
     if (symbol.toUpperCase() === this.sequence.at(this.memorySequence.length - 1)) {
-      console.log("Pressed Symbol Correct");
       return true;
     } else {
-      console.log("Pressed Symbol Incorrect");
       this.state = false;
       this.pressedKeys.textContent = "Error";
     }
@@ -116,16 +111,12 @@ class Simon {
       if (!this.checkSymbol(symbol)) return false; // check pressed symbol 
       this.pressedKeys.textContent = this.memorySequence;
       if (this.sequence.length === this.memorySequence.length) {
-        // this.state = false;
         if (this.checkSequence){
           this.pressedKeys.textContent = "Correct";
-          // this.memoryKeys.textContent = `Correct -> ${this.sequence} <- Correct`;
           this.repeatBtn.disabled = true;
-          // this.nextBtn.removeAttribute("disabled");
           this.nextBtn.disabled = false;
         } else {
           this.pressedKeys.textContent = "Error";
-          // this.memoryKeys.textContent = `Error -> ${this.sequence} <- Error`;
         }
         this.memorySequence = "";
         if (this.round === 5) {
@@ -139,14 +130,11 @@ class Simon {
   }
 
   get checkSequence(){ //check by all sequence
-    console.log('checking');
     if (this.sequence === this.memorySequence)
     {
-      console.log('checking - OK');
       this.nextBtn.classList.add("show");
       return true;
     }
-    console.log('checking - FALSE');
     return false;
   }
 
@@ -166,8 +154,6 @@ class Simon {
   }
 
   set setLevel(data){
-    console.log(this.kbdNum);
-    
     this.level = data;
     switch (data) {
       case "easy":
@@ -223,7 +209,6 @@ class Simon {
     const delay = 800;
     function displayNextCharacter() { //display next symbol in sequence with delay
       if (index < sequence.length) {
-        // console.log(sequence[index]);
         const btn = document.body.querySelector(`#btn-${sequence[index]}`);
         btn.classList.toggle('virtual-press');
         setTimeout(displayNextCharacter, delay);
@@ -234,7 +219,6 @@ class Simon {
     setTimeout(() => {
       this.repeatBtn.classList.add("show");
       this.newBtn.classList.add("show");
-      // this.pressedKeys.classList.add("show");
       this.state = true; // return normal state for interface
       this.pressedKeys.textContent = "Type in what You remember";
     }, sequence.length * delay);
@@ -299,7 +283,6 @@ class Simon {
   }
 
   pressedBtn(symbol){
-    console.log("btn = ", symbol);
     const btn = document.body.querySelector(`#btn-${symbol.toUpperCase()}`);
       btn.classList.add('virtual-press');
       setTimeout(() => {
@@ -309,47 +292,34 @@ class Simon {
 }
 
 function createElement(options) {
-  // Default values
   const { tag = "div", text = "", parent, classes = [] } = options;
-
   const element = document.createElement(tag);
   element.textContent = text;
-
-  // Adding classes if provided
   if (classes.length > 0) {
     element.classList.add(...classes);
   }
-
   if (options.type) {
     element.setAttribute("type", options.type);
   }
-
   if (options.name) {
     element.setAttribute("name", options.name);
   }
-
   if (options.checked) {
     element.setAttribute("checked", options.checked);
   }
-
   if (options.for) {
     element.setAttribute("for", options.for);
   }
-
   if (options.id) {
     element.setAttribute("id", options.id);
   }
-
-  // Adding the element to the parent element if necessary
   if (parent != null) {
     parent.appendChild(element);
   }
-
   return element; // Returning the created element
 }
 
 function App(parent, elements) {
-  console.log(elements);
   Dom(parent, elements);
   const simon = new Simon(parent);
   simon.init;
@@ -357,12 +327,10 @@ function App(parent, elements) {
   AddKbdSym(simon);
 
   parent.querySelector("#start").addEventListener('click', function () {
-    console.log('start click');
     simon.start;
   });
 
   parent.querySelector("#level-select").addEventListener('click', function (event) {
-    // console.log('level-select click', event.target);
     for (const key in simon.levelSelected) {
       if (simon.levelSelected[key].checked) simon.setLevel = key;
     }
@@ -370,8 +338,6 @@ function App(parent, elements) {
 
   document.addEventListener('keyup', function (event) {
     if (simon.getState) {
-      // console.log('кнопка:', event.key);
-      // simon.checkSymbol(event.key);
       simon.memorySymbol(event.key);
     }
   });
@@ -381,8 +347,6 @@ function App(parent, elements) {
   });
 
   simon.newBtn.addEventListener('click', function () {
-    // if (simon.state) {
-      console.log("new game");
       simon.newBtn.classList.remove("show");
       simon.repeatBtn.classList.remove("show");
       simon.nextBtn.classList.remove("show");
@@ -391,28 +355,20 @@ function App(parent, elements) {
       simon.roundLabel.classList.remove("show");
       simon.pressedKeys.classList.remove("show");
       simon.init;
-      // simon.start;
-    // }
   });
 
   simon.repeatBtn.addEventListener('click', function () {
-      console.log("repeat");
       console.log(simon.repeatSequenceAgain);
   });
 
 }
 
 function Dom(parent, elements) {
-  console.log(elements);
   elements.forEach(
     (el) => {
-      console.log('el=', el);
       const node = createElement(el);
-      console.log(node);
-
       parent.append(node);
       if (el.children) Dom(node, el.children);
-
     }
   );
 }
@@ -429,9 +385,6 @@ function AddKbdNum(simon) {
     });
     kbdNum.append(btn);
     btn.addEventListener("click", (events) => {
-      // console.log('kbd-num-click=', events.target.id);
-      // console.log(events.target.id.slice(-1));
-      // if (simon.getState) simon.checkSymbol(events.target.id.slice(-1));
       if (simon.getState) simon.memorySymbol(events.target.id.slice(-1));
     });
   }
@@ -448,9 +401,6 @@ function AddKbdSym(simon) {
     });
     kbdNum.append(btn);
     btn.addEventListener("click", (events) => {
-      // console.log('kbd-sum-click=', events.target.id);
-      // console.log(events.target.id.slice(-1));
-      // if (simon.getState) simon.checkSymbol(events.target.id.slice(-1));
       if (simon.getState) simon.memorySymbol(events.target.id.slice(-1));
     });
   }
@@ -461,6 +411,5 @@ fetch("./js/dom.json")
     return response.json();
   })
   .then(function (response) {
-    console.log(response);
     App(document.body, response.dom);
   });
