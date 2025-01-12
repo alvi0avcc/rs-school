@@ -1,0 +1,111 @@
+.slider-section{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 60px 8px;
+    width: 100%;
+    background-color: var(--primary);
+    background-image: url("../images/background/bg-snow.png");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    overflow: hidden;
+}
+
+.slider-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    row-gap: 20px;
+    width: 100%;
+    max-width: 1276px;
+}
+
+.slider-title{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    row-gap: 12px;
+    width: 426px;
+    height: 72px;
+    max-width: 426px;
+}
+
+.slider-title p{
+    width: 100%;
+    color: var(--static-white);
+}
+
+.slider-title h2{
+    width: 100%;
+    color: var(--static-white);
+}
+
+.slider-row{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    align-items: flex-start;
+    width: 100%;
+}
+
+.slider{
+    display: flex;
+    flex-direction: row;
+    column-gap: 20px;
+    justify-content: flex-start;
+    align-items: center;
+    transform: (-100px);
+    transition: 0.5s;
+}
+
+.slider p{
+    width: auto;
+    font-family: var(--font-family);
+    font-weight: 600;
+    font-size: 80px;
+    text-transform: uppercase;
+    text-align: center;
+    color: var(--static-white);
+}
+
+.slider img{
+    border-radius: 20px;
+    width: 200px;
+    height: 200px;
+}
+
+.slider-controls-slice{
+    width: 100px;
+    height: 100px;
+}
+.slider-controls{
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    column-gap: 20px;
+    width: 100%;
+}
+
+.slider-button{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid var(--static-white);
+    border-radius: 20px;
+    width: 56px;
+    height: 56px;
+    background-color: transparent;
+}
+
+.slider-button-active{
+    opacity: 1;
+}
+
+.slider-button:not(.slider-button-active){
+    opacity: 0.4;
+}
