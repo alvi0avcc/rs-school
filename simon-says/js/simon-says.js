@@ -129,6 +129,7 @@ class Simon {
         if (this.round === 5) {
           this.nextBtn.classList.remove("show");
           // TODO - add info about WIN!
+          this.pressedKeys.textContent = "You Win !!!";
         }
         return true;
       }
