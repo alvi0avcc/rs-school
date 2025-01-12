@@ -270,6 +270,7 @@ class Simon {
   get repeatSequenceAgain(){
     this.stateAllBtn(false); // disable all
     this.state = false; // block users input
+    this.pressedKeys.textContent = "Try remember";
 
     const delay = 800;
 
@@ -288,6 +289,7 @@ class Simon {
     
     displayNextCharacter(this.sequence).then(()=>{
       this.newBtn.disabled  = false; // enable "new game" button
+      this.pressedKeys.textContent = "Type in what You remember";
       this.state = true; // unblock users input
     });
 
