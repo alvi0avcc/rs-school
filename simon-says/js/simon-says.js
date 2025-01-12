@@ -94,6 +94,7 @@ class Simon {
     if (!this.getState) return false;
     if (!this.symbolFilter(symbol)) return false;
     if (this.sequence.length > this.memorySequence.length) {
+      this.pressedBtn(symbol);
       this.memorySequence += symbol.toUpperCase();
       this.pressedKeys.textContent = this.memorySequence;
       if (this.sequence.length === this.memorySequence.length) {
@@ -132,7 +133,7 @@ class Simon {
   symbolFilter(symbol){
     const regExpNum = /^[0-9]$/;
     const regExpSym = /^[a-zA-Z]$/;
-    const regExpAll = /^[0-1a-zA-Z]$/;
+    const regExpAll = /^[0-9a-zA-Z]$/;
     if (this.getLevel === 'easy') return regExpNum.test(symbol);
     if (this.getLevel === 'medium') return regExpSym.test(symbol);
     if (this.getLevel === 'hard') return regExpAll.test(symbol);
@@ -268,6 +269,15 @@ class Simon {
     displayNextCharacter(this.sequence);
 
     return this.sequence;
+  }
+
+  pressedBtn(symbol){
+    console.log("btn = ", symbol);
+    const btn = document.body.querySelector(`#btn-${symbol.toUpperCase()}`);
+      btn.classList.add('virtual-press');
+      setTimeout(() => {
+        btn.classList.remove('virtual-press');
+      }, 200);
   }
 }
 
