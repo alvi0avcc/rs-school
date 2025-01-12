@@ -1,3 +1,0 @@
-# rs-school
-
-## simon-says
