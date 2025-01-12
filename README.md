@@ -1,4 +1,5 @@
 # rs-school
+
 Aleksandr Vavilov
 My repository on rs-scool (not available for me):
 
@@ -16,3 +17,9 @@ My repository on rs-scool (not available for me):
 link to gitHub code <https://github.com/alvi0avcc/rs-school/tree/gh-pages/christmas-shop>
 
 link to gh-pages <https://alvi0avcc.github.io/rs-school/christmas-shop/>
+
+## Simon says
+
+link to gitHub code <https://github.com/alvi0avcc/rs-school/tree/gh-pages/simon-says>
+
+link to gh-pages <https://alvi0avcc.github.io/rs-school/simon-says/>
