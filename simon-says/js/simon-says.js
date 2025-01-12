@@ -7,7 +7,7 @@ class Simon {
     this.countSymbols = 2; // 2 for round 1, +2 for each next round
     this.sequence = "";
     this.memorySequence = ""; // sequence typed by user
-    this.countSequence = 0;
+    // this.countSequence = 0;
     this.multiplePress = false; //for check MultiplePress
     this.pressedKeys = parent.querySelector("#pressed-keys");
     // this.memoryKeys = parent.querySelector("#memory-keys");
@@ -84,16 +84,13 @@ class Simon {
   checkSymbol(symbol){ //check by symbol
     if (!this.getState) return false;
     if (!this.symbolFilter(symbol)) return false;
-    if (symbol.toUpperCase() === this.sequence[this.countSequence]) {
-      console.log("OK");
-      if (this.sequence[this.countSequence + 1]) {
-        console.log('next symbol=',this.sequence[this.countSequence + 1]);
-      } else console.log('Sequence finished');
-      
-      this.countSequence++;
+    if (symbol.toUpperCase() === this.sequence.at(this.memorySequence.length - 1)) {
+      console.log("Pressed Symbol Correct");
       return true;
     } else {
-      console.log("Incorrect symbol");
+      console.log("Pressed Symbol Incorrect");
+      this.state = false;
+      this.pressedKeys.textContent = "Error";
     }
     
     return false;
@@ -116,6 +113,7 @@ class Simon {
     if (this.sequence.length > this.memorySequence.length) {
       this.pressedBtn(symbol);
       this.memorySequence += symbol.toUpperCase();
+      if (!this.checkSymbol(symbol)) return false; // check pressed symbol 
       this.pressedKeys.textContent = this.memorySequence;
       if (this.sequence.length === this.memorySequence.length) {
         // this.state = false;
@@ -381,7 +379,7 @@ function App(parent, elements) {
   });
 
   simon.newBtn.addEventListener('click', function () {
-    if (simon.state) {
+    // if (simon.state) {
       console.log("new game");
       simon.newBtn.classList.remove("show");
       simon.repeatBtn.classList.remove("show");
@@ -392,7 +390,7 @@ function App(parent, elements) {
       simon.pressedKeys.classList.remove("show");
       simon.init;
       // simon.start;
-    }
+    // }
   });
 
   simon.repeatBtn.addEventListener('click', function () {
