@@ -4,11 +4,12 @@ class Simon {
     this.state = false; // if true - game started
     this.level = "easy";
     this.round = 1;
+    this.errorCount = 0; //error count
     this.countSymbols = 2; // 2 for round 1, +2 for each next round
     this.sequence = "";
     this.memorySequence = ""; // sequence typed by user
     this.multiplePress = false; //for check MultiplePress
-    this.pressedKeys = parent.querySelector("#pressed-keys");
+    this.pressedKeys = parent.querySelector("#pressed-keys"); // show pressed keys & info about game
     this.kbdNum = parent.querySelector("#kbd-num");
     this.kbdNum.classList.add("show");
     this.kbdSym = parent.querySelector("#kbd-sym");
@@ -41,6 +42,7 @@ class Simon {
   }
 
   get start(){ // start game on current level
+    this.errorCount = 0;
     this.state = true;
     this.levelSelector.setAttribute("disabled", "");
     for (const key in this.levelSelected) {
@@ -85,7 +87,12 @@ class Simon {
       return true;
     } else {
       this.state = false;
+      this.errorCount++;
       this.pressedKeys.textContent = "Error";
+      if (this.errorCount === 2){ // Game Over
+        console.log("Game Over");
+        this.pressedKeys.textContent = "Game Over";
+      }
     }
     
     return false;
