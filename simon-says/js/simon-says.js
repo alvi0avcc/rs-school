@@ -122,6 +122,8 @@ class Simon {
           this.pressedKeys.textContent = "Correct";
           this.repeatBtn.disabled = true;
           this.nextBtn.disabled = false;
+          this.state = false;
+          this.repeatBtn.classList.remove("show");
         } else {
           this.pressedKeys.textContent = "Error";
         }
@@ -190,6 +192,7 @@ class Simon {
 
   get newSequence() {
     this.state = false;// interface ignore user
+    this.stateAllBtn(false);
     this.countSequence = 0;
     let sequence = "";
     for (let i = 0; i < this.countSymbols; i++) {
@@ -229,6 +232,8 @@ class Simon {
       this.newBtn.classList.add("show");
       this.state = true; // return normal state for interface
       this.pressedKeys.textContent = "Type in what You remember";
+      this.repeatBtn.disabled = false;
+      this.newBtn.disabled = false;
     }, sequence.length * delay);
     displayNextCharacter();
 
@@ -351,6 +356,8 @@ function App(parent, elements) {
   });
 
   simon.nextBtn.addEventListener('click', function () {
+    simon.repeatBtn.classList.add("show");
+    simon.nextBtn.classList.remove("show");
     simon.nextRound;
   });
 
