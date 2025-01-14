@@ -122,6 +122,7 @@ class Simon {
           this.pressedKeys.textContent = "Correct";
           this.repeatBtn.disabled = true;
           this.nextBtn.disabled = false;
+          this.state = false;
         } else {
           this.pressedKeys.textContent = "Error";
         }
