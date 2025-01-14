@@ -123,6 +123,7 @@ class Simon {
           this.repeatBtn.disabled = true;
           this.nextBtn.disabled = false;
           this.state = false;
+          this.repeatBtn.classList.remove("show");
         } else {
           this.pressedKeys.textContent = "Error";
         }
@@ -355,6 +356,8 @@ function App(parent, elements) {
   });
 
   simon.nextBtn.addEventListener('click', function () {
+    simon.repeatBtn.classList.add("show");
+    simon.nextBtn.classList.remove("show");
     simon.nextRound;
   });
 
