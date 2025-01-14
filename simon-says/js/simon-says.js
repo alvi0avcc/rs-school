@@ -190,6 +190,7 @@ class Simon {
 
   get newSequence() {
     this.state = false;// interface ignore user
+    this.stateAllBtn(false);
     this.countSequence = 0;
     let sequence = "";
     for (let i = 0; i < this.countSymbols; i++) {
@@ -229,6 +230,8 @@ class Simon {
       this.newBtn.classList.add("show");
       this.state = true; // return normal state for interface
       this.pressedKeys.textContent = "Type in what You remember";
+      this.repeatBtn.disabled = false;
+      this.newBtn.disabled = false;
     }, sequence.length * delay);
     displayNextCharacter();
 
