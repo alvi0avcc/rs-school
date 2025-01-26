@@ -1,4 +1,6 @@
-class Nonograms {
+"use strict";
+
+export default class Nonograms {
     #puzzle = null // current puzzle {}
 
   async setPuzzle(name){
@@ -89,13 +91,3 @@ class Nonograms {
     }
   }
 }
-
-const nonograms = new Nonograms();
-
-nonograms.loadPuzzleList();
-nonograms.loadPuzzleByName('x').then(response => console.table(response));
-nonograms.setPuzzle('x').then(() => console.log(nonograms.getPuzzle));
-// nonograms.loadPuzzleByName('hash');
-// nonograms.loadPuzzleByName('little-smile');
-// nonograms.printAllPuzzle();
-console.log('current puzzle = ', nonograms.puzzle);

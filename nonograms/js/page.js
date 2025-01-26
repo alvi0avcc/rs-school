@@ -1,24 +1,33 @@
-class Page {
-  constructor() {
-    this.parent = document.body;
+"use strict";
+
+export default class Page {
+  #parent = null;
+
+  constructor(){
+    this.#parent = document.body;
+  }
+
+  get getParent(){
+    return this.#parent ? this.#parent : false;
   }
 
   loadDom() {
     fetch("./js/dom.json")
-      .then(function (response) {
+      .then( response => {
         return response.json();
       })
-      .then(function (response) {
-        App(document.body, response.dom);
+      .then( response => {
+        this.Dom(this.getParent, response.dom);
       });
   }
 
   Dom(parent, elements) {
+    this.#parent = parent;
     elements.forEach(
       (el) => {
-        const node = createElement(el);
+        const node = this.createElement(el);
         parent.append(node);
-        if (el.children) Dom(node, el.children);
+        if (el.children) this.Dom(node, el.children);
       }
     );
   }
