@@ -1,165 +1,40 @@
 {"dom":[
   {
-    "tag": "h1",
-    "text": "Simon-says",
-    "classes": ["h1"]
-  },
-  {
-    "tag": "fieldset",
-    "id": "level-select",
+    "tag": "header",
+    "id": "header",
     "text": "",
-    "classes": ["level-select"],
+    "classes": ["header"],
     "children": [
       {
-        "tag": "legend",
-        "id": "legend",
-        "text": "Select Level",
-        "classes": ["legend"]
-      },
-      {
-        "tag": "div",
-        "id": "",
-        "classes": ["level"],
-        "children": [
-          {
-            "tag": "label",
-            "text": "Easy",
-            "classes": [],
-            "for": "easy"
-          },
-          {
-            "tag": "input",
-            "id": "easy",
-            "text": "",
-            "classes": ["radio"],
-            "type": "radio",
-            "name": "level",
-            "checked": "checked"
-          }
-        ]
-      },
-      {
-        "tag": "div",
-        "id": "",
-        "classes": ["level"],
-        "children": [
-        {
-          "tag": "label",
-          "text": "Medium",
-          "classes": [],
-          "for": "medium"
-        },
-        {
-          "tag": "input",
-          "id": "medium",
-          "text": "",
-          "classes": ["radio"],
-          "type": "radio",
-          "name": "level"
-        }
-        ]
-      },
-      {
-        "tag": "div",
-        "id": "",
-        "classes": ["level"],
-        "children": [
-          {
-            "tag": "label",
-            "text": "Hard",
-            "classes": [],
-            "for": "hard"
-          },
-          {
-            "tag": "input",
-            "id": "hard",
-            "text": "",
-            "classes": ["radio"],
-            "type": "radio",
-            "name": "level"
-          }
-        ]
-      }
-    ]
-  },
-
-  {
-    "tag": "nav",
-    "classes": ["nav"],
-    "children": [
-      {
-      "tag": "h2",
-      "id": "round",
-      "text": "Round",
-      "classes": ["round"]
-      },
-      {
-        "tag": "div",
-        "text": "",
-        "classes": ["nav-button"],
-        "children": [
-          {
-            "tag": "button",
-            "id": "start",
-            "text": "Start",
-            "classes": ["button", "show"]
-          },
-          {
-            "tag": "button",
-            "id": "repeat",
-            "text": "Repeat the sequence",
-            "classes": ["button"]
-          },
-          {
-            "tag": "button",
-            "id": "next",
-            "text": "Next",
-            "classes": ["button"]
-          },
-          {
-            "tag": "button",
-            "id": "new",
-            "text": "New game",
-            "classes": ["button"]
-          }
-        ]
-      }
-    ]
-  },
-
-  {
-    "tag": "div",
-    "id": "info",
-    "text": "",
-    "classes": ["info"],
-    "children": [
-      {
-        "tag": "p",
-        "id": "pressed-keys",
-        "text": "Type in what You remember",
-        "classes": ["pressed-keys"]
+      "tag": "h1",
+      "text": "Nonograms",
+      "classes": ["h1"]
       }
     ]
   },
   {
-    "tag": "div",
-    "id": "keyboards",
+    "tag": "main",
+    "id": "main",
     "text": "",
-    "classes": ["keyboards"],
+    "classes": ["main"],
     "children": [
       {
-        "tag": "div",
-        "id": "kbd-num",
-        "text": "",
-        "classes": ["kbd"],
-        "children": []
-      },
+      "tag": "p",
+      "text": "place for game",
+      "classes": ["p"]
+      }
+    ]
+  },
+  {
+    "tag": "footer",
+    "id": "footer",
+    "text": "",
+    "classes": ["footer"],
+    "children": [
       {
-        "tag": "div",
-        "id": "kbd-sym",
-        "text": "",
-        "classes": ["kbd"],
-        "children": []
+      "tag": "p",
+      "text": "footer",
+      "classes": ["p"]
       }
     ]
   }
