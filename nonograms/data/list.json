@@ -1,7 +1,21 @@
-{"list":
-  [
-    "x",
-    "hash",
-    "little-smile"
-  ]
+{"list":{
+  "level-1":
+    [
+      "x",
+      "hash",
+      "little-smile"
+    ],
+  "level-2":
+    [
+      "x-2",
+      "hash-2",
+      "little-smile-2"
+    ],
+  "level-3":
+    [
+      "x-3",
+      "hash-3",
+      "little-smile-3"
+    ]
+  }
 }
