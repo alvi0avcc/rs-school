@@ -1,26 +1,23 @@
 class Nonograms {
-  constructor() {
-    this.pazl = null // current puzzle {}
-    
-  }
+    #puzzle = null // current puzzle {}
 
   async setPuzzle(name){
-    const response = await this.loadPazlByName(name);
+    const response = await this.loadPuzzleByName(name);
     if (response) {
-      // console.log(response.pazl);
-      this.pazl = response.pazl;
+      // console.log(response.puzzle);
+      this.#puzzle = response.puzzle;
       return true;
     } else {
       return false;
     }
   }
 
-  get puzzle(){
-    return this.pazl ? this.pazl : false;
+  get getPuzzle(){
+    return this.#puzzle ? this.#puzzle : false;
   }
   
-  printAllPazl() { // for testing
-    this.loadPazlList().then(responseList => {
+  printAllPuzzle() { // for testing
+    this.loadPuzzleList().then(responseList => {
         console.log(responseList.list);
         if (typeof responseList.list === 'object' && responseList.list !== null) {
             const loadPromises = [];
@@ -28,9 +25,9 @@ class Nonograms {
                 if (Array.isArray(responseList.list[level])) {
                     responseList.list[level].forEach(name => {
                         loadPromises.push(
-                            this.loadPazlByName(name).then(responsePazl => {
-                                console.log(responsePazl.pazl);
-                                console.table(responsePazl.pazl.data);
+                            this.loadPuzzleByName(name).then(responsePuzzle => {
+                                console.log(responsePuzzle.puzzle);
+                                console.table(responsePuzzle.puzzle.data);
                             }).catch(error => {
                                 console.error(`Error loading puzzle ${name}:`, error);
                             })
@@ -50,7 +47,7 @@ class Nonograms {
 }
 
 
-  async loadPazlList(){
+  async loadPuzzleList(){
     try {
       const response = await fetch(`./data/list.json`);
       if (!response.ok) {
@@ -60,12 +57,12 @@ class Nonograms {
       // console.table(data);
       return data;
     } catch (error) {
-      console.error(`Error during loading list of pazl`, error);
+      console.error(`Error during loading list of puzzles`, error);
       return false;
     }
   }
 
-  async loadPazlByName(name) {
+  async loadPuzzleByName(name) {
     try {
       const response = await fetch(`./data/${name}.json`);
       if (!response.ok) {
@@ -75,7 +72,7 @@ class Nonograms {
       // console.table(data);
       return data;
     } catch (error) {
-      console.error(`Error during loading pazl - ${name}:`, error);
+      console.error(`Error during loading puzzle - ${name}:`, error);
       return false;
     }
   }
@@ -83,10 +80,10 @@ class Nonograms {
 
 const nonograms = new Nonograms();
 
-nonograms.loadPazlList();
-nonograms.loadPazlByName('x').then(response => console.table(response));
-nonograms.setPuzzle('x').then(() => console.log(nonograms.puzzle));
-// nonograms.loadPazlByName('hash');
-// nonograms.loadPazlByName('little-smile');
-// nonograms.printAllPazl();
+nonograms.loadPuzzleList();
+nonograms.loadPuzzleByName('x').then(response => console.table(response));
+nonograms.setPuzzle('x').then(() => console.log(nonograms.getPuzzle));
+// nonograms.loadPuzzleByName('hash');
+// nonograms.loadPuzzleByName('little-smile');
+// nonograms.printAllPuzzle();
 console.log('current puzzle = ', nonograms.puzzle);
