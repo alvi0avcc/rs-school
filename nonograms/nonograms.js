@@ -33,3 +33,5 @@ const nonograms = new Nonograms();
 
 nonograms.loadPazlList();
 nonograms.loadPazlByName('x');
+nonograms.loadPazlByName('hash');
+nonograms.loadPazlByName('little-smile');
