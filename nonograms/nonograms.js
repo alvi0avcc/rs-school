@@ -1,8 +1,24 @@
 class Nonograms {
   constructor() {
+    this.pazl = null // current puzzle {}
     
   }
 
+  async setPuzzle(name){
+    const response = await this.loadPazlByName(name);
+    if (response) {
+      // console.log(response.pazl);
+      this.pazl = response.pazl;
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  get puzzle(){
+    return this.pazl ? this.pazl : false;
+  }
+  
   printAllPazl() { // for testing
     this.loadPazlList().then(responseList => {
         console.log(responseList.list);
@@ -69,6 +85,8 @@ const nonograms = new Nonograms();
 
 nonograms.loadPazlList();
 nonograms.loadPazlByName('x').then(response => console.table(response));
+nonograms.setPuzzle('x').then(() => console.log(nonograms.puzzle));
 // nonograms.loadPazlByName('hash');
 // nonograms.loadPazlByName('little-smile');
 // nonograms.printAllPazl();
+console.log('current puzzle = ', nonograms.puzzle);
