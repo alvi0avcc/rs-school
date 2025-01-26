@@ -15,6 +15,18 @@ class Nonograms {
   get getPuzzle(){
     return this.#puzzle ? this.#puzzle : false;
   }
+
+  get getPuzzleName(){
+    return this.getPuzzle ? this.#puzzle.name : false;
+  }
+
+  get getPuzzleLevel(){
+    return this.getPuzzle ? this.#puzzle.level : false;
+  }
+
+  get getPuzzleMatrix(){
+    return this.getPuzzle ? this.#puzzle.data : false;
+  }
   
   printAllPuzzle() { // for testing
     this.loadPuzzleList().then(responseList => {
