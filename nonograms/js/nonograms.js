@@ -29,6 +29,34 @@ class Nonograms {
   get getPuzzleMatrix(){
     return this.getPuzzle ? this.#puzzle.data : false;
   }
+
+  get getRowLineNumbers(){
+    const matrix = this.getPuzzleMatrix;
+    const result = [];
+    for(let row = 0; row < matrix.length; row++) {
+      const rowResult = [];
+      let counter = 0;
+
+      for (let col = 0; col < matrix.length; col++) {
+        if (matrix[row][col] === 1){
+          counter += 1;
+        } else {
+          if (counter > 0){
+            rowResult.push(counter);
+          }
+          counter = 0;
+        }
+      }
+
+      if (counter > 0) {
+        rowResult.push(counter);
+      }
+
+      result.push(rowResult);
+    }
+    // console.log('counter = ',result);
+    return result;
+  }
   
   printAllPuzzle() { // for testing
     this.loadPuzzleList().then(responseList => {

@@ -12,7 +12,10 @@ function App(){
   nonograms.loadPuzzleList();
   nonograms.loadPuzzleByName('x').then(response => {
     console.table(response);
-    nonograms.setPuzzle('x').then( ()=> page.puzzle());
+    nonograms.setPuzzle('x').then( ()=> {
+      page.puzzle();
+      nonograms.getRowLineNumbers;
+    });
   });
   nonograms.setPuzzle('x').then(() => console.log(nonograms.getPuzzle));
 
