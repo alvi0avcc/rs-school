@@ -22,6 +22,12 @@
       "tag": "p",
       "text": "place for game",
       "classes": ["p"]
+      },
+      {
+      "tag": "div",
+      "id": "cell-container",
+      "text": "",
+      "classes": ["cell-container"]
       }
     ]
   },

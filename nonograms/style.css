@@ -1,0 +1,35 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.cell-container{
+  display: grid;
+  border: solid 2px black;
+  width: max-content;
+}
+
+.row-cell{
+  display: flex;
+  justify-content: flex-end;
+  border: solid 1px black;
+  padding: 5px;
+  background-color: aquamarine;
+}
+
+.col-cell {
+  display: flex;
+  flex-direction: column;
+  border: solid 1px black;
+  padding: 5px;
+  background-color: aquamarine;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.cell {
+  border: solid 1px black;
+  padding: 5px;
+  background-color: bisque;
+}

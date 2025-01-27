@@ -1,6 +1,6 @@
 "use strict";
 
-export default class Nonograms {
+class Nonograms {
     #puzzle = null // current puzzle {}
 
   async setPuzzle(name){
@@ -91,3 +91,7 @@ export default class Nonograms {
     }
   }
 }
+
+
+const nonograms = new Nonograms();
+export default nonograms;

@@ -1,5 +1,7 @@
 "use strict";
 
+import nonograms from "./nonograms.js";
+
 export default class Page {
   #parent = null;
 
@@ -60,8 +62,55 @@ export default class Page {
     return element; // Returning the created element
   }
 
-  puzzle(parent){
+  puzzle(){
+    const puzzle = nonograms.getPuzzle;
+      // console.log(puzzle);
 
+    if (puzzle) {
+      const container = document.querySelector("#cell-container");
+      const colRow = puzzle.data.length;
+      // console.log(colRow);
+      container.style.gridTemplateColumns = `max-content repeat(${colRow}, 25px)`;
+      
+      //upper numbers
+      for(let colIndex = -1; colIndex < colRow; colIndex++){
+        const element = this.createElement({tag: "div", id: `col-${colIndex}`, classes: ["col-cell"]});
+        const colCell = container.appendChild(element);
+
+        // let str = '';
+
+        if(colIndex >= 0) {
+          for(let row = 0; row < colRow; row++){
+            let num = puzzle.data[row][colIndex];
+            // console.log(num);
+            if (num === 1) {
+              const element = this.createElement({tag: "span", text: num, classes: []});
+              colCell.append(element);
+            }
+          }
+        }
+      }
+
+      puzzle.data.forEach((row, rowIndex) => {
+        // console.log(row);
+        const element = this.createElement({id: `row-${rowIndex}`, classes: ["row-cell"]});
+        const rowCell = container.appendChild(element); //container for left numbers
+      
+        row.forEach(cell => { //left numbers
+          // console.log(cell);
+          if (cell === 1){
+            const element = this.createElement({tag: "span", text: cell, classes: []});
+            rowCell.append(element);
+          }
+        });
+      
+        row.forEach((cell, colIndex) => {
+          // console.log(cell);
+          const element = this.createElement({id: `cell-${rowIndex}/${colIndex}`, text: cell, classes: ["cell"]});
+          container.append(element);
+        });
+      });
+    }
   }
 
 }
