@@ -23,7 +23,7 @@
               {
                 "tag": "li",
                 "text": "",
-                "classes": ["level-selector"],
+                "classes": ["li", "level-selector"],
                 "children": [
                   {
                     "tag": "select",
@@ -47,6 +47,27 @@
                         "tag": "option",
                         "text": "Hard",
                         "value": "Hard",
+                        "classes": ["option"]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "tag": "li",
+                "text": "",
+                "classes": ["li", "puzzle-selector"],
+                "children": [
+                  {
+                    "tag": "select",
+                    "id": "puzzle-selector",
+                    "text": "",
+                    "classes": ["select"],
+                    "children": [
+                      {
+                        "tag": "option",
+                        "text": "Select Puzzle",
+                        "value": "name-puzzle",
                         "classes": ["option"]
                       }
                     ]
