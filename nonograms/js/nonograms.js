@@ -3,6 +3,8 @@
 class Nonograms {
     #puzzle = null // current puzzle {}
     #userPuzzle = null // user puzzle [][]
+    #level = "Easy"; // current selected level
+    #puzzleList;
 
   async setPuzzle(name){
     const response = await this.loadPuzzleByName(name);
@@ -23,6 +25,10 @@ class Nonograms {
       return this.#userPuzzle;
     }
     return false;
+  }
+
+  getPuzzleListByLevel(level){
+    return this.#puzzleList[level];
   }
 
   setUserCellState( row, col, state){
@@ -163,8 +169,10 @@ class Nonograms {
         throw new Error(`Error HTTP! ${response.status}`);
       }
       const data = await response.json();
-      // console.table(data);
-      return data;
+      this.#puzzleList = data.list;
+      console.table( this.#puzzleList);
+      console.log(this.getPuzzleListByLevel('Easy')); //for testing
+      return this.#puzzleList;
     } catch (error) {
       console.error(`Error during loading list of puzzles`, error);
       return false;
