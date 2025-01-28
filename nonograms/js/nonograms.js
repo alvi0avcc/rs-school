@@ -25,6 +25,11 @@ class Nonograms {
     return false;
   }
 
+  userPuzzle( row, col, state){
+    this.#userPuzzle[row][col] = state;
+    return this.#userPuzzle;
+  }
+
   get getPuzzle(){
     return this.#puzzle ? this.#puzzle : false;
   }
