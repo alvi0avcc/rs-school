@@ -33,3 +33,18 @@
   padding: 5px;
   background-color: bisque;
 }
+
+.black{
+  background-color: black;
+}
+
+.white {
+  background-color: white;
+}
+
+.cell.crossed {
+  background-image: url("../assets/x.svg");
+  background-position: center;
+  background-size: 200%;
+  background-repeat: no-repeat;
+}

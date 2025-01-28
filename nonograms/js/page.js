@@ -102,12 +102,19 @@ export default class Page {
   cellClick(element){
     element.addEventListener('click', (events) => { // for left click
       console.log("left events = ", events);
+
+      element.classList.remove("white");
+      element.classList.remove("crossed");
+      element.classList.toggle("black");
     });
 
     element.addEventListener('contextmenu', (events) => { // for right click
       events.preventDefault(); // block context menu
 
       console.log("right events = ", events);
+      element.classList.remove("black");
+      element.classList.toggle("white");
+      element.classList.toggle("crossed");
     });
   }
 
