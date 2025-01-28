@@ -48,3 +48,26 @@
   background-size: 200%;
   background-repeat: no-repeat;
 }
+
+.h1{
+  text-align: center;
+  padding-bottom: 10px;
+}
+
+.nav-menu {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  list-style: none;
+  gap: 5px;
+  justify-content: center;
+  padding: 5px;
+  border: solid 1px blue;
+  border-radius: 5px;
+}
+
+.main{
+  display: flex;
+  justify-content: center;
+  padding: 5px;
+}

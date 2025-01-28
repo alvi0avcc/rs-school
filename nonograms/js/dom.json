@@ -9,6 +9,95 @@
       "tag": "h1",
       "text": "Nonograms",
       "classes": ["h1"]
+      },
+      {
+      "tag": "nav",
+      "text": "",
+      "classes": ["nav"],
+      "children": [
+          {
+            "tag": "ul",
+            "text": "",
+            "classes": ["nav-menu"],
+            "children": [
+              {
+                "tag": "li",
+                "text": "",
+                "classes": ["level-selector"],
+                "children": [
+                  {
+                    "tag": "select",
+                    "id": "level-selector",
+                    "text": "",
+                    "classes": ["select"],
+                    "children": [
+                      {
+                        "tag": "option",
+                        "text": "Easy",
+                        "value": "Easy",
+                        "classes": ["option"]
+                      },
+                      {
+                        "tag": "option",
+                        "text": "Medium",
+                        "value": "Medium",
+                        "classes": ["option"]
+                      },
+                      {
+                        "tag": "option",
+                        "text": "Hard",
+                        "value": "Hard",
+                        "classes": ["option"]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "tag": "li",
+                "text": "",
+                "classes": ["li"],
+                "children": [
+                  {
+                    "tag": "button",
+                    "text": "Restart",
+                    "classes": ["button", "button-reset"],
+                    "children": [
+                    ]
+                  }
+                ]
+              },
+              {
+                "tag": "li",
+                "text": "",
+                "classes": ["li"],
+                "children": [
+                  {
+                    "tag": "button",
+                    "text": "Load Game",
+                    "classes": ["button", "button-load"],
+                    "children": [
+                    ]
+                  }
+                ]
+              },
+              {
+                "tag": "li",
+                "text": "",
+                "classes": ["li"],
+                "children": [
+                  {
+                    "tag": "button",
+                    "text": "Save Game",
+                    "classes": ["button", "button-save"],
+                    "children": [
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
       }
     ]
   },
@@ -19,15 +108,10 @@
     "classes": ["main"],
     "children": [
       {
-      "tag": "p",
-      "text": "place for game",
-      "classes": ["p"]
-      },
-      {
-      "tag": "div",
-      "id": "cell-container",
-      "text": "",
-      "classes": ["cell-container"]
+        "tag": "div",
+        "id": "cell-container",
+        "text": "",
+        "classes": ["cell-container"]
       }
     ]
   },
