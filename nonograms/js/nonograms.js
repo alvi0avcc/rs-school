@@ -2,16 +2,27 @@
 
 class Nonograms {
     #puzzle = null // current puzzle {}
+    #userPuzzle = null // user puzzle [][]
 
   async setPuzzle(name){
     const response = await this.loadPuzzleByName(name);
     if (response) {
       // console.log(response.puzzle);
       this.#puzzle = response.puzzle;
+      this.clearPuzzle;
       return true;
     } else {
       return false;
     }
+  }
+
+  get clearPuzzle(){
+    if (this.#puzzle) {
+      const size = this.getPuzzleMatrix.length;
+      this.#userPuzzle = Array.from({ length: size }, () => Array(size).fill(null));
+      return this.#userPuzzle;
+    }
+    return false;
   }
 
   get getPuzzle(){
