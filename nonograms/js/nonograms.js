@@ -25,13 +25,29 @@ class Nonograms {
     return false;
   }
 
-  setUserPuzzle( row, col, state){
+  setUserCellState( row, col, state){
     this.#userPuzzle[row][col] = state;
     return this.#userPuzzle;
   }
 
   get getUserPuzzle(){
     return this.#userPuzzle;
+  }
+
+  getUserCellState(row, col){
+    return this.#userPuzzle[row][col];
+  }
+
+  toggleUserCell(row, col, state){
+    if (this.getUserCellState(row, col) !== state) {
+      this.setUserCellState(row, col, state);
+    } else {
+      this.setUserCellState(row, col, null);
+    }
+
+    // console.log("toggleUserCell = ",this.getUserCellState(row, col))
+
+    return this.getUserCellState(row, col);
   }
 
   get getPuzzle(){

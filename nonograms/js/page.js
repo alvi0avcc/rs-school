@@ -99,22 +99,54 @@ export default class Page {
     }
   }
 
+  parseCell(id){
+    // cell-row/col
+    return id.slice(5).split('/');
+  }
+
   cellClick(element){
     element.addEventListener('click', (events) => { // for left click
-      console.log("left events = ", events);
+      console.log("left events = ", events.currentTarget.id);
 
-      element.classList.remove("white");
-      element.classList.remove("crossed");
-      element.classList.toggle("black");
+      const [row, col] = this.parseCell(events.currentTarget.id);
+
+      switch (nonograms.toggleUserCell(row, col, 1)) {
+
+        case 1:
+          element.classList.remove("white");
+          element.classList.remove("crossed");
+          element.classList.add("black");
+          break;
+
+        case null:
+          element.classList.remove("white");
+          element.classList.remove("crossed");
+          element.classList.remove("black");
+          break;
+      }
     });
 
     element.addEventListener('contextmenu', (events) => { // for right click
       events.preventDefault(); // block context menu
 
       console.log("right events = ", events);
-      element.classList.remove("black");
-      element.classList.toggle("white");
-      element.classList.toggle("crossed");
+
+      const [row, col] = this.parseCell(events.currentTarget.id);
+
+      switch (nonograms.toggleUserCell(row, col, 0)) {
+        case 0:
+          element.classList.add("white");
+          element.classList.add("crossed");
+          element.classList.remove("black");
+          break;
+
+        case null:
+          element.classList.remove("white");
+          element.classList.remove("crossed");
+          element.classList.remove("black");
+          break;
+      }
+
     });
   }
 
