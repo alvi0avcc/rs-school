@@ -1,0 +1,6 @@
+@media (hover: hover) {
+
+  .cell:hover {
+    border-color: lime;
+  }
+}
