@@ -57,6 +57,37 @@ class Nonograms {
     // console.log('counter = ',result);
     return result;
   }
+
+  get getColLineNumbers() {
+    const matrix = this.getPuzzleMatrix;
+    const result = [];
+    
+    for (let col = 0; col < matrix.length; col++) {
+        const colResult = [];
+        let counter = 0;
+
+        for (let row = 0; row < matrix.length; row++) {
+            if (matrix[row][col] === 1) {
+                counter += 1;
+            } else {
+                if (counter > 0) {
+                    colResult.push(counter);
+                }
+                counter = 0;
+            }
+        }
+
+        if (counter > 0) {
+            colResult.push(counter);
+        }
+
+        result.push(colResult);
+    }
+    // console.log('counter = ',result);
+
+    return result;
+}
+
   
   printAllPuzzle() { // for testing
     this.loadPuzzleList().then(responseList => {
