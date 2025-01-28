@@ -92,10 +92,23 @@ export default class Page {
         row.forEach((cell, colIndex) => {  // cells of puzzle
           // console.log(cell);
           const element = this.createElement({id: `cell-${rowIndex}/${colIndex}`, text: cell, classes: ["cell"]});
+          this.cellClick(element);
           container.append(element);
         });
       });
     }
+  }
+
+  cellClick(element){
+    element.addEventListener('click', (events) => { // for left click
+      console.log("left events = ", events);
+    });
+
+    element.addEventListener('contextmenu', (events) => { // for right click
+      events.preventDefault(); // block context menu
+
+      console.log("right events = ", events);
+    });
   }
 
 }
