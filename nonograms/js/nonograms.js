@@ -13,6 +13,17 @@ class Nonograms {
     await this.setPuzzle(puzzleName);
     // console.table(this.#puzzle);
   }
+
+  get getLevel(){
+    return this.#level;
+  }
+
+  async setLevel(level){
+    this.#level = level;
+    const list = this.getPuzzleListByLevel(this.#level);
+    await this.setPuzzle(list[0]);
+    return list;
+  }
     
   async setPuzzle(name){
     const response = await this.loadPuzzleByName(name);
@@ -20,7 +31,7 @@ class Nonograms {
       // console.log(response.puzzle);
       this.#puzzle = response.puzzle;
       this.clearPuzzle;
-      return true;
+      return this.#puzzle;
     } else {
       return false;
     }
@@ -41,6 +52,10 @@ class Nonograms {
 
   getPuzzleListByLevel(level){
     return this.#puzzleList[level];
+  }
+
+  get getPuzzleListByCurrentLevel(){
+    return this.#puzzleList[this.#level];
   }
 
   setUserCellState( row, col, state){

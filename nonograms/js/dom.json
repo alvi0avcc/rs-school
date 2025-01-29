@@ -63,14 +63,7 @@
                     "id": "puzzle-selector",
                     "text": "",
                     "classes": ["select"],
-                    "children": [
-                      {
-                        "tag": "option",
-                        "text": "Select Puzzle",
-                        "value": "name-puzzle",
-                        "classes": ["option"]
-                      }
-                    ]
+                    "children": []
                   }
                 ]
               },

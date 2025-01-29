@@ -6,7 +6,7 @@ export default class Page {
   #parent = null;
 
   constructor(){
-    this.#parent = document.body;
+    this.#parent = document.getElementsByTagName('body')[0];
   }
 
   get getParent(){
@@ -15,14 +15,43 @@ export default class Page {
 
   async init(){
     console.log("commence loading of DOM");
-    
-    await this.loadDom().then(() => {
-      nonograms.init().then(() => {
-        console.log(nonograms.getPuzzleListAll);
-          this.puzzle();
-      });
+    console.log(this.#parent);
 
-      console.log("loading of DOM completed");
+    await this.loadDom();
+    console.log(this.#parent);
+
+    await nonograms.init();
+    console.log(nonograms.getPuzzleListAll);
+
+    const levelSelector = this.#parent.querySelector("#level-selector");
+    levelSelector.addEventListener('change', (events) => {
+      console.log(events.currentTarget.value);
+      nonograms.setLevel(events.currentTarget.value).then(() => {
+        this.clearPuzzleList;
+        this.fillPuzzleSelector();
+      });
+    });
+
+    this.puzzle();
+    this.fillPuzzleSelector();
+
+    console.log("loading of DOM completed");
+  }
+
+  fillPuzzleSelector (){
+    const selector = this.#parent.querySelector("#puzzle-selector");
+    console.log(selector);
+    selector.addEventListener('change', (events) => {
+      console.log(events.currentTarget.value);
+      nonograms.setPuzzle(events.currentTarget.value).then( () => {
+        this.removePuzzle;
+        this.puzzle();
+      });
+      
+    });
+    console.log(nonograms.getPuzzleListByCurrentLevel);
+    nonograms.getPuzzleListByCurrentLevel.forEach((name) => {
+      selector.append(this.createElement({tag: "option", text: name, value: name}));
     });
   }
 
@@ -37,7 +66,6 @@ export default class Page {
   }
 
   Dom(parent, elements) {
-    this.#parent = parent;
     elements.forEach(
       (el) => {
         const node = this.createElement(el);
@@ -45,6 +73,18 @@ export default class Page {
         if (el.children) this.Dom(node, el.children);
       }
     );
+  }
+
+  get clearPuzzleList(){
+    this.removeElement(document.querySelector("#puzzle-selector"));
+  }
+
+  get removePuzzle(){
+    this.removeElement(document.querySelector("#cell-container"));
+  }
+
+  removeElement(container){
+    container.replaceChildren();
   }
 
   createElement(options) {
@@ -69,6 +109,9 @@ export default class Page {
     if (options.id) {
       element.setAttribute("id", options.id);
     }
+    if (options.value) {
+      element.setAttribute("value", options.value);
+    }
     if (parent != null) {
       parent.appendChild(element);
     }
@@ -85,7 +128,7 @@ export default class Page {
       // console.log(colRow);
       container.style.gridTemplateColumns = `max-content repeat(${colRow}, 25px)`;
       
-       const colLineNumbers = nonograms.getColLineNumbers; //upper numbers
+      const colLineNumbers = nonograms.getColLineNumbers; //upper numbers
       for(let colIndex = -1; colIndex < colRow; colIndex++){
         const element = this.createElement({ //create container with upper numbers
           tag: "div",
