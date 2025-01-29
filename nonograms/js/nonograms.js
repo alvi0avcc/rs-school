@@ -5,13 +5,23 @@ class Nonograms {
   #userPuzzle = null // user puzzle [][]
   #level = "Easy"; // current selected level
   #puzzleList; // list of all puzzles
+  #freezeClick = false;
 
   async init(){
     await this.loadPuzzleList();
     this.#level = "Easy";
     const puzzleName = this.getPuzzleListByLevel(this.#level)[0];
     await this.setPuzzle(puzzleName);
+    this.freeze(false);
     // console.table(this.#puzzle);
+  }
+
+  freeze(state){
+    this.#freezeClick = state;
+  }
+
+  get getFreeze(){
+    return this.#freezeClick;
   }
 
   get getLevel(){

@@ -32,6 +32,8 @@ export default class Page {
         nonograms.setPuzzle(nonograms.getPuzzleListByLevel(nonograms.getLevel)[0]).then( () => {
           this.removePuzzle;
           this.puzzle();
+          nonograms.clearPuzzle;
+          nonograms.freeze(false);
         });
       });
     });
@@ -40,6 +42,8 @@ export default class Page {
     levelRestart.addEventListener('click', () => {
       this.removePuzzle;
       this.puzzle();
+      nonograms.clearPuzzle;
+      nonograms.freeze(false);
     });
 
     const winClose = this.#parent.querySelector("#button-x");
@@ -63,6 +67,8 @@ export default class Page {
       nonograms.setPuzzle(events.currentTarget.value).then( () => {
         this.removePuzzle;
         this.puzzle();
+        nonograms.clearPuzzle;
+        nonograms.freeze(false);
       });
       
     });
@@ -183,21 +189,23 @@ export default class Page {
 
       const [row, col] = this.parseCell(events.currentTarget.id);
 
-      switch (nonograms.toggleUserCell(row, col, 1)) {
+      if (!nonograms.getFreeze) {
+        switch (nonograms.toggleUserCell(row, col, 1)) {
 
-        case 1:
-          element.classList.remove("white");
-          element.classList.remove("crossed");
-          element.classList.add("black");
-          break;
+          case 1:
+            element.classList.remove("white");
+            element.classList.remove("crossed");
+            element.classList.add("black");
+            break;
 
-        case null:
-          element.classList.remove("white");
-          element.classList.remove("crossed");
-          element.classList.remove("black");
-          break;
+          case null:
+            element.classList.remove("white");
+            element.classList.remove("crossed");
+            element.classList.remove("black");
+            break;
+        }
+        if(nonograms.checkPuzzle) this.showWin;
       }
-      if(nonograms.checkPuzzle) this.showWin;
     });
 
     element.addEventListener('contextmenu', (events) => { // for right click
@@ -207,25 +215,28 @@ export default class Page {
 
       const [row, col] = this.parseCell(events.currentTarget.id);
 
-      switch (nonograms.toggleUserCell(row, col, 0)) {
-        case 0:
-          element.classList.add("white");
-          element.classList.add("crossed");
-          element.classList.remove("black");
-          break;
+      if (!nonograms.getFreeze) {
+        switch (nonograms.toggleUserCell(row, col, 0)) {
+          case 0:
+            element.classList.add("white");
+            element.classList.add("crossed");
+            element.classList.remove("black");
+            break;
 
-        case null:
-          element.classList.remove("white");
-          element.classList.remove("crossed");
-          element.classList.remove("black");
-          break;
+          case null:
+            element.classList.remove("white");
+            element.classList.remove("crossed");
+            element.classList.remove("black");
+            break;
+        }
+        if(nonograms.checkPuzzle) this.showWin;
       }
-      if(nonograms.checkPuzzle) this.showWin;
     });
   }
 
   get showWin(){
     console.log("You Win!");
+    nonograms.freeze(true);
     const win = this.#parent.querySelector(".win");
     win.classList.add("show");
     setTimeout(() => {
