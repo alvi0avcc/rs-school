@@ -1,25 +1,15 @@
 "use strict";
 
 import Page from "./page.js";
-import nonograms from "./nonograms.js";
 
 function App(){
-
   const page = new Page();
+    // TODO add initial state before loaded DOM
+    
+    page.init().then(() => {
+      // TODO remove initial state after loading DOM
 
-  page.loadDom();
-
-  nonograms.loadPuzzleList();
-  nonograms.loadPuzzleByName('x').then(response => {
-    console.table(response);
-    nonograms.setPuzzle('x').then( ()=> {
-      page.puzzle();
-      // nonograms.getRowLineNumbers;
-      // nonograms.getColLineNumbers;
     });
-  });
-  nonograms.setPuzzle('x').then(() => console.log(nonograms.getPuzzle));
-
 }
 
 //start application

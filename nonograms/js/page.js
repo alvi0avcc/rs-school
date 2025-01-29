@@ -13,8 +13,21 @@ export default class Page {
     return this.#parent ? this.#parent : false;
   }
 
-  loadDom() {
-    fetch("./js/dom.json")
+  async init(){
+    console.log("commence loading of DOM");
+    
+    await this.loadDom().then(() => {
+      nonograms.init().then(() => {
+        console.log(nonograms.getPuzzleListAll);
+          this.puzzle();
+      });
+
+      console.log("loading of DOM completed");
+    });
+  }
+
+  async loadDom() {
+    await fetch("./js/dom.json")
       .then( response => {
         return response.json();
       })

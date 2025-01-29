@@ -1,11 +1,19 @@
 "use strict";
 
 class Nonograms {
-    #puzzle = null // current puzzle {}
-    #userPuzzle = null // user puzzle [][]
-    #level = "Easy"; // current selected level
-    #puzzleList;
+  #puzzle = null // current puzzle {}
+  #userPuzzle = null // user puzzle [][]
+  #level = "Easy"; // current selected level
+  #puzzleList; // list of all puzzles
 
+  async init(){
+    await this.loadPuzzleList();
+    this.#level = "Easy";
+    const puzzleName = this.getPuzzleListByLevel(this.#level)[0];
+    await this.setPuzzle(puzzleName);
+    // console.table(this.#puzzle);
+  }
+    
   async setPuzzle(name){
     const response = await this.loadPuzzleByName(name);
     if (response) {
@@ -25,6 +33,10 @@ class Nonograms {
       return this.#userPuzzle;
     }
     return false;
+  }
+
+  get getPuzzleListAll(){
+    return this.#puzzleList;
   }
 
   getPuzzleListByLevel(level){
