@@ -3,19 +3,19 @@
     [
       "x",
       "hash",
-      "little-smile"
+      "smile"
     ],
   "Medium":
     [
       "x-2",
       "hash-2",
-      "little-smile-2"
+      "smile-2"
     ],
   "Hard":
     [
       "x-3",
       "hash-3",
-      "little-smile-3"
+      "smile-3"
     ]
   }
 }
