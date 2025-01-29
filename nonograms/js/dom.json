@@ -76,7 +76,7 @@
                     "tag": "button",
                     "id": "restart",
                     "text": "Restart",
-                    "classes": ["button", "button-reset"],
+                    "classes": ["button", "btn-reset"],
                     "children": [
                     ]
                   }
@@ -89,8 +89,8 @@
                 "children": [
                   {
                     "tag": "button",
-                    "text": "Load Game",
-                    "classes": ["button", "button-load"],
+                    "text": "Solution",
+                    "classes": ["button", "btn-solution"],
                     "children": [
                     ]
                   }
@@ -103,8 +103,8 @@
                 "children": [
                   {
                     "tag": "button",
-                    "text": "Save Game",
-                    "classes": ["button", "button-save"],
+                    "text": "Random Game",
+                    "classes": ["button", "btn-random"],
                     "children": [
                     ]
                   }
@@ -137,9 +137,41 @@
     "classes": ["footer"],
     "children": [
       {
-      "tag": "p",
-      "text": "footer",
-      "classes": ["p"]
+        "tag": "ul",
+        "text": "",
+        "classes": ["nav-menu"],
+        "children": [
+          {
+            "tag": "li",
+            "text": "",
+            "classes": ["li"],
+            "children": [
+              {
+                "tag": "button",
+                "id": "button-load",
+                "text": "Load Game",
+                "classes": ["button", "btn-load"],
+                "children": [
+                ]
+              }
+            ]
+          },
+          {
+            "tag": "li",
+            "text": "",
+            "classes": ["li"],
+            "children": [
+              {
+                "tag": "button",
+                "id": "button-save",
+                "text": "Save Game",
+                "classes": ["button", "btn-save"],
+                "children": [
+                ]
+              }
+            ]
+          }
+        ]
       }
     ]
   },
