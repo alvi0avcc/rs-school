@@ -220,6 +220,24 @@ class Nonograms {
       return false;
     }
   }
+
+  get checkPuzzle(){
+    const puzzle = this.getPuzzleMatrix;
+    console.log(puzzle);
+    const userPuzzle = this.getUserPuzzle
+    console.log(userPuzzle);
+
+    for (let row = 0; row < puzzle.length; row++) {
+      for (let col = 0; col < puzzle.length; col++) {
+        let cell;
+        userPuzzle[row][col] === 1 ? cell = 1 : cell = 0;
+        if (puzzle[row][col] !== cell) return false;
+      }
+    }
+    console.log("Puzzle solved !");
+    
+    return true;
+  }
 }
 
 

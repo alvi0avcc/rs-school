@@ -190,6 +190,7 @@ export default class Page {
           element.classList.remove("black");
           break;
       }
+      nonograms.checkPuzzle;
     });
 
     element.addEventListener('contextmenu', (events) => { // for right click
@@ -212,7 +213,7 @@ export default class Page {
           element.classList.remove("black");
           break;
       }
-
+      nonograms.checkPuzzle;
     });
   }
 
