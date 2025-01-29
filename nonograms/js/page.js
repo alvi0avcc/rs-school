@@ -190,7 +190,7 @@ export default class Page {
           element.classList.remove("black");
           break;
       }
-      nonograms.checkPuzzle;
+      if(nonograms.checkPuzzle) this.showWin;
     });
 
     element.addEventListener('contextmenu', (events) => { // for right click
@@ -213,8 +213,15 @@ export default class Page {
           element.classList.remove("black");
           break;
       }
-      nonograms.checkPuzzle;
+      if(nonograms.checkPuzzle) this.showWin;
     });
+  }
+
+  get showWin(){
+    console.log("You Win!");
+    // const win = this.createElement({})
+    this.#parent.querySelector(".win").classList.add("show");
+    
   }
 
 }

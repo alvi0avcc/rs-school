@@ -142,5 +142,11 @@
       "classes": ["p"]
       }
     ]
+  },
+  {
+    "tag": "div",
+    "id": "win",
+    "text": "",
+    "classes": ["win"]
   }
 ]}
