@@ -4,6 +4,7 @@ import nonograms from "./nonograms.js";
 
 export default class Page {
   #parent = null;
+  #solution = false;
 
   constructor(){
     this.#parent = document.getElementsByTagName('body')[0];
@@ -38,12 +39,35 @@ export default class Page {
       });
     });
 
+
+    const ShowSolution = this.#parent.querySelector("#btn-solution");
+    ShowSolution.addEventListener('click', () => {
+      if (!this.#solution) {
+        const styleSheet = document.styleSheets[0];
+        
+        styleSheet.insertRule('.solution { background-color: black !important;}');
+        styleSheet.insertRule('.cell { background-color: white !important;}');
+        this.#solution = true;
+        // console.log(styleSheet);
+        
+        nonograms.clearPuzzle;
+        nonograms.freeze(true);
+      }
+    });
+
     const levelRestart = this.#parent.querySelector("#restart");
     levelRestart.addEventListener('click', () => {
       this.removePuzzle;
       this.puzzle();
       nonograms.clearPuzzle;
       nonograms.freeze(false);
+      const styleSheet = document.styleSheets[0];
+      if (this.#solution) {
+        styleSheet.deleteRule(0);
+        styleSheet.deleteRule(0);
+        this.#solution = false;
+      }
+      // console.log(styleSheet);
     });
 
     const winClose = this.#parent.querySelector("#button-x");
@@ -170,7 +194,7 @@ export default class Page {
       
         row.forEach((cell, colIndex) => {  // cells of puzzle
           // console.log(cell);
-          const element = this.createElement({id: `cell-${rowIndex}/${colIndex}`, text: cell, classes: ["cell"]});
+          const element = this.createElement({id: `cell-${rowIndex}/${colIndex}`, text: cell, classes: (cell === 1 ? ["cell", "solution"] : ["cell"])});
           this.cellClick(element);
           container.append(element);
         });

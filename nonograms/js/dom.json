@@ -89,6 +89,7 @@
                 "children": [
                   {
                     "tag": "button",
+                    "id": "btn-solution",
                     "text": "Solution",
                     "classes": ["button", "btn-solution"],
                     "children": [
