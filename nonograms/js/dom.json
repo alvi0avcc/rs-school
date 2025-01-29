@@ -147,6 +147,14 @@
     "tag": "div",
     "id": "win",
     "text": "",
-    "classes": ["win"]
+    "classes": ["win"],
+    "children": [
+      {
+      "tag": "span",
+      "id": "button-x",
+      "text": "❌",
+      "classes": ["button-x"]
+      }
+    ]
   }
 ]}

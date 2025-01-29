@@ -42,6 +42,13 @@ export default class Page {
       this.puzzle();
     });
 
+    const winClose = this.#parent.querySelector("#button-x");
+    winClose.addEventListener('click', () => {
+      const win = this.#parent.querySelector("#win");
+      win.classList.remove("show");
+      win.style.transform = "";
+    });
+
     this.puzzle();
     this.fillPuzzleSelector();
 
@@ -219,9 +226,11 @@ export default class Page {
 
   get showWin(){
     console.log("You Win!");
-    // const win = this.createElement({})
-    this.#parent.querySelector(".win").classList.add("show");
-    
+    const win = this.#parent.querySelector(".win");
+    win.classList.add("show");
+    setTimeout(() => {
+      win.style.transform = "translateY(-100%)";
+    }, 100);
   }
 
 }

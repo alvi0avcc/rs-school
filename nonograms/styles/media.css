@@ -3,4 +3,9 @@
   .cell:hover {
     border-color: lime;
   }
+
+  .button-x:hover{
+    text-shadow: 0px 0px 10px grey;
+    cursor: pointer;
+  }
 }
