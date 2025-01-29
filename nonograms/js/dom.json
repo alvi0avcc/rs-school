@@ -74,6 +74,7 @@
                 "children": [
                   {
                     "tag": "button",
+                    "id": "restart",
                     "text": "Restart",
                     "classes": ["button", "button-reset"],
                     "children": [

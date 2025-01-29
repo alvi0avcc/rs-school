@@ -36,6 +36,12 @@ export default class Page {
       });
     });
 
+    const levelRestart = this.#parent.querySelector("#restart");
+    levelRestart.addEventListener('click', () => {
+      this.removePuzzle;
+      this.puzzle();
+    });
+
     this.puzzle();
     this.fillPuzzleSelector();
 
