@@ -29,6 +29,10 @@ export default class Page {
       nonograms.setLevel(events.currentTarget.value).then(() => {
         this.clearPuzzleList;
         this.fillPuzzleSelector();
+        nonograms.setPuzzle(nonograms.getPuzzleListByLevel(nonograms.getLevel)[0]).then( () => {
+          this.removePuzzle;
+          this.puzzle();
+        });
       });
     });
 
