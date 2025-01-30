@@ -103,6 +103,11 @@ export default class Page {
       win.style.transform = "";
     });
 
+    const saveGame = this.#parent.querySelector("#btn-save");
+    saveGame.addEventListener('click', () => {
+      nonograms.saveGame();
+    });
+
     this.puzzle();
     this.fillPuzzleSelector();
 

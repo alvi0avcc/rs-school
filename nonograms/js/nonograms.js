@@ -17,6 +17,17 @@ class Nonograms {
     // console.table(this.#puzzle);
   }
 
+  saveGame(){
+    const game = {};
+    game.puzzle = this.#puzzle
+    game.userPuzzle = this.#userPuzzle;
+    game.level = this.#level;
+    game.seconds = this.#seconds;
+    console.log(game);
+    localStorage.setItem('game', JSON.stringify(game));
+    
+  }
+
   setTimer(){
     return this.#seconds++;
   }
@@ -263,6 +274,8 @@ class Nonograms {
     
     return true;
   }
+
+
 }
 
 

@@ -179,7 +179,7 @@
             "children": [
               {
                 "tag": "button",
-                "id": "button-save",
+                "id": "btn-save",
                 "text": "Save Game",
                 "classes": ["button", "btn-save"],
                 "children": [
