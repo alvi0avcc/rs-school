@@ -5,7 +5,7 @@ import nonograms from "./nonograms.js";
 export default class Page {
   #parent = null;
   #solution = false;
-  #timerID;
+  #timerID = null;
 
   constructor(){
     this.#parent = document.getElementsByTagName('body')[0];
@@ -303,18 +303,20 @@ export default class Page {
 
   startTimer(){
     const timer = this.#parent.querySelector('#timer');
-    nonograms.initTimer()
-    this.#timerID = setInterval(()=>{
-      console.log(nonograms.getTimer);
-      timer.textContent = `Timer ${nonograms.getTimer}`;
-    }, 1000);
+    nonograms.initTimer();
+    if (!this.#timerID) {
+      this.#timerID = setInterval(()=>{
+        console.log(nonograms.getTimer);
+        timer.textContent = `Timer ${nonograms.getTimer}`;
+      }, 1000);
+    }
   }
 
   stopTimer(){
     const timer = this.#parent.querySelector('#timer');
     timer.textContent = 'Timer 00:00';
     clearInterval(this.#timerID);
-    nonograms.initTimer();
+    this.#timerID = null;
   }
 
 }
