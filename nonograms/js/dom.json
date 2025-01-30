@@ -164,7 +164,7 @@
             "children": [
               {
                 "tag": "button",
-                "id": "button-load",
+                "id": "btn-load",
                 "text": "Load Game",
                 "classes": ["button", "btn-load"],
                 "children": [

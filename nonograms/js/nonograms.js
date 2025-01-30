@@ -6,8 +6,8 @@ class Nonograms {
   #level = "Easy"; // current selected level
   #puzzleList; // list of all puzzles
   #freezeClick = false;
-  #seconds = 0;
-  #timerOn = false;
+  // #seconds = 0;
+  // #timerOn = false;
   #startTime;
   #elapsedTime;
 
@@ -25,19 +25,43 @@ class Nonograms {
     game.puzzle = this.#puzzle
     game.userPuzzle = this.#userPuzzle;
     game.level = this.#level;
-    game.seconds = this.#seconds;
-    console.log(game);
+    game.startTime = this.#startTime;
+    game.elapsedTime = this.getTime;
+    // console.log(game);
     localStorage.setItem('game', JSON.stringify(game));
-    
   }
+
+  loadGame() {
+    const savedGame = localStorage.getItem('game');
+    if (savedGame) {
+        const game = JSON.parse(savedGame);
+        this.#puzzle = game.puzzle;
+        this.#userPuzzle = game.userPuzzle;
+        this.#level = game.level;
+        this.#startTime = game.startTime;
+        this.#elapsedTime = game.elapsedTime;
+        console.log("loaded game = ", game);
+        console.log("puzzle = ", this.#puzzle);
+        console.log("userPuzzle = ", this.#userPuzzle);
+        console.log("level = ", this.#level);
+        console.log("startTime = ", this.#startTime);
+        console.log("elapsedTime = ", this.#elapsedTime);
+    } else {
+        console.log(`You don't have any saved games`);
+    }
+}
 
   initTimer(seconds = 0){
     this.#startTime = Date.now() - seconds / 1000;
     // console.log(this.#startTime);
   }
 
+  get getTime(){
+    return Math.round((Date.now() - this.#startTime) / 1000);
+  }
+
   get getTimer(){
-    const elapsedTime = Math.round((Date.now() - this.#startTime) / 1000);
+    const elapsedTime = this.getTime;
     // console.log(elapsedTime);
     const minutes = Math.floor(elapsedTime / 60);
     const seconds = elapsedTime % 60;

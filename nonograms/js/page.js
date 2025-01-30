@@ -108,6 +108,33 @@ export default class Page {
       nonograms.saveGame();
     });
 
+    const loadGame = this.#parent.querySelector("#btn-load");
+    loadGame.addEventListener('click', () => {
+      nonograms.loadGame();
+
+      // const puzzleList = nonograms.getPuzzleListAll;
+      // console.log(puzzleList);
+      // const levels = Object.keys(puzzleList);
+      // const randomIndex = Math.floor(Math.random() * levels.length);
+      // const randomLevel = levels[randomIndex];
+      // console.log(randomLevel);
+      // const puzzles = puzzleList[randomLevel];
+      // console.log(puzzles);
+      // const randomPuzzleIndex = Math.floor(Math.random() * puzzles.length);
+      // const randomPuzzle = puzzles[randomPuzzleIndex];
+      // console.log(randomPuzzle);
+      const levelSelector = this.#parent.querySelector('#level-selector');
+      const puzzleSelector = this.#parent.querySelector('#puzzle-selector');
+      levelSelector.value = nonograms.getLevel;
+      console.log(nonograms.getLevel);
+      this.clearPuzzleList;
+      this.fillPuzzleSelector();
+      console.log(nonograms.getPuzzleName); //TODO incorrect name of puzzle
+
+      puzzleSelector.value = nonograms.getPuzzleName;
+      puzzleSelector.dispatchEvent(new Event('change'));
+    });
+
     this.puzzle();
     this.fillPuzzleSelector();
 
