@@ -303,8 +303,9 @@ export default class Page {
 
   startTimer(){
     const timer = this.#parent.querySelector('#timer');
+    nonograms.initTimer()
     this.#timerID = setInterval(()=>{
-      nonograms.setTimer();
+      console.log(nonograms.getTimer);
       timer.textContent = `Timer ${nonograms.getTimer}`;
     }, 1000);
   }

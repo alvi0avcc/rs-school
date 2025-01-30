@@ -7,6 +7,9 @@ class Nonograms {
   #puzzleList; // list of all puzzles
   #freezeClick = false;
   #seconds = 0;
+  #timerOn = false;
+  #startTime;
+  #elapsedTime;
 
   async init(){
     await this.loadPuzzleList();
@@ -28,17 +31,16 @@ class Nonograms {
     
   }
 
-  setTimer(){
-    return this.#seconds++;
-  }
-
   initTimer(seconds = 0){
-    this.#seconds = seconds;
+    this.#startTime = Date.now() - seconds / 1000;
+    // console.log(this.#startTime);
   }
 
   get getTimer(){
-    const minutes = Math.floor(this.#seconds / 60);
-    const seconds = this.#seconds % 60;
+    const elapsedTime = Math.round((Date.now() - this.#startTime) / 1000);
+    // console.log(elapsedTime);
+    const minutes = Math.floor(elapsedTime / 60);
+    const seconds = elapsedTime % 60;
     return `${(minutes < 10 ? `0${minutes}` : minutes)} : ${(seconds < 10 ? `0${seconds}` : seconds)}`;
   }
 
