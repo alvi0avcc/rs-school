@@ -104,6 +104,7 @@
                 "children": [
                   {
                     "tag": "button",
+                    "id": "btn-random",
                     "text": "Random Game",
                     "classes": ["button", "btn-random"],
                     "children": [

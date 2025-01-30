@@ -70,6 +70,29 @@ export default class Page {
       // console.log(styleSheet);
     });
 
+    const randomPuzzle = this.#parent.querySelector("#btn-random");
+    randomPuzzle.addEventListener('click', () => {
+      const puzzleList = nonograms.getPuzzleListAll;
+      // console.log(puzzleList);
+      const levels = Object.keys(puzzleList);
+      const randomIndex = Math.floor(Math.random() * levels.length);
+      const randomLevel = levels[randomIndex];
+      // console.log(randomLevel);
+      const puzzles = puzzleList[randomLevel];
+      // console.log(puzzles);
+      const randomPuzzleIndex = Math.floor(Math.random() * puzzles.length);
+      const randomPuzzle = puzzles[randomPuzzleIndex];
+      // console.log(randomPuzzle);
+      const levelSelector = this.#parent.querySelector('#level-selector');
+      const puzzleSelector = this.#parent.querySelector('#puzzle-selector');
+      levelSelector.value = randomLevel;
+      this.clearPuzzleList;
+      nonograms.setLevel(randomLevel);
+      this.fillPuzzleSelector();
+      puzzleSelector.value = randomPuzzle;
+      puzzleSelector.dispatchEvent(new Event('change'));
+    });
+
     const winClose = this.#parent.querySelector("#button-x");
     winClose.addEventListener('click', () => {
       const win = this.#parent.querySelector("#win");
