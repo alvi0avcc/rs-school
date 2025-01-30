@@ -5,6 +5,7 @@ import nonograms from "./nonograms.js";
 export default class Page {
   #parent = null;
   #solution = false;
+  #timerID;
 
   constructor(){
     this.#parent = document.getElementsByTagName('body')[0];
@@ -42,6 +43,7 @@ export default class Page {
 
     const ShowSolution = this.#parent.querySelector("#btn-solution");
     ShowSolution.addEventListener('click', () => {
+      this.stopTimer();
       if (!this.#solution) {
         const styleSheet = document.styleSheets[0];
         
@@ -67,6 +69,7 @@ export default class Page {
         styleSheet.deleteRule(0);
         this.#solution = false;
       }
+      this.stopTimer();
       // console.log(styleSheet);
     });
 
@@ -107,6 +110,7 @@ export default class Page {
   }
 
   fillPuzzleSelector (){
+    this.stopTimer();
     const selector = this.#parent.querySelector("#puzzle-selector");
     console.log(selector);
     selector.addEventListener('change', (events) => {
@@ -189,6 +193,7 @@ export default class Page {
   }
 
   puzzle(){
+    this.stopTimer();
     const puzzle = nonograms.getPuzzle;
       // console.log(puzzle);
 
@@ -237,14 +242,13 @@ export default class Page {
       const [row, col] = this.parseCell(events.currentTarget.id);
 
       if (!nonograms.getFreeze) {
+        this.startTimer();
         switch (nonograms.toggleUserCell(row, col, 1)) {
-
           case 1:
             element.classList.remove("white");
             element.classList.remove("crossed");
             element.classList.add("black");
             break;
-
           case null:
             element.classList.remove("white");
             element.classList.remove("crossed");
@@ -263,6 +267,7 @@ export default class Page {
       const [row, col] = this.parseCell(events.currentTarget.id);
 
       if (!nonograms.getFreeze) {
+        this.startTimer();
         switch (nonograms.toggleUserCell(row, col, 0)) {
           case 0:
             element.classList.add("white");
@@ -289,6 +294,21 @@ export default class Page {
     setTimeout(() => {
       win.style.transform = "translateY(-100%)";
     }, 100);
+  }
+
+  startTimer(){
+    const timer = this.#parent.querySelector('#timer');
+    this.#timerID = setInterval(()=>{
+      nonograms.setTimer();
+      timer.textContent = `Timer ${nonograms.getTimer}`;
+    }, 1000);
+  }
+
+  stopTimer(){
+    const timer = this.#parent.querySelector('#timer');
+    timer.textContent = 'Timer 00:00';
+    clearInterval(this.#timerID);
+    nonograms.initTimer();
   }
 
 }

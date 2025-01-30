@@ -6,6 +6,7 @@ class Nonograms {
   #level = "Easy"; // current selected level
   #puzzleList; // list of all puzzles
   #freezeClick = false;
+  #seconds = 0;
 
   async init(){
     await this.loadPuzzleList();
@@ -14,6 +15,20 @@ class Nonograms {
     await this.setPuzzle(puzzleName);
     this.freeze(false);
     // console.table(this.#puzzle);
+  }
+
+  setTimer(){
+    return this.#seconds++;
+  }
+
+  initTimer(seconds = 0){
+    this.#seconds = seconds;
+  }
+
+  get getTimer(){
+    const minutes = Math.floor(this.#seconds / 60);
+    const seconds = this.#seconds % 60;
+    return `${(minutes < 10 ? `0${minutes}` : minutes)} : ${(seconds < 10 ? `0${seconds}` : seconds)}`;
   }
 
   freeze(state){

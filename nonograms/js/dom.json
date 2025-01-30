@@ -126,6 +126,20 @@
     "children": [
       {
         "tag": "div",
+        "id": "info",
+        "text": "",
+        "classes": ["info"],
+        "children": [
+          {
+           "tag": "p",
+            "id": "timer",
+            "text": "Timer 00:00",
+            "classes": ["timer"]
+          }
+        ]
+      },
+      {
+        "tag": "div",
         "id": "cell-container",
         "text": "",
         "classes": ["cell-container"]
