@@ -323,6 +323,7 @@ export default class Page {
 
   get showWin(){
     console.log("You Win!");
+    this.stopTimer(true);
     nonograms.freeze(true);
     const win = this.#parent.querySelector(".win");
     win.classList.add("show");
@@ -333,8 +334,8 @@ export default class Page {
 
   startTimer(){
     const timer = this.#parent.querySelector('#timer');
-    nonograms.initTimer();
     if (!this.#timerID) {
+      nonograms.initTimer();
       this.#timerID = setInterval(()=>{
         console.log(nonograms.getTimer);
         timer.textContent = `Timer ${nonograms.getTimer}`;
@@ -342,11 +343,13 @@ export default class Page {
     }
   }
 
-  stopTimer(){
-    const timer = this.#parent.querySelector('#timer');
-    timer.textContent = 'Timer 00:00';
+  stopTimer(show = false){
+    if (!show) {
+      const timer = this.#parent.querySelector('#timer');
+      timer.textContent = 'Timer 00:00';
+    }
     clearInterval(this.#timerID);
     this.#timerID = null;
   }
-
+  
 }
