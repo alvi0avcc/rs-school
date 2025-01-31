@@ -40,6 +40,7 @@ class Nonograms {
         this.#level = game.level;
         this.#startTime = game.startTime;
         this.#elapsedTime = game.elapsedTime;
+        this.freeze(false);
         // console.log("loaded game = ", game);
         // console.log("puzzle = ", this.#puzzle);
         // console.log("userPuzzle = ", this.#userPuzzle);
