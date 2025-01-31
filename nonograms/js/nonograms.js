@@ -9,7 +9,7 @@ class Nonograms {
   // #seconds = 0;
   // #timerOn = false;
   #startTime;
-  #elapsedTime;
+  #elapsedTime = 0;
 
   async init(){
     await this.loadPuzzleList();
@@ -40,12 +40,12 @@ class Nonograms {
         this.#level = game.level;
         this.#startTime = game.startTime;
         this.#elapsedTime = game.elapsedTime;
-        console.log("loaded game = ", game);
-        console.log("puzzle = ", this.#puzzle);
-        console.log("userPuzzle = ", this.#userPuzzle);
-        console.log("level = ", this.#level);
-        console.log("startTime = ", this.#startTime);
-        console.log("elapsedTime = ", this.#elapsedTime);
+        // console.log("loaded game = ", game);
+        // console.log("puzzle = ", this.#puzzle);
+        // console.log("userPuzzle = ", this.#userPuzzle);
+        // console.log("level = ", this.#level);
+        // console.log("startTime = ", this.#startTime);
+        // console.log("elapsedTime = ", this.#elapsedTime);
     } else {
         console.log(`You don't have any saved games`);
     }
@@ -57,7 +57,7 @@ class Nonograms {
   }
 
   get getTime(){
-    return Math.round((Date.now() - this.#startTime) / 1000);
+    return Math.round((Date.now() - this.#startTime) / 1000) + this.#elapsedTime;
   }
 
   get getTimer(){
@@ -66,6 +66,10 @@ class Nonograms {
     const minutes = Math.floor(elapsedTime / 60);
     const seconds = elapsedTime % 60;
     return `${(minutes < 10 ? `0${minutes}` : minutes)} : ${(seconds < 10 ? `0${seconds}` : seconds)}`;
+  }
+
+  setElapsedTime(elapsed = 0){
+    this.#elapsedTime = elapsed;
   }
 
   freeze(state){
@@ -101,6 +105,7 @@ class Nonograms {
 
   get clearPuzzle(){
     if (this.#puzzle) {
+      this.setElapsedTime();
       const size = this.getPuzzleMatrix.length;
       this.#userPuzzle = Array.from({ length: size }, () => Array(size).fill(null));
       return this.#userPuzzle;
