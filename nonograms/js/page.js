@@ -63,12 +63,7 @@ export default class Page {
       nonograms.clearPuzzle;
       this.puzzle();
       nonograms.freeze(false);
-      const styleSheet = document.styleSheets[0];
-      if (this.#solution) {
-        styleSheet.deleteRule(0);
-        styleSheet.deleteRule(0);
-        this.#solution = false;
-      }
+      this.hideSolution;
       this.stopTimer();
       // console.log(styleSheet);
     });
@@ -94,6 +89,7 @@ export default class Page {
       this.fillPuzzleSelector();
       puzzleSelector.value = randomPuzzle;
       puzzleSelector.dispatchEvent(new Event('change'));
+      this.hideSolution;
     });
 
     const winClose = this.#parent.querySelector("#button-x");
@@ -125,13 +121,23 @@ export default class Page {
 
       this.removePuzzle;
       this.puzzle();
-
+      this.hideSolution;
     });
 
     this.puzzle();
     this.fillPuzzleSelector();
 
     console.log("loading of DOM completed");
+  }
+
+  get hideSolution(){
+    const styleSheet = document.styleSheets[0];
+      if (this.#solution) {
+        styleSheet.deleteRule(0);
+        styleSheet.deleteRule(0);
+        this.#solution = false;
+      }
+    return this.#solution;
   }
 
   fillPuzzleSelector (){
