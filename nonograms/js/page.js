@@ -60,8 +60,8 @@ export default class Page {
     const levelRestart = this.#parent.querySelector("#restart");
     levelRestart.addEventListener('click', () => {
       this.removePuzzle;
-      this.puzzle();
       nonograms.clearPuzzle;
+      this.puzzle();
       nonograms.freeze(false);
       const styleSheet = document.styleSheets[0];
       if (this.#solution) {
