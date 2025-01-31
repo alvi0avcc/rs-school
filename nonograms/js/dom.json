@@ -186,6 +186,21 @@
                 ]
               }
             ]
+          },
+          {
+            "tag": "li",
+            "text": "",
+            "classes": ["li"],
+            "children": [
+              {
+                "tag": "div",
+                "id": "btn-sound",
+                "text": "",
+                "classes": ["button", "btn-sound"],
+                "children": [
+                ]
+              }
+            ]
           }
         ]
       }

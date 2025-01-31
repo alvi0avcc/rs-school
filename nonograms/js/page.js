@@ -124,6 +124,12 @@ export default class Page {
       this.hideSolution;
     });
 
+    const btnSound = this.#parent.querySelector("#btn-sound");
+    btnSound.addEventListener('click', () => {
+      btnSound.classList.toggle("sound-off");
+      // TODO add function for on-off sound
+    });
+
     this.puzzle();
     this.fillPuzzleSelector();
 

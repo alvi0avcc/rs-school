@@ -105,3 +105,15 @@ body{
 .show{
   display: flex;
 }
+
+.btn-sound{
+  width: 19px;
+  height: 19px;
+  background-image: url("../assets/sound.png");
+  background-position: center;
+  background-size: contain;
+}
+
+.sound-off {
+  background-image: url("../assets/sound-off.png");
+}
