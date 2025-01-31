@@ -112,27 +112,20 @@ export default class Page {
     loadGame.addEventListener('click', () => {
       nonograms.loadGame();
 
-      // const puzzleList = nonograms.getPuzzleListAll;
-      // console.log(puzzleList);
-      // const levels = Object.keys(puzzleList);
-      // const randomIndex = Math.floor(Math.random() * levels.length);
-      // const randomLevel = levels[randomIndex];
-      // console.log(randomLevel);
-      // const puzzles = puzzleList[randomLevel];
-      // console.log(puzzles);
-      // const randomPuzzleIndex = Math.floor(Math.random() * puzzles.length);
-      // const randomPuzzle = puzzles[randomPuzzleIndex];
-      // console.log(randomPuzzle);
       const levelSelector = this.#parent.querySelector('#level-selector');
       const puzzleSelector = this.#parent.querySelector('#puzzle-selector');
       levelSelector.value = nonograms.getLevel;
       console.log(nonograms.getLevel);
       this.clearPuzzleList;
       this.fillPuzzleSelector();
-      console.log(nonograms.getPuzzleName); //TODO incorrect name of puzzle
+      console.log(nonograms.getPuzzleName);
+      console.log(nonograms.getUserPuzzle);
 
       puzzleSelector.value = nonograms.getPuzzleName;
-      puzzleSelector.dispatchEvent(new Event('change'));
+
+      this.removePuzzle;
+      this.puzzle();
+
     });
 
     this.puzzle();
@@ -249,12 +242,22 @@ export default class Page {
       const rowLineNumbers = nonograms.getRowLineNumbers; //left numbers
       puzzle.data.forEach((row, rowIndex) => {
         // console.log(row);
-        const element = this.createElement({id: `row-${rowIndex}`, classes: ["row-cell"], text: rowLineNumbers[rowIndex].join('') }); // create container with left numbers
+        const element = this.createElement({  // create container with left numbers
+          id: `row-${rowIndex}`, classes: ["row-cell"], text: rowLineNumbers[rowIndex].join('')
+        });
         container.appendChild(element); //add to DOM container with left numbers
       
         row.forEach((cell, colIndex) => {  // cells of puzzle
           // console.log(cell);
-          const element = this.createElement({id: `cell-${rowIndex}/${colIndex}`, text: cell, classes: (cell === 1 ? ["cell", "solution"] : ["cell"])});
+          const element = this.createElement({
+            id: `cell-${rowIndex}/${colIndex}`,
+            text: cell,
+            classes: (cell === 1 ? ["cell", "solution"] : ["cell"])
+          });
+          // console.log(nonograms.getUserCellState(rowIndex, colIndex));
+          
+          if (nonograms.getUserCellState(rowIndex, colIndex) === 1) element.classList.add('black');
+          if (nonograms.getUserCellState(rowIndex, colIndex) === 0) element.classList.add('crossed', 'white');
           this.cellClick(element);
           container.append(element);
         });
