@@ -27,7 +27,8 @@ export default class Page {
 
     const levelSelector = this.#parent.querySelector("#level-selector");
     levelSelector.addEventListener('change', (events) => {
-      console.log(events.currentTarget.value);
+      // console.log(events.currentTarget.value);
+      nonograms.soundPlay('click');
       nonograms.setLevel(events.currentTarget.value).then(() => {
         this.clearPuzzleList;
         this.fillPuzzleSelector();
@@ -45,6 +46,7 @@ export default class Page {
     ShowSolution.addEventListener('click', () => {
       this.stopTimer();
       if (!this.#solution) {
+        nonograms.soundPlay('solution');
         const styleSheet = document.styleSheets[0];
         
         styleSheet.insertRule('.solution { background-color: black !important;}');
@@ -59,6 +61,7 @@ export default class Page {
 
     const levelRestart = this.#parent.querySelector("#restart");
     levelRestart.addEventListener('click', () => {
+      nonograms.soundPlay('restart');
       this.removePuzzle;
       nonograms.clearPuzzle;
       this.puzzle();
@@ -70,6 +73,7 @@ export default class Page {
 
     const randomPuzzle = this.#parent.querySelector("#btn-random");
     randomPuzzle.addEventListener('click', () => {
+      nonograms.soundPlay('random');
       const puzzleList = nonograms.getPuzzleListAll;
       // console.log(puzzleList);
       const levels = Object.keys(puzzleList);
@@ -94,6 +98,7 @@ export default class Page {
 
     const winClose = this.#parent.querySelector("#button-x");
     winClose.addEventListener('click', () => {
+      nonograms.soundPlay('click');
       const win = this.#parent.querySelector("#win");
       win.classList.remove("show");
       win.style.transform = "";
@@ -101,11 +106,13 @@ export default class Page {
 
     const saveGame = this.#parent.querySelector("#btn-save");
     saveGame.addEventListener('click', () => {
+      nonograms.soundPlay('click');
       nonograms.saveGame();
     });
 
     const loadGame = this.#parent.querySelector("#btn-load");
     loadGame.addEventListener('click', () => {
+      nonograms.soundPlay('click');
       nonograms.loadGame();
 
       const levelSelector = this.#parent.querySelector('#level-selector');
@@ -127,6 +134,8 @@ export default class Page {
     const btnSound = this.#parent.querySelector("#btn-sound");
     btnSound.addEventListener('click', () => {
       btnSound.classList.toggle("sound-off");
+      nonograms.soundPlay('click');
+
       // TODO add function for on-off sound
     });
 
@@ -152,6 +161,7 @@ export default class Page {
     console.log(selector);
     selector.addEventListener('change', (events) => {
       console.log(events.currentTarget.value);
+      nonograms.soundPlay('click');
       nonograms.setPuzzle(events.currentTarget.value).then( () => {
         this.removePuzzle;
         this.puzzle();
@@ -285,7 +295,6 @@ export default class Page {
   cellClick(element){
     element.addEventListener('click', (events) => { // for left click
       console.log("left events = ", events.currentTarget.id);
-
       const [row, col] = this.parseCell(events.currentTarget.id);
 
       if (!nonograms.getFreeze) {
@@ -295,11 +304,13 @@ export default class Page {
             element.classList.remove("white");
             element.classList.remove("crossed");
             element.classList.add("black");
+            nonograms.soundPlay('select');
             break;
           case null:
             element.classList.remove("white");
             element.classList.remove("crossed");
             element.classList.remove("black");
+            nonograms.soundPlay('deselect');
             break;
         }
         if(nonograms.checkPuzzle) this.showWin;
@@ -320,12 +331,14 @@ export default class Page {
             element.classList.add("white");
             element.classList.add("crossed");
             element.classList.remove("black");
+            nonograms.soundPlay('select');
             break;
 
           case null:
             element.classList.remove("white");
             element.classList.remove("crossed");
             element.classList.remove("black");
+            nonograms.soundPlay('deselect');
             break;
         }
         if(nonograms.checkPuzzle) this.showWin;
@@ -335,6 +348,7 @@ export default class Page {
 
   get showWin(){
     console.log("You Win!");
+    nonograms.soundPlay('win');
     this.stopTimer(true);
     nonograms.freeze(true);
     const win = this.#parent.querySelector(".win");
@@ -348,6 +362,7 @@ export default class Page {
     const timer = this.#parent.querySelector('#timer');
     if (!this.#timerID) {
       nonograms.initTimer();
+      nonograms.soundPlay('start');
       this.#timerID = setInterval(()=>{
         console.log(nonograms.getTimer);
         timer.textContent = `Timer ${nonograms.getTimer}`;

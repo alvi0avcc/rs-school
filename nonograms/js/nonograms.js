@@ -10,9 +10,12 @@ class Nonograms {
   // #timerOn = false;
   #startTime;
   #elapsedTime = 0;
+  soundOn = true; //for all sound
+  sounds = {}; //all sounds
 
   async init(){
     await this.loadPuzzleList();
+    this.soundLoad;
     this.#level = "Easy";
     const puzzleName = this.getPuzzleListByLevel(this.#level)[0];
     await this.setPuzzle(puzzleName);
@@ -307,7 +310,34 @@ class Nonograms {
     return true;
   }
 
+  get soundLoad(){
+    const soundFiles = [
+      'click',
+      'select',
+      'deselect',
+      'start',
+      'win',
+      'restart',
+      'random',
+      'solution'
+    ];
+    soundFiles.forEach(sound => {
+      this.sounds[sound] = {
+      on: true,
+      audio: new Audio(`./assets/sound/${sound}.ogg`)
+      }
+    });
+  }
 
+  soundPlay(soundName){
+    if (this.soundOn && this.sounds[soundName].on) {
+      // console.log(this.sounds[soundName]);
+      this.sounds[soundName].audio.currentTime = 0;
+      this.sounds[soundName].audio.play().catch(error => {
+        console.error(`Audio playback error (${soundName}.ogg):`, error);
+      });
+    }
+  }
 }
 
 
