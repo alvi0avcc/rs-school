@@ -352,11 +352,14 @@ export default class Page {
 
   get showWin(){
     console.log("You Win!");
+    
     nonograms.soundPlay('win');
     this.stopTimer(true);
     nonograms.freeze(true);
     const win = this.#parent.querySelector(".win");
     win.classList.add("show");
+    const winMessage = this.#parent.querySelector("#win-message");
+    winMessage.textContent = `Great! You have solved the nonogram in ${nonograms.getTime} seconds!`
     setTimeout(() => {
       win.style.transform = "translateY(-100%)";
     }, 100);
