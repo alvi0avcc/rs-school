@@ -106,6 +106,7 @@ export default class Page {
       const win = this.#parent.querySelector("#win");
       win.classList.remove("show");
       win.style.transform = "";
+      nonograms.soundPlay('win', true)
     });
 
     const saveGame = this.#parent.querySelector("#btn-save");

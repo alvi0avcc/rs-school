@@ -217,6 +217,12 @@
       "id": "button-x",
       "text": "❌",
       "classes": ["button-x"]
+      },
+      {
+      "tag": "span",
+      "id": "win-message",
+      "text": "Great! You have solved the nonogram in ## seconds!",
+      "classes": ["win-message"]
       }
     ]
   }
