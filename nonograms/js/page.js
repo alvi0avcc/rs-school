@@ -135,8 +135,7 @@ export default class Page {
     btnSound.addEventListener('click', () => {
       btnSound.classList.toggle("sound-off");
       nonograms.soundPlay('click');
-
-      // TODO add function for on-off sound
+      nonograms.soundOnOffToggle; 
     });
 
     this.puzzle();

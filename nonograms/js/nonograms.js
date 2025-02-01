@@ -23,6 +23,10 @@ class Nonograms {
     // console.table(this.#puzzle);
   }
 
+  get soundOnOffToggle (){
+    this.soundOn ? this.soundOn = false : this.soundOn = true;
+  }
+
   saveGame(){
     const game = {};
     game.puzzle = this.#puzzle
