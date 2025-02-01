@@ -333,13 +333,25 @@ class Nonograms {
     });
   }
 
-  soundPlay(soundName){
+  soundPlay(soundName, stop = false, duration = 10){
+    if (stop === true) {
+      setTimeout(()=>{
+        this.sounds[soundName].audio.pause();
+        this.sounds[soundName].audio.currentTime = 0;
+        console.log('pause');
+      }, duration);
+      
+      return false;
+    }
+
     if (this.soundOn && this.sounds[soundName].on) {
       // console.log(this.sounds[soundName]);
       this.sounds[soundName].audio.currentTime = 0;
       this.sounds[soundName].audio.play().catch(error => {
         console.error(`Audio playback error (${soundName}.ogg):`, error);
+        return error;
       });
+      return true;
     }
   }
 }
