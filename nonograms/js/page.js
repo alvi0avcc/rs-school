@@ -255,7 +255,7 @@ export default class Page {
       puzzle.data.forEach((row, rowIndex) => {
         // console.log(row);
         const element = this.createElement({  // create container with left numbers
-          id: `row-${rowIndex}`, classes: ["row-cell"], text: rowLineNumbers[rowIndex].join('')
+          id: `row-${rowIndex}`, classes: ["row-cell"], text: rowLineNumbers[rowIndex].join(' | ')
         });
         container.appendChild(element); //add to DOM container with left numbers
       
