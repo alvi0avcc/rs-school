@@ -184,7 +184,7 @@ export default class Page {
         const scoreTableCell = this.createElement({
           tag: "div",
           id: `score-${row}-${col}`,
-          text: row,
+          text: col === 1 ? row : '',
           classes: ["score-cell"]
         });
         scoreTable.appendChild(scoreTableCell);
