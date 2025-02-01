@@ -146,6 +146,51 @@ export default class Page {
     this.puzzle();
     this.fillPuzzleSelector();
 
+    const btnScore = this.#parent.querySelector("#btn-score");
+    btnScore.addEventListener('click', () => {
+      nonograms.soundPlay('click');
+      const scoreModal = this.#parent.querySelector("#score");
+      const score = nonograms.sortResult(nonograms.loadResult());
+      if (score) {
+        score.forEach((record, row) => {
+          console.log(record);
+          Object.values(record).forEach((value, index) => {
+            console.log(value, index);
+            const cell = this.#parent.querySelector(`#score-${row + 1}-${index + 2}`);
+            if (row % 2 === 0) cell.classList.add('score-cell-mark');
+            if (index === 2) {
+              const minutes = Math.floor(value / 60);
+              const seconds = value % 60;
+              cell.textContent = `${(minutes < 10 ? `0${minutes}` : minutes)} : ${(seconds < 10 ? `0${seconds}` : seconds)}`;
+            } else {
+              cell.textContent = value;
+            }
+          });
+        });
+      }
+      scoreModal.classList.add('show');
+    });
+
+    const btnScoreX = this.#parent.querySelector("#score-x");
+    btnScoreX.addEventListener('click', () => {
+      nonograms.soundPlay('click');
+      const scoreModal = this.#parent.querySelector("#score");
+      scoreModal.classList.remove('show');
+    });
+
+    const scoreTable = this.#parent.querySelector("#score-grid");
+    for (let row = 1; row < 6; row++ ) {
+      for (let col = 1; col < 5; col++ ) {
+        const scoreTableCell = this.createElement({
+          tag: "div",
+          id: `score-${row}-${col}`,
+          text: row,
+          classes: ["score-cell"]
+        });
+        scoreTable.appendChild(scoreTableCell);
+      }
+    }
+
     console.log("loading of DOM completed");
   }
 
@@ -362,9 +407,10 @@ export default class Page {
     winMessage.textContent = `Great! You have solved the nonogram in ${nonograms.getTime} seconds!`
     setTimeout(() => {
       win.style.transform = "translateY(-100%)";
-    }, 100);
+    }, 10);
+    nonograms.saveResult();
   }
-
+  
   startTimer(){
     const timer = this.#parent.querySelector('#timer');
     if (!this.#timerID) {

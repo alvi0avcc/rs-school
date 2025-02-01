@@ -57,7 +57,44 @@ class Nonograms {
     } else {
         console.log(`You don't have any saved games`);
     }
-}
+  }
+
+  saveResult(){
+    const winGame = [
+      {
+      name: this.#puzzle.name,
+      level: this.#level,
+      time: this.getTime
+      }
+    ];
+
+    const savedWinGame = this.loadResult();
+
+    if (savedWinGame) {
+      winGame.push(...savedWinGame);
+      if (winGame.length > 5) winGame.pop();
+      console.log(winGame);
+    };
+    
+    localStorage.setItem('win-game', JSON.stringify(winGame));
+  }
+
+  loadResult(){
+    const savedWinGame = localStorage.getItem('win-game');
+    if (savedWinGame) {
+      const result = JSON.parse(savedWinGame);
+      return result;
+    }
+    console.log("record not saved");
+    return false;
+  }
+
+  sortResult(resultList){
+    if (resultList) {
+      return resultList.sort((a, b) => a.time - b.time);
+    }
+    return false;
+  }
 
   initTimer(seconds = 0){
     this.#startTime = Date.now() - seconds / 1000;

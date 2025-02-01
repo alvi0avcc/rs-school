@@ -201,6 +201,21 @@
                 ]
               }
             ]
+          },
+          {
+            "tag": "li",
+            "text": "",
+            "classes": ["li"],
+            "children": [
+              {
+                "tag": "div",
+                "id": "btn-score",
+                "text": "",
+                "classes": ["button", "btn-score"],
+                "children": [
+                ]
+              }
+            ]
           }
         ]
       }
@@ -223,6 +238,64 @@
       "id": "win-message",
       "text": "Great! You have solved the nonogram in ## seconds!",
       "classes": ["win-message"]
+      }
+    ]
+  },
+  {
+    "tag": "div",
+    "id": "score",
+    "text": "",
+    "classes": ["score"],
+    "children": [
+      {
+      "tag": "div",
+      "text": "",
+      "classes": ["container-score"],
+      "children": [
+        {
+          "tag": "h2",
+          "text": "Score Table",
+          "classes": ["h2"]
+        },
+        {
+          "tag": "span",
+          "id": "score-x",
+          "text": "❌",
+          "classes": ["score-x"]
+        },
+        {
+          "tag": "hr",
+          "classes": ["hr"]
+        },
+        {
+          "tag": "div",
+          "id": "score-grid",
+          "text": "",
+          "classes": ["score-grid"],
+          "children": [
+            {
+            "tag": "span",
+            "text": "#",
+            "classes": ["span"]
+            },
+            {
+            "tag": "span",
+            "text": "Puzzle",
+            "classes": ["span"]
+            },
+            {
+            "tag": "span",
+            "text": "Level",
+            "classes": ["span"]
+            },
+            {
+            "tag": "span",
+            "text": "Time",
+            "classes": ["span"]
+            }
+          ]
+        }
+      ]
       }
     ]
   }
