@@ -2,6 +2,7 @@
 
   .cell:hover {
     border-color: lime;
+    cursor: pointer;
   }
 
   .button-x:hover,
@@ -10,7 +11,8 @@
     cursor: pointer;
   }
 
-  .button:hover{
+  .button:hover,
+  .select:hover{
     filter: drop-shadow(0px 0px 10px lime);
     cursor: pointer;
   }
