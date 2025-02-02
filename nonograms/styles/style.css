@@ -11,12 +11,16 @@
 
 body{
   overflow: hidden;
+  width: 100%;
+  padding: 5px
 }
 
 .cell-container{
   display: grid;
   border: solid 1px var(--line-color);
-  width: max-content;
+  width: 100%;
+  max-width: 1024px;
+  font-size: 1em;
 }
 
 .row-cell{
@@ -26,11 +30,14 @@ body{
   padding: 5px;
   background-color: aquamarine;
   border-right: 2px solid var(--group-line-color);
+  white-space: nowrap;
+  align-items: center;
 }
 
 .col-cell {
   display: flex;
   flex-direction: column;
+  white-space: pre-line;
   border: solid 1px var(--line-color);
   padding: 5px;
   background-color: aquamarine;
@@ -40,9 +47,12 @@ body{
 }
 
 .cell {
+  display: flex;
   border: dotted 1px var(--line-color);
-  padding: 5px;
   background-color: bisque;
+  aspect-ratio: 1;
+  align-items: center;
+  justify-content: center;
 }
 
 .vertical{
@@ -64,7 +74,7 @@ body{
 .cell.crossed {
   background-image: url("../assets/x.svg");
   background-position: center;
-  background-size: 200%;
+  background-size: 150%;
   background-repeat: no-repeat;
 }
 

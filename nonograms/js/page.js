@@ -300,7 +300,9 @@ export default class Page {
       const container = document.querySelector("#cell-container");
       const colRow = puzzle.data.length;
       // console.log(colRow);
-      container.style.gridTemplateColumns = `max-content repeat(${colRow}, 25px)`;
+      // container.style.gridTemplateColumns = `1fr repeat(${colRow}, 1fr)`;
+      container.style.gridTemplateColumns = `repeat(${colRow + 1}, 1fr)`;
+      // container.style.gridTemplateRows = `min-content repeat(${colRow}, 1fr)`;
       
       const colLineNumbers = nonograms.getColLineNumbers; //upper numbers
       for(let colIndex = -1; colIndex < colRow; colIndex++){
