@@ -220,6 +220,22 @@
                 ]
               }
             ]
+          },
+          {
+            "tag": "li",
+            "text": "",
+            "classes": ["li"],
+            "children": [
+              {
+                "tag": "div",
+                "id": "btn-theme",
+                "text": "",
+                "title": "Theme toggle",
+                "classes": ["button", "btn-theme"],
+                "children": [
+                ]
+              }
+            ]
           }
         ]
       }

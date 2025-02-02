@@ -191,6 +191,30 @@ export default class Page {
       }
     }
 
+    const btnTheme = document.getElementById('btn-theme');
+    btnTheme.addEventListener('click', () => {
+      const root = document.documentElement;
+
+      if (root.style.getPropertyValue('--background-color-body') === 'black') {
+          root.style.setProperty('--line-color', 'blue');
+          root.style.setProperty('--group-line-color', 'red');
+          root.style.setProperty('--background-color-body', 'white');
+          root.style.setProperty('--background-color-cells', 'bisque');
+          root.style.setProperty('--background-color-hint', 'aquamarine');
+          root.style.setProperty('--block-border-color', 'blue');
+          root.style.setProperty('--font-color', 'black');
+
+      } else {
+          root.style.setProperty('--line-color', 'white');
+          root.style.setProperty('--group-line-color', 'orange');
+          root.style.setProperty('--background-color-body', 'black');
+          root.style.setProperty('--background-color-cells', '#333');
+          root.style.setProperty('--background-color-hint', '#555');
+          root.style.setProperty('--block-border-color', 'white');
+          root.style.setProperty('--font-color', 'white');
+      }
+    });
+
     console.log("loading of DOM completed");
   }
 
