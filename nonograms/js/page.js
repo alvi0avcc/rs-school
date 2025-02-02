@@ -310,6 +310,7 @@ export default class Page {
           classes: ["col-cell"],
           text: colIndex >=0 ? colLineNumbers[colIndex].join('\n') : ''
         });
+        if ((colIndex + 1) % 5 === 0) element.classList.add('vertical');
         container.appendChild(element); //add to DOM container with upper numbers
       }
 
@@ -319,6 +320,7 @@ export default class Page {
         const element = this.createElement({  // create container with left numbers
           id: `row-${rowIndex}`, classes: ["row-cell"], text: rowLineNumbers[rowIndex].join(' | ')
         });
+        if ((rowIndex + 1) % 5 === 0) element.classList.add('horizontal');
         container.appendChild(element); //add to DOM container with left numbers
       
         row.forEach((cell, colIndex) => {  // cells of puzzle
@@ -333,6 +335,8 @@ export default class Page {
           if (nonograms.getUserCellState(rowIndex, colIndex) === 1) element.classList.add('black');
           if (nonograms.getUserCellState(rowIndex, colIndex) === 0) element.classList.add('crossed', 'white');
           this.cellClick(element);
+          if ((colIndex + 1) % 5 === 0) element.classList.add('vertical');
+          if ((rowIndex + 1) % 5 === 0) element.classList.add('horizontal');
           container.append(element);
         });
       });

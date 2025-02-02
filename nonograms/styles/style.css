@@ -4,38 +4,53 @@
   box-sizing: border-box;
 }
 
+:root {
+  --line-color: blue;
+  --group-line-color: red;
+}
+
 body{
   overflow: hidden;
 }
 
 .cell-container{
   display: grid;
-  border: solid 2px black;
+  border: solid 1px var(--line-color);
   width: max-content;
 }
 
 .row-cell{
   display: flex;
   justify-content: flex-end;
-  border: solid 1px black;
+  border: solid 1px var(--line-color);
   padding: 5px;
   background-color: aquamarine;
+  border-right: 2px solid var(--group-line-color);
 }
 
 .col-cell {
   display: flex;
   flex-direction: column;
-  border: solid 1px black;
+  border: solid 1px var(--line-color);
   padding: 5px;
   background-color: aquamarine;
   align-items: center;
   justify-content: flex-end;
+  border-bottom: 2px solid var(--group-line-color);
 }
 
 .cell {
-  border: solid 1px black;
+  border: dotted 1px var(--line-color);
   padding: 5px;
   background-color: bisque;
+}
+
+.vertical{
+  border-right: 2px solid var(--group-line-color);
+}
+
+.horizontal {
+  border-bottom: 2px solid var(--group-line-color);
 }
 
 .black{
