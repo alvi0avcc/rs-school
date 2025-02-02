@@ -63,7 +63,7 @@ body{
   flex-direction: row;
   flex-wrap: wrap;
   list-style: none;
-  gap: 5px;
+  gap: 10px;
   justify-content: center;
   padding: 5px;
   border: solid 1px blue;
@@ -185,6 +185,22 @@ body{
 .score-cell-mark,
 .score-cell:nth-child(8n-3) {
   background-color: lightgrey;
+}
+
+.btn-load{
+  width: 25px;
+  height: 25px;
+  background-image: url("../assets/load.png");
+  background-position: center;
+  background-size: contain;
+}
+
+.btn-save {
+  width: 25px;
+  height: 25px;
+  background-image: url("../assets/save.png");
+  background-position: center;
+  background-size: contain;
 }
 
 .show {

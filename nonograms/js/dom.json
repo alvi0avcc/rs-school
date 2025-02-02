@@ -163,9 +163,10 @@
             "classes": ["li"],
             "children": [
               {
-                "tag": "button",
+                "tag": "div",
                 "id": "btn-load",
-                "text": "Load Game",
+                "text": "",
+                "title": "Load game",
                 "classes": ["button", "btn-load"],
                 "children": [
                 ]
@@ -178,9 +179,10 @@
             "classes": ["li"],
             "children": [
               {
-                "tag": "button",
+                "tag": "div",
                 "id": "btn-save",
-                "text": "Save Game",
+                "text": "",
+                "title": "Save game",
                 "classes": ["button", "btn-save"],
                 "children": [
                 ]
@@ -196,6 +198,7 @@
                 "tag": "div",
                 "id": "btn-sound",
                 "text": "",
+                "title": "Sound On/Off",
                 "classes": ["button", "btn-sound"],
                 "children": [
                 ]
@@ -211,6 +214,7 @@
                 "tag": "div",
                 "id": "btn-score",
                 "text": "",
+                "title": "Score Table",
                 "classes": ["button", "btn-score"],
                 "children": [
                 ]

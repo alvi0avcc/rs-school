@@ -282,6 +282,9 @@ export default class Page {
     if (options.value) {
       element.setAttribute("value", options.value);
     }
+    if (options.title) {
+      element.setAttribute("title", options.title);
+    }
     if (parent != null) {
       parent.appendChild(element);
     }
