@@ -217,6 +217,16 @@ export default class Page {
       }
     });
 
+    const btnHint = this.#parent.querySelector("#btn-hint");
+    btnHint.addEventListener('click', () => {
+      nonograms.soundPlay('click');
+      const cellsHint = this.#parent.querySelectorAll(".cell.solution");
+      cellsHint.forEach((cell)=>{
+        cell.classList.toggle("hint");
+      });
+      scoreModal.classList.remove('show');
+    });
+
     console.log("loading of DOM completed");
   }
 
@@ -355,7 +365,7 @@ export default class Page {
           // console.log(cell);
           const element = this.createElement({
             id: `cell-${rowIndex}/${colIndex}`,
-            text: cell,
+            text: (cell === 1 ? "◉": ""),
             classes: (cell === 1 ? ["cell", "solution"] : ["cell"])
           });
           // console.log(nonograms.getUserCellState(rowIndex, colIndex));

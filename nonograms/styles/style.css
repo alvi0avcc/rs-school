@@ -61,6 +61,7 @@ body{
   aspect-ratio: 1;
   align-items: center;
   justify-content: center;
+  color: transparent;
 }
 
 .vertical{
@@ -244,6 +245,18 @@ body{
   background-size: contain;
 }
 
+.btn-hint {
+  width: 25px;
+  height: 25px;
+  background-image: url("../assets/hint.png");
+  background-position: center;
+  background-size: contain;
+}
+
 .show {
   display: flex;
+}
+
+.hint{
+  color: var(--font-color);
 }

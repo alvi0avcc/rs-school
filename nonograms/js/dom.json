@@ -236,6 +236,22 @@
                 ]
               }
             ]
+          },
+          {
+            "tag": "li",
+            "text": "",
+            "classes": ["li"],
+            "children": [
+              {
+                "tag": "div",
+                "id": "btn-hint",
+                "text": "",
+                "title": "Show tips for tester",
+                "classes": ["button", "btn-hint"],
+                "children": [
+                ]
+              }
+            ]
           }
         ]
       }
