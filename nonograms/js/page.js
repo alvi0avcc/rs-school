@@ -111,8 +111,10 @@ export default class Page {
 
     const saveGame = this.#parent.querySelector("#btn-save");
     saveGame.addEventListener('click', () => {
-      nonograms.soundPlay('click');
-      nonograms.saveGame();
+      if (!this.#solution) {
+        nonograms.soundPlay('click');
+        nonograms.saveGame();
+      }
     });
 
     const loadGame = this.#parent.querySelector("#btn-load");
