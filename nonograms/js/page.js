@@ -435,7 +435,7 @@ export default class Page {
 
   get showWin(){
     console.log("You Win!");
-    
+    nonograms.initStartGame(false);
     nonograms.soundPlay('win');
     this.stopTimer(true);
     nonograms.freeze(true);
