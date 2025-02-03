@@ -24,6 +24,7 @@ export default class Page {
 
     const levelSelector = this.#parent.querySelector("#level-selector");
     levelSelector.addEventListener('change', (events) => {
+      nonograms.initStartGame(false);
       nonograms.soundPlay('click');
       nonograms.setLevel(events.currentTarget.value).then(() => {
         this.clearPuzzleList;
@@ -41,6 +42,7 @@ export default class Page {
     const ShowSolution = this.#parent.querySelector("#btn-solution");
     ShowSolution.addEventListener('click', () => {
       this.stopTimer();
+      nonograms.initStartGame(false);
       if (!this.#solution) {
         nonograms.soundPlay('solution');
         const styleSheet = document.styleSheets[0];
@@ -56,17 +58,20 @@ export default class Page {
 
     const levelRestart = this.#parent.querySelector("#restart");
     levelRestart.addEventListener('click', () => {
+      nonograms.initStartGame(false);
       nonograms.soundPlay('restart');
+      nonograms.setElapsedTime(0);
       this.removePuzzle;
       nonograms.clearPuzzle;
       this.puzzle();
       nonograms.freeze(false);
       this.hideSolution;
-      this.stopTimer();
+      // this.stopTimer();
     });
 
     const randomPuzzle = this.#parent.querySelector("#btn-random");
     randomPuzzle.addEventListener('click', async () => {
+      nonograms.initStartGame(false);
       this.hideSolution;
       nonograms.soundPlay('click');
       this.showMessage('A random game is being selected.');
@@ -101,21 +106,31 @@ export default class Page {
 
     const saveGame = this.#parent.querySelector("#btn-save");
     saveGame.addEventListener('click', () => {
-      if (!this.#solution) {
+      if (!this.#solution && nonograms.getGameState) {
         nonograms.soundPlay('click');
         this.showMessage('Saving Game');
 
         nonograms.saveGame();
       } else {
-        this.showMessage('You cannot save the solution shown!');
+        if (this.#solution) {
+          this.showMessage('You will not be able to save if the solution is shown!');
+        } else {
+          this.showMessage('You won\'t be able to save a game you haven\'t started.!');
+        }
       }
     });
 
     const loadGame = this.#parent.querySelector("#btn-load");
     loadGame.addEventListener('click', () => {
+      nonograms.initStartGame(false);
       nonograms.soundPlay('click');
       this.showMessage('Loading Game');
-      nonograms.loadGame();
+      nonograms.loadGame().then((result)=>{
+        if (result){
+          this.#parent.querySelector('#timer').textContent =
+            `Timer ${nonograms.secondsToString(result.elapsedTime)}`;
+        }
+      });
 
       const levelSelector = this.#parent.querySelector('#level-selector');
       const puzzleSelector = this.#parent.querySelector('#puzzle-selector');
@@ -233,6 +248,7 @@ export default class Page {
     this.stopTimer();
     const selector = this.#parent.querySelector("#puzzle-selector");
     selector.addEventListener('change', (events) => {
+      nonograms.initStartGame(false);
       nonograms.soundPlay('click');
       nonograms.setPuzzle(events.currentTarget.value).then( () => {
         this.removePuzzle;
@@ -366,7 +382,7 @@ export default class Page {
 
   cellClick(element){
     element.addEventListener('click', (events) => { // for left click
-      console.log("left events = ", events.currentTarget.id);
+      nonograms.initStartGame(true);
       const [row, col] = this.parseCell(events.currentTarget.id);
 
       if (!nonograms.getFreeze) {
@@ -391,8 +407,7 @@ export default class Page {
 
     element.addEventListener('contextmenu', (events) => { // for right click
       events.preventDefault(); // block context menu
-
-      console.log("right events = ", events);
+      nonograms.initStartGame(true);
 
       const [row, col] = this.parseCell(events.currentTarget.id);
 
@@ -420,7 +435,7 @@ export default class Page {
 
   get showWin(){
     console.log("You Win!");
-    
+    nonograms.initStartGame(false);
     nonograms.soundPlay('win');
     this.stopTimer(true);
     nonograms.freeze(true);
@@ -440,7 +455,6 @@ export default class Page {
       nonograms.initTimer();
       nonograms.soundPlay('start');
       this.#timerID = setInterval(()=>{
-        console.log(nonograms.getTimer);
         timer.textContent = `Timer ${nonograms.getTimer}`;
       }, 1000);
     }

@@ -7,6 +7,7 @@ class Nonograms {
   #puzzleList; // list of all puzzles
   #freezeClick = false;
   #startTime;
+  #startGame = false;
   #elapsedTime = 0;
   soundOn = true; //for all sound
   sounds = {}; //all sounds
@@ -24,6 +25,15 @@ class Nonograms {
     this.soundOn ? this.soundOn = false : this.soundOn = true;
   }
 
+  initStartGame(state = true){
+    this.#startGame = state;
+    return this.#startGame;
+  }
+
+  get getGameState(){
+    return this.#startGame;
+  }
+
   saveGame(){
     const game = {};
     game.puzzle = this.#puzzle
@@ -34,7 +44,7 @@ class Nonograms {
     localStorage.setItem('game', JSON.stringify(game));
   }
 
-  loadGame() {
+  async loadGame() {
     const savedGame = localStorage.getItem('game');
     if (savedGame) {
         const game = JSON.parse(savedGame);
@@ -44,8 +54,10 @@ class Nonograms {
         this.#startTime = game.startTime;
         this.#elapsedTime = game.elapsedTime;
         this.freeze(false);
+        return game;
     } else {
         console.log(`You don't have any saved games`);
+        return false;
     }
   }
 
@@ -93,15 +105,20 @@ class Nonograms {
     return Math.round((Date.now() - this.#startTime) / 1000) + this.#elapsedTime;
   }
 
+  secondsToString(seconds){
+    const minutes = Math.floor(seconds / 60);
+    const sec = seconds % 60;
+    return `${(minutes < 10 ? `0${minutes}` : minutes)} : ${(sec < 10 ? `0${sec}` : sec)}`;
+  }
+
   get getTimer(){
-    const elapsedTime = this.getTime;
-    const minutes = Math.floor(elapsedTime / 60);
-    const seconds = elapsedTime % 60;
-    return `${(minutes < 10 ? `0${minutes}` : minutes)} : ${(seconds < 10 ? `0${seconds}` : seconds)}`;
+    const seconds = this.getTime % 60;
+    return this.secondsToString(seconds);
   }
 
   setElapsedTime(elapsed = 0){
     this.#elapsedTime = elapsed;
+    this.initTimer(0);
   }
 
   freeze(state){
@@ -314,9 +331,7 @@ class Nonograms {
 
   get checkPuzzle(){
     const puzzle = this.getPuzzleMatrix;
-    console.log(puzzle);
     const userPuzzle = this.getUserPuzzle
-    console.log(userPuzzle);
 
     for (let row = 0; row < puzzle.length; row++) {
       for (let col = 0; col < puzzle.length; col++) {
