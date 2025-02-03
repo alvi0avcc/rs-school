@@ -27,7 +27,7 @@ body{
   display: grid;
   border: solid 1px var(--line-color);
   width: 100%;
-  max-width: 1024px;
+  max-width: 75vh;
   font-size: 1em;
 }
 
