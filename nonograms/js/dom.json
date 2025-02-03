@@ -334,5 +334,35 @@
       ]
       }
     ]
+  },
+  {
+    "tag": "div",
+    "id": "message",
+    "text": "",
+    "classes": ["message"],
+    "children": [
+      {
+        "tag": "div",
+        "text": "",
+        "classes": ["container-message"],
+        "children": [
+          {
+            "tag": "p",
+            "text": "Info message",
+            "classes": ["message-text"]
+          },
+          {
+            "tag": "hr",
+            "classes": ["hr"]
+          },
+          {
+            "tag": "p",
+            "id": "message-text",
+            "text": "message-text",
+            "classes": ["message-text"]
+          }
+        ]
+      }
+    ]
   }
 ]}

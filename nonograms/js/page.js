@@ -75,6 +75,7 @@ export default class Page {
     randomPuzzle.addEventListener('click', async () => {
       this.hideSolution;
       nonograms.soundPlay('click');
+      this.showMessage('A random game is being selected.');
       for (let i = 0; i < 5; i++) {
         const puzzleList = nonograms.getPuzzleListAll;
         // console.log(puzzleList);
@@ -113,13 +114,18 @@ export default class Page {
     saveGame.addEventListener('click', () => {
       if (!this.#solution) {
         nonograms.soundPlay('click');
+        this.showMessage('Saving Game');
+
         nonograms.saveGame();
+      } else {
+        this.showMessage('You cannot save the solution shown!');
       }
     });
 
     const loadGame = this.#parent.querySelector("#btn-load");
     loadGame.addEventListener('click', () => {
       nonograms.soundPlay('click');
+      this.showMessage('Loading Game');
       nonograms.loadGame();
 
       const levelSelector = this.#parent.querySelector('#level-selector');
@@ -475,6 +481,26 @@ export default class Page {
     }
     clearInterval(this.#timerID);
     this.#timerID = null;
+  }
+
+  showMessage(text){
+    // nonograms.soundPlay('message');
+    const message = this.#parent.querySelector("#message-text");
+    message.textContent = text;
+    const showMessage = this.#parent.querySelector("#message");
+    showMessage.classList.add("show");
+    
+
+    setTimeout(() => {
+      showMessage.style.opacity = 1;
+      setTimeout(() => {
+        showMessage.style.opacity = 0;
+        setTimeout(() => {
+          showMessage.classList.remove("show");
+        }, 50);
+      }, 1000);
+    }, 50);
+    nonograms.saveResult();
   }
   
 }
