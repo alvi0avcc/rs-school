@@ -17,17 +17,13 @@ export default class Page {
 
   async init(){
     console.log("commence loading of DOM");
-    console.log(this.#parent);
 
     await this.loadDom();
-    console.log(this.#parent);
 
     await nonograms.init();
-    console.log(nonograms.getPuzzleListAll);
 
     const levelSelector = this.#parent.querySelector("#level-selector");
     levelSelector.addEventListener('change', (events) => {
-      // console.log(events.currentTarget.value);
       nonograms.soundPlay('click');
       nonograms.setLevel(events.currentTarget.value).then(() => {
         this.clearPuzzleList;
@@ -52,7 +48,6 @@ export default class Page {
         styleSheet.insertRule('.solution { background-color: black !important;}');
         styleSheet.insertRule('.cell { background-color: white !important;}');
         this.#solution = true;
-        // console.log(styleSheet);
         
         nonograms.clearPuzzle;
         nonograms.freeze(true);
@@ -68,7 +63,6 @@ export default class Page {
       nonograms.freeze(false);
       this.hideSolution;
       this.stopTimer();
-      // console.log(styleSheet);
     });
 
     const randomPuzzle = this.#parent.querySelector("#btn-random");
@@ -78,16 +72,12 @@ export default class Page {
       this.showMessage('A random game is being selected.');
       for (let i = 0; i < 5; i++) {
         const puzzleList = nonograms.getPuzzleListAll;
-        // console.log(puzzleList);
         const levels = Object.keys(puzzleList);
         const randomIndex = Math.floor(Math.random() * levels.length);
         const randomLevel = levels[randomIndex];
-        // console.log(randomLevel);
         const puzzles = puzzleList[randomLevel];
-        // console.log(puzzles);
         const randomPuzzleIndex = Math.floor(Math.random() * puzzles.length);
         const randomPuzzle = puzzles[randomPuzzleIndex];
-        // console.log(randomPuzzle);
         const levelSelector = this.#parent.querySelector('#level-selector');
         const puzzleSelector = this.#parent.querySelector('#puzzle-selector');
         levelSelector.value = randomLevel;
@@ -98,7 +88,6 @@ export default class Page {
         puzzleSelector.dispatchEvent(new Event('change'));
         await new Promise((resolve) => setTimeout(resolve, 100));
       }
-      // nonograms.soundPlay('random', true);
     });
 
     const winClose = this.#parent.querySelector("#button-x");
@@ -131,11 +120,8 @@ export default class Page {
       const levelSelector = this.#parent.querySelector('#level-selector');
       const puzzleSelector = this.#parent.querySelector('#puzzle-selector');
       levelSelector.value = nonograms.getLevel;
-      console.log(nonograms.getLevel);
       this.clearPuzzleList;
       this.fillPuzzleSelector();
-      console.log(nonograms.getPuzzleName);
-      console.log(nonograms.getUserPuzzle);
 
       puzzleSelector.value = nonograms.getPuzzleName;
 
@@ -161,9 +147,7 @@ export default class Page {
       const score = nonograms.sortResult(nonograms.loadResult());
       if (score) {
         score.forEach((record, row) => {
-          console.log(record);
           Object.values(record).forEach((value, index) => {
-            console.log(value, index);
             const cell = this.#parent.querySelector(`#score-${row + 1}-${index + 2}`);
             if (row % 2 === 0) cell.classList.add('score-cell-mark');
             if (index === 2) {
@@ -248,9 +232,7 @@ export default class Page {
   fillPuzzleSelector (){
     this.stopTimer();
     const selector = this.#parent.querySelector("#puzzle-selector");
-    console.log(selector);
     selector.addEventListener('change', (events) => {
-      console.log(events.currentTarget.value);
       nonograms.soundPlay('click');
       nonograms.setPuzzle(events.currentTarget.value).then( () => {
         this.removePuzzle;
@@ -260,7 +242,6 @@ export default class Page {
       });
       
     });
-    console.log(nonograms.getPuzzleListByCurrentLevel);
     nonograms.getPuzzleListByCurrentLevel.forEach((name) => {
       selector.append(this.createElement({tag: "option", text: name, value: name}));
     });
@@ -335,15 +316,11 @@ export default class Page {
   puzzle(){
     this.stopTimer();
     const puzzle = nonograms.getPuzzle;
-      // console.log(puzzle);
 
     if (puzzle) {
       const container = document.querySelector("#cell-container");
       const colRow = puzzle.data.length;
-      // console.log(colRow);
-      // container.style.gridTemplateColumns = `1fr repeat(${colRow}, 1fr)`;
       container.style.gridTemplateColumns = `repeat(${colRow + 1}, 1fr)`;
-      // container.style.gridTemplateRows = `min-content repeat(${colRow}, 1fr)`;
       
       const colLineNumbers = nonograms.getColLineNumbers; //upper numbers
       for(let colIndex = -1; colIndex < colRow; colIndex++){
@@ -359,7 +336,6 @@ export default class Page {
 
       const rowLineNumbers = nonograms.getRowLineNumbers; //left numbers
       puzzle.data.forEach((row, rowIndex) => {
-        // console.log(row);
         const element = this.createElement({  // create container with left numbers
           id: `row-${rowIndex}`, classes: ["row-cell"], text: rowLineNumbers[rowIndex].join(' | ')
         });
@@ -367,13 +343,11 @@ export default class Page {
         container.appendChild(element); //add to DOM container with left numbers
       
         row.forEach((cell, colIndex) => {  // cells of puzzle
-          // console.log(cell);
           const element = this.createElement({
             id: `cell-${rowIndex}/${colIndex}`,
             text: (cell === 1 ? "◉": ""),
             classes: (cell === 1 ? ["cell", "solution"] : ["cell"])
           });
-          // console.log(nonograms.getUserCellState(rowIndex, colIndex));
           
           if (nonograms.getUserCellState(rowIndex, colIndex) === 1) element.classList.add('black');
           if (nonograms.getUserCellState(rowIndex, colIndex) === 0) element.classList.add('crossed', 'white');
@@ -387,7 +361,6 @@ export default class Page {
   }
 
   parseCell(id){
-    // cell-row/col
     return id.slice(5).split('/');
   }
 
@@ -483,7 +456,6 @@ export default class Page {
   }
 
   showMessage(text){
-    // nonograms.soundPlay('message');
     const message = this.#parent.querySelector("#message-text");
     message.textContent = text;
     const showMessage = this.#parent.querySelector("#message");

@@ -6,8 +6,6 @@ class Nonograms {
   #level = "Easy"; // current selected level
   #puzzleList; // list of all puzzles
   #freezeClick = false;
-  // #seconds = 0;
-  // #timerOn = false;
   #startTime;
   #elapsedTime = 0;
   soundOn = true; //for all sound
@@ -20,7 +18,6 @@ class Nonograms {
     const puzzleName = this.getPuzzleListByLevel(this.#level)[0];
     await this.setPuzzle(puzzleName);
     this.freeze(false);
-    // console.table(this.#puzzle);
   }
 
   get soundOnOffToggle (){
@@ -34,7 +31,6 @@ class Nonograms {
     game.level = this.#level;
     game.startTime = this.#startTime;
     game.elapsedTime = this.getTime;
-    // console.log(game);
     localStorage.setItem('game', JSON.stringify(game));
   }
 
@@ -48,12 +44,6 @@ class Nonograms {
         this.#startTime = game.startTime;
         this.#elapsedTime = game.elapsedTime;
         this.freeze(false);
-        // console.log("loaded game = ", game);
-        // console.log("puzzle = ", this.#puzzle);
-        // console.log("userPuzzle = ", this.#userPuzzle);
-        // console.log("level = ", this.#level);
-        // console.log("startTime = ", this.#startTime);
-        // console.log("elapsedTime = ", this.#elapsedTime);
     } else {
         console.log(`You don't have any saved games`);
     }
@@ -73,7 +63,6 @@ class Nonograms {
     if (savedWinGame) {
       winGame.push(...savedWinGame);
       if (winGame.length > 5) winGame.pop();
-      console.log(winGame);
     };
     
     localStorage.setItem('win-game', JSON.stringify(winGame));
@@ -98,7 +87,6 @@ class Nonograms {
 
   initTimer(seconds = 0){
     this.#startTime = Date.now() - seconds / 1000;
-    // console.log(this.#startTime);
   }
 
   get getTime(){
@@ -107,7 +95,6 @@ class Nonograms {
 
   get getTimer(){
     const elapsedTime = this.getTime;
-    // console.log(elapsedTime);
     const minutes = Math.floor(elapsedTime / 60);
     const seconds = elapsedTime % 60;
     return `${(minutes < 10 ? `0${minutes}` : minutes)} : ${(seconds < 10 ? `0${seconds}` : seconds)}`;
@@ -139,7 +126,6 @@ class Nonograms {
   async setPuzzle(name){
     const response = await this.loadPuzzleByName(name);
     if (response) {
-      // console.log(response.puzzle);
       this.#puzzle = response.puzzle;
       this.clearPuzzle;
       return this.#puzzle;
@@ -190,8 +176,6 @@ class Nonograms {
       this.setUserCellState(row, col, null);
     }
 
-    // console.log("toggleUserCell = ",this.getUserCellState(row, col))
-
     return this.getUserCellState(row, col);
   }
 
@@ -235,7 +219,6 @@ class Nonograms {
 
       result.push(rowResult);
     }
-    // console.log('counter = ',result);
     return result;
   }
 
@@ -264,7 +247,6 @@ class Nonograms {
 
         result.push(colResult);
     }
-    // console.log('counter = ',result);
 
     return result;
 }
@@ -309,8 +291,6 @@ class Nonograms {
       }
       const data = await response.json();
       this.#puzzleList = data.list;
-      console.table( this.#puzzleList);
-      console.log(this.getPuzzleListByLevel('Easy')); //for testing
       return this.#puzzleList;
     } catch (error) {
       console.error(`Error during loading list of puzzles`, error);
@@ -325,7 +305,6 @@ class Nonograms {
         throw new Error(`Error HTTP! ${response.status}`);
       }
       const data = await response.json();
-      // console.table(data);
       return data;
     } catch (error) {
       console.error(`Error during loading puzzle - ${name}:`, error);
@@ -382,7 +361,6 @@ class Nonograms {
     }
 
     if (this.soundOn && this.sounds[soundName].on) {
-      // console.log(this.sounds[soundName]);
       this.sounds[soundName].audio.currentTime = 0;
       this.sounds[soundName].audio.play().catch(error => {
         console.error(`Audio playback error (${soundName}.ogg):`, error);
