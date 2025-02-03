@@ -3,19 +3,25 @@
     [
       "x",
       "hash",
-      "smile"
+      "smile",
+      "snowflake",
+      "house"
     ],
   "Medium":
     [
       "x-2",
       "hash-2",
-      "smile-2"
+      "smile-2",
+      "snowflake-2",
+      "house-2"
     ],
   "Hard":
     [
       "x-3",
       "hash-3",
-      "smile-3"
+      "smile-3",
+      "snowflake-3",
+      "house-3"
     ]
   }
 }
