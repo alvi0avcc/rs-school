@@ -1,0 +1,37 @@
+@media (hover: hover) {
+
+  .cell:hover {
+    border-color: lime;
+    cursor: pointer;
+  }
+
+  .button-x:hover,
+  .score-x:hover{
+    text-shadow: 0px 0px 10px grey;
+    cursor: pointer;
+  }
+
+  .button:hover,
+  .select:hover{
+    filter: drop-shadow(0px 0px 10px lime);
+    cursor: pointer;
+  }
+}
+
+@media screen and ( max-width: 600px) {
+  .cell-container{
+    font-size: 0.8em;
+  }
+}
+
+@media screen and (max-width: 550px) {
+  .cell-container {
+    font-size: 0.7em;
+  }
+}
+
+@media screen and (max-width: 490px) {
+  .cell-container {
+    font-size: 0.5em;
+  }
+}
