@@ -230,7 +230,6 @@ export default class Page {
       cellsHint.forEach((cell)=>{
         cell.classList.toggle("hint");
       });
-      scoreModal.classList.remove('show');
     });
 
     console.log("loading of DOM completed");
