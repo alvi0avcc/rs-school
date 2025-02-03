@@ -34,7 +34,7 @@ class Nonograms {
     localStorage.setItem('game', JSON.stringify(game));
   }
 
-  loadGame() {
+  async loadGame() {
     const savedGame = localStorage.getItem('game');
     if (savedGame) {
         const game = JSON.parse(savedGame);
@@ -44,8 +44,10 @@ class Nonograms {
         this.#startTime = game.startTime;
         this.#elapsedTime = game.elapsedTime;
         this.freeze(false);
+        return game;
     } else {
         console.log(`You don't have any saved games`);
+        return false;
     }
   }
 
@@ -93,11 +95,15 @@ class Nonograms {
     return Math.round((Date.now() - this.#startTime) / 1000) + this.#elapsedTime;
   }
 
+  secondsToString(seconds){
+    const minutes = Math.floor(seconds / 60);
+    const sec = seconds % 60;
+    return `${(minutes < 10 ? `0${minutes}` : minutes)} : ${(sec < 10 ? `0${sec}` : sec)}`;
+  }
+
   get getTimer(){
-    const elapsedTime = this.getTime;
-    const minutes = Math.floor(elapsedTime / 60);
-    const seconds = elapsedTime % 60;
-    return `${(minutes < 10 ? `0${minutes}` : minutes)} : ${(seconds < 10 ? `0${seconds}` : seconds)}`;
+    const seconds = this.getTime % 60;
+    return this.secondsToString(seconds);
   }
 
   setElapsedTime(elapsed = 0){

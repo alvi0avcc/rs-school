@@ -115,7 +115,12 @@ export default class Page {
     loadGame.addEventListener('click', () => {
       nonograms.soundPlay('click');
       this.showMessage('Loading Game');
-      nonograms.loadGame();
+      nonograms.loadGame().then((result)=>{
+        if (result){
+          this.#parent.querySelector('#timer').textContent =
+            `Timer ${nonograms.secondsToString(result.elapsedTime)}`;
+        }
+      });
 
       const levelSelector = this.#parent.querySelector('#level-selector');
       const puzzleSelector = this.#parent.querySelector('#puzzle-selector');
@@ -440,7 +445,6 @@ export default class Page {
       nonograms.initTimer();
       nonograms.soundPlay('start');
       this.#timerID = setInterval(()=>{
-        console.log(nonograms.getTimer);
         timer.textContent = `Timer ${nonograms.getTimer}`;
       }, 1000);
     }
