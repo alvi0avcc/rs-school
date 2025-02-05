@@ -1,0 +1,27 @@
+{"list":{
+  "Easy":
+    [
+      "plus",
+      "hash",
+      "smile",
+      "snowflake",
+      "house"
+    ],
+  "Medium":
+    [
+      "plus-2",
+      "hash-2",
+      "smile-2",
+      "snowflake-2",
+      "house-2"
+    ],
+  "Hard":
+    [
+      "plus-3",
+      "hash-3",
+      "smile-3",
+      "snowflake-3",
+      "house-3"
+    ]
+  }
+}

@@ -1,0 +1,368 @@
+{"dom":[
+  {
+    "tag": "header",
+    "id": "header",
+    "text": "",
+    "classes": ["header"],
+    "children": [
+      {
+      "tag": "h1",
+      "text": "Nonograms",
+      "classes": ["h1"]
+      },
+      {
+      "tag": "nav",
+      "text": "",
+      "classes": ["nav"],
+      "children": [
+          {
+            "tag": "ul",
+            "text": "",
+            "classes": ["nav-menu"],
+            "children": [
+              {
+                "tag": "li",
+                "text": "",
+                "classes": ["li", "level-selector"],
+                "children": [
+                  {
+                    "tag": "select",
+                    "id": "level-selector",
+                    "text": "",
+                    "classes": ["select"],
+                    "children": [
+                      {
+                        "tag": "option",
+                        "text": "Easy",
+                        "value": "Easy",
+                        "classes": ["option"]
+                      },
+                      {
+                        "tag": "option",
+                        "text": "Medium",
+                        "value": "Medium",
+                        "classes": ["option"]
+                      },
+                      {
+                        "tag": "option",
+                        "text": "Hard",
+                        "value": "Hard",
+                        "classes": ["option"]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "tag": "li",
+                "text": "",
+                "classes": ["li", "puzzle-selector"],
+                "children": [
+                  {
+                    "tag": "select",
+                    "id": "puzzle-selector",
+                    "text": "",
+                    "classes": ["select"],
+                    "children": []
+                  }
+                ]
+              },
+              {
+                "tag": "li",
+                "text": "",
+                "classes": ["li"],
+                "children": [
+                  {
+                    "tag": "button",
+                    "id": "restart",
+                    "text": "Restart",
+                    "classes": ["button", "btn-reset"],
+                    "children": [
+                    ]
+                  }
+                ]
+              },
+              {
+                "tag": "li",
+                "text": "",
+                "classes": ["li"],
+                "children": [
+                  {
+                    "tag": "button",
+                    "id": "btn-solution",
+                    "text": "Solution",
+                    "classes": ["button", "btn-solution"],
+                    "children": [
+                    ]
+                  }
+                ]
+              },
+              {
+                "tag": "li",
+                "text": "",
+                "classes": ["li"],
+                "children": [
+                  {
+                    "tag": "button",
+                    "id": "btn-random",
+                    "text": "Random Game",
+                    "classes": ["button", "btn-random"],
+                    "children": [
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "tag": "main",
+    "id": "main",
+    "text": "",
+    "classes": ["main"],
+    "children": [
+      {
+        "tag": "div",
+        "id": "info",
+        "text": "",
+        "classes": ["info"],
+        "children": [
+          {
+           "tag": "p",
+            "id": "timer",
+            "text": "Timer 00:00",
+            "classes": ["timer"]
+          }
+        ]
+      },
+      {
+        "tag": "div",
+        "id": "cell-container",
+        "text": "",
+        "classes": ["cell-container"]
+      }
+    ]
+  },
+  {
+    "tag": "footer",
+    "id": "footer",
+    "text": "",
+    "classes": ["footer"],
+    "children": [
+      {
+        "tag": "ul",
+        "text": "",
+        "classes": ["nav-menu"],
+        "children": [
+          {
+            "tag": "li",
+            "text": "",
+            "classes": ["li"],
+            "children": [
+              {
+                "tag": "div",
+                "id": "btn-load",
+                "text": "",
+                "title": "Load game",
+                "classes": ["button", "btn-load"],
+                "children": [
+                ]
+              }
+            ]
+          },
+          {
+            "tag": "li",
+            "text": "",
+            "classes": ["li"],
+            "children": [
+              {
+                "tag": "div",
+                "id": "btn-save",
+                "text": "",
+                "title": "Save game",
+                "classes": ["button", "btn-save"],
+                "children": [
+                ]
+              }
+            ]
+          },
+          {
+            "tag": "li",
+            "text": "",
+            "classes": ["li"],
+            "children": [
+              {
+                "tag": "div",
+                "id": "btn-sound",
+                "text": "",
+                "title": "Sound On/Off",
+                "classes": ["button", "btn-sound"],
+                "children": [
+                ]
+              }
+            ]
+          },
+          {
+            "tag": "li",
+            "text": "",
+            "classes": ["li"],
+            "children": [
+              {
+                "tag": "div",
+                "id": "btn-score",
+                "text": "",
+                "title": "Score Table",
+                "classes": ["button", "btn-score"],
+                "children": [
+                ]
+              }
+            ]
+          },
+          {
+            "tag": "li",
+            "text": "",
+            "classes": ["li"],
+            "children": [
+              {
+                "tag": "div",
+                "id": "btn-theme",
+                "text": "",
+                "title": "Theme toggle",
+                "classes": ["button", "btn-theme"],
+                "children": [
+                ]
+              }
+            ]
+          },
+          {
+            "tag": "li",
+            "text": "",
+            "classes": ["li"],
+            "children": [
+              {
+                "tag": "div",
+                "id": "btn-hint",
+                "text": "",
+                "title": "Show tips for tester",
+                "classes": ["button", "btn-hint"],
+                "children": [
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "tag": "div",
+    "id": "win",
+    "text": "",
+    "classes": ["win"],
+    "children": [
+      {
+      "tag": "span",
+      "id": "button-x",
+      "text": "❌",
+      "classes": ["button-x"]
+      },
+      {
+      "tag": "span",
+      "id": "win-message",
+      "text": "Great! You have solved the nonogram in ## seconds!",
+      "classes": ["win-message"]
+      }
+    ]
+  },
+  {
+    "tag": "div",
+    "id": "score",
+    "text": "",
+    "classes": ["score"],
+    "children": [
+      {
+      "tag": "div",
+      "text": "",
+      "classes": ["container-score"],
+      "children": [
+        {
+          "tag": "h2",
+          "text": "Score Table",
+          "classes": ["h2"]
+        },
+        {
+          "tag": "span",
+          "id": "score-x",
+          "text": "❌",
+          "classes": ["score-x"]
+        },
+        {
+          "tag": "hr",
+          "classes": ["hr"]
+        },
+        {
+          "tag": "div",
+          "id": "score-grid",
+          "text": "",
+          "classes": ["score-grid"],
+          "children": [
+            {
+            "tag": "span",
+            "text": "#",
+            "classes": ["span"]
+            },
+            {
+            "tag": "span",
+            "text": "Puzzle",
+            "classes": ["span"]
+            },
+            {
+            "tag": "span",
+            "text": "Level",
+            "classes": ["span"]
+            },
+            {
+            "tag": "span",
+            "text": "Time",
+            "classes": ["span"]
+            }
+          ]
+        }
+      ]
+      }
+    ]
+  },
+  {
+    "tag": "div",
+    "id": "message",
+    "text": "",
+    "classes": ["message"],
+    "children": [
+      {
+        "tag": "div",
+        "text": "",
+        "classes": ["container-message"],
+        "children": [
+          {
+            "tag": "p",
+            "text": "Info message",
+            "classes": ["message-text"]
+          },
+          {
+            "tag": "hr",
+            "classes": ["hr"]
+          },
+          {
+            "tag": "p",
+            "id": "message-text",
+            "text": "message-text",
+            "classes": ["message-text"]
+          }
+        ]
+      }
+    ]
+  }
+]}
