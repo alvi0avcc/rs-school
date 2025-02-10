@@ -15,9 +15,9 @@ My self-introduction video is here [video]()
 
 Hello everyone, and welcome to my self-presentation.
 
-My name is Alexander Vavilov, and I am 46 years old. I am from Berdyansk, on the Azov Sea. In 2001, I graduated from the Ukrainian State Marine Technical University (now the National University of Shipbuilding) with a degree in Ships and Ocean Engineering. I am a shipbuilding engineer.
+My name is Aleksandr Vavilov, and I am 46 years old. I am from Berdyansk, on the Azov Sea. In 2001, I graduated from the Ukrainian State Marine Technical University (now the National University of Shipbuilding) with a degree in Ships and Ocean Engineering. I am a shipbuilding engineer.
 
-I have been interested in programming since school (as far as it was possible in those days). The first computer at my school was the Pravets-8A, and the programming language was BASIC.
+I have been interested in programming since school (as far as it was possible in those days). The first computer at my school was the "Pravets-8A", and the programming language was BASIC.
 
 At university, I studied Pascal and its successor, Delphi. As part of my studies, I participated in the development of software for shipbuilding.
 
