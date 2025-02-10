@@ -9,7 +9,7 @@ My public repository on rs-school (agreed with the school administration):
 ---
 
 # Self-Introduction
-My self-introduction video is here [video]()
+My self-introduction video is here [video](https://youtu.be/Sd5x1XK2vXs)
 
 ## Transcription
 
