@@ -1,13 +1,13 @@
 class Loader {
     private baseLink: string;
-    private options: Record<string, string>
+    private options: Record<string, string>;
     constructor(baseLink: string, options: Record<string, string>) {
         this.baseLink = baseLink;
         this.options = options;
     }
 
     getResp(
-        { endpoint, options = {} }: {endpoint: string, options?: Record<string, string>},
+        { endpoint, options = {} }: { endpoint: string; options?: Record<string, string> },
         callback = () => {
             console.error('No callback for GET response');
         }
@@ -36,7 +36,12 @@ class Loader {
         return url.slice(0, -1);
     }
 
-    private load(method: string, endpoint: string, callback: (data: any) => void, options: Record<string, string> = {}): void {
+    private load(
+        method: string,
+        endpoint: string,
+        callback: (data: any) => void,
+        options: Record<string, string> = {}
+    ): void {
         fetch(this.makeUrl(options, endpoint), { method })
             .then(this.errorHandler)
             .then((res) => res.json())

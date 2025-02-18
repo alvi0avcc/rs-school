@@ -18,12 +18,12 @@ class AppController extends AppLoader {
             if (target.classList.contains('source__item')) {
                 const sourceId: string | null = target.getAttribute('data-source-id');
                 if (newsContainer.getAttribute('data-source') !== sourceId) {
-                    newsContainer.setAttribute('data-source', sourceId != null ? sourceId as string : '');
+                    newsContainer.setAttribute('data-source', sourceId != null ? (sourceId as string) : '');
                     super.getResp(
                         {
                             endpoint: 'everything',
                             options: {
-                                sources: sourceId != null ? sourceId as string : '',
+                                sources: sourceId != null ? (sourceId as string) : '',
                             },
                         },
                         callback
