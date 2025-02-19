@@ -20,7 +20,10 @@ export interface IArticle {
 
 export interface ISources {
     status: string;
-    sources: [{
+    sources: ISrc[];
+}
+
+export interface ISrc {
         id: string;
         name: string;
         description: string;
@@ -28,7 +31,6 @@ export interface ISources {
         category: string;
         language: string;
         country: string;
-    }]
 }
 
 class Loader {
