@@ -13,14 +13,12 @@ export class AppView {
 
     drawNews(data: IEverything): void {
         console.log('data articles = ',data);
-        const values = data?.articles ? data?.articles : [];
-        // console.log('drawNews = ',values);
+        const values = data?.articles || [];
         this.news.draw(values);
     }
 
     drawSources(data: ISources): void {
-        // console.log('drawSources=', data);
-        const values = data?.sources ? data?.sources : [];
+        const values = data?.sources || [];
         this.sources.draw(values);
     }
 }
