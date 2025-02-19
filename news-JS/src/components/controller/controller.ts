@@ -1,17 +1,20 @@
 import AppLoader from './appLoader';
-import { IResponse } from './loader';
+import { IEverything } from './loader';
+import { ISources } from './loader';
 
 class AppController extends AppLoader {
-    getSources(callback: (data: IResponse) => void): void {
+    getSources(callback: (data: ISources) => void): void {
         super.getResp(
             {
                 endpoint: 'sources',
             },
-            callback
+            (data: IEverything | ISources) => {
+                callback(data as ISources)
+            }
         );
     }
 
-    getNews(e: Event, callback: (data: IResponse) => void): void {
+    getNews(e: Event, callback: (data: IEverything) => void): void {
         let target = e.target as HTMLElement;
         const newsContainer = e.currentTarget as HTMLElement;
 
@@ -27,7 +30,9 @@ class AppController extends AppLoader {
                                 sources: sourceId || '',
                             },
                         },
-                        callback
+                        (data: IEverything | ISources) => {
+                            callback(data as IEverything)
+                        }
                     );
                 }
                 return;

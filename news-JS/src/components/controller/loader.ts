@@ -1,7 +1,7 @@
-export interface IResponse {
-    articles: IArticle[];
+export interface IEverything {
     status: string;
     totalResults: number;
+    articles: IArticle[];
 }
 
 interface IArticle {
@@ -18,6 +18,19 @@ interface IArticle {
     urlToImage: string;
 }
 
+export interface ISources {
+    status: string;
+    sources: [{
+        id: string;
+        name: string;
+        description: string;
+        url: string;
+        category: string;
+        language: string;
+        country: string;
+    }]
+}
+
 class Loader {
     private baseLink: string;
     private options: Record<string, string>;
@@ -28,7 +41,7 @@ class Loader {
 
     getResp(
         { endpoint, options = {} }: { endpoint: string; options?: Record<string, string> },
-        callback:(data: IResponse) => void = () => {
+        callback:(data: IEverything | ISources) => void = () => {
             console.error('No callback for GET response');
         }
     ): void {
@@ -59,14 +72,14 @@ class Loader {
     private load(
         method: string,
         endpoint: string,
-        callback: (data: IResponse) => void,
+        callback: (data: IEverything | ISources) => void,
         options: Record<string, string> = {}
     ): void {
         fetch(this.makeUrl(options, endpoint), { method })
             .then(this.errorHandler)
             .then((res) => res.json())
-            .then((data: IResponse) => {
-                console.log('fetch data= ',data);
+            .then((data: IEverything | ISources) => {
+                // console.log('fetch data= ',data);
                 callback(data);
             }
             )
