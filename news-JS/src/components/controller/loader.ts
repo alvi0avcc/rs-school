@@ -4,7 +4,7 @@ export interface IEverything {
     articles: IArticle[];
 }
 
-interface IArticle {
+export interface IArticle {
     author: string;
     content: string;
     description: string;
