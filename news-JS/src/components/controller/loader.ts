@@ -1,3 +1,13 @@
+interface NewsSource {
+    id: string;
+    name: string;
+    description: string;
+    url: string;
+    category: string;
+    language: string;
+    country: string;
+}
+
 class Loader {
     private baseLink: string;
     private options: Record<string, string>;
@@ -39,13 +49,17 @@ class Loader {
     private load(
         method: string,
         endpoint: string,
-        callback: (data: any) => void,
+        callback: (data: NewsSource) => void,
         options: Record<string, string> = {}
     ): void {
         fetch(this.makeUrl(options, endpoint), { method })
             .then(this.errorHandler)
             .then((res) => res.json())
-            .then((data) => callback(data))
+            .then((data) => {
+                // console.log('fetch data= ',data);
+                callback(data);
+            }
+            )
             .catch((err) => console.error(err));
     }
 }
