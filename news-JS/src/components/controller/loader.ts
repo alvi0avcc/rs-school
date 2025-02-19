@@ -1,11 +1,21 @@
-interface NewsSource {
-    id: string;
-    name: string;
+export interface IResponse {
+    articles: IArticle[];
+    status: string;
+    totalResults: number;
+}
+
+interface IArticle {
+    author: string;
+    content: string;
     description: string;
+    publishedAt: string;
+    source: {
+        id: string;
+        name: string;
+    };
+    title: string;
     url: string;
-    category: string;
-    language: string;
-    country: string;
+    urlToImage: string;
 }
 
 class Loader {
@@ -18,7 +28,7 @@ class Loader {
 
     getResp(
         { endpoint, options = {} }: { endpoint: string; options?: Record<string, string> },
-        callback = () => {
+        callback:(data: IResponse) => void = () => {
             console.error('No callback for GET response');
         }
     ): void {
@@ -49,14 +59,14 @@ class Loader {
     private load(
         method: string,
         endpoint: string,
-        callback: (data: NewsSource) => void,
+        callback: (data: IResponse) => void,
         options: Record<string, string> = {}
     ): void {
         fetch(this.makeUrl(options, endpoint), { method })
             .then(this.errorHandler)
             .then((res) => res.json())
-            .then((data) => {
-                // console.log('fetch data= ',data);
+            .then((data: IResponse) => {
+                console.log('fetch data= ',data);
                 callback(data);
             }
             )
