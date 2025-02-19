@@ -1,41 +1,7 @@
 import News from './news/news';
 import Sources from './sources/sources';
-import { IResponse } from '../controller/loader';
-
-// interface INewsArticle {
-//     author: string;
-//     content: string;
-//     description: string;
-//     publishedAt: string;
-//     source: {
-//         id: string;
-//         name: string;
-//     };
-//     title: string;
-//     url: string;
-//     urlToImage: string;
-// }
-
-// export interface INews {
-//     articles: INewsArticle[];
-//     status: string;
-//     totalResults: number;
-// }
-
-interface ISource {
-    id: string;
-    name: string;
-    description?: string;
-    url: string;
-    category: string;
-    language: string;
-    country: string;
-}
-
-export interface ISources {
-    sources: ISource[];
-    status: string;
-}
+import { IEverything } from '../controller/loader';
+import { ISources } from '../controller/loader';
 
 export class AppView {
     private news: News;
@@ -45,7 +11,7 @@ export class AppView {
         this.sources = new Sources();
     }
 
-    drawNews(data: IResponse): void {
+    drawNews(data: IEverything): void {
         console.log('data articles = ',data);
         const values = data?.articles ? data?.articles : [];
         // console.log('drawNews = ',values);
