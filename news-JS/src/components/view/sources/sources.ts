@@ -1,6 +1,8 @@
 import './sources.css';
 import { ISrc } from '../../controller/loader';
 
+export type HtmlElType = HTMLElement | null;
+
 class Sources {
     draw(data: ISrc[]): void {
         const fragment = document.createDocumentFragment();
@@ -14,15 +16,15 @@ class Sources {
         data.forEach((item) => {
             const sourceClone: HTMLElement = sourceItemTemp.content.cloneNode(true) as HTMLElement;
 
-            const sourceItemName: HTMLElement | null = sourceClone.querySelector('.source__item-name');
-            if (sourceItemName) sourceItemName.textContent = item.name;
-            const sourceItem: HTMLElement | null = sourceClone.querySelector('.source__item');
-            if (sourceItem) sourceItem.setAttribute('data-source-id', item.id);
+            const sourceItemName: HtmlElType = sourceClone.querySelector('.source__item-name');
+            if (sourceItemName && item.name) sourceItemName.textContent = item.name;
+            const sourceItem: HtmlElType = sourceClone.querySelector('.source__item');
+            if (sourceItem && item.id) sourceItem.setAttribute('data-source-id', item.id);
 
             fragment.append(sourceClone);
         });
 
-        const sourceBlock: HTMLElement | null = document.querySelector('.sources');
+        const sourceBlock: HtmlElType = document.querySelector('.sources');
         if (sourceBlock) sourceBlock.append(fragment);
     }
 }
