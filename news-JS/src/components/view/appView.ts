@@ -1,6 +1,6 @@
 import News from './news/news';
 import Sources from './sources/sources';
-import { IEverything } from '../controller/loader';
+import { IArticle, IEverything, ISrc } from '../controller/loader';
 import { ISources } from '../controller/loader';
 
 export class AppView {
@@ -12,13 +12,12 @@ export class AppView {
     }
 
     drawNews(data: IEverything): void {
-        console.log('data articles = ', data);
-        const values = data?.articles || [];
+        const values: IArticle[] = data?.articles || [];
         this.news.draw(values);
     }
 
     drawSources(data: ISources): void {
-        const values = data?.sources || [];
+        const values: ISrc[] = data?.sources || [];
         this.sources.draw(values);
     }
 }
