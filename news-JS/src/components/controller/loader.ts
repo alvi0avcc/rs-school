@@ -12,7 +12,7 @@ export interface IArticle {
     source?: {
         id?: string | null;
         name?: string | null;
-    } | {} | null;
+    } | null;
     title?: string | null;
     url?: string | null;
     urlToImage?: string | null;
@@ -20,17 +20,17 @@ export interface IArticle {
 
 export interface ISources {
     status?: string | null;
-    sources?: ISrc[] | []  | null;
+    sources?: ISrc[] | [] | null;
 }
 
 export interface ISrc {
-        id?: string | null;
-        name?: string | null;
-        description?: string | null;
-        url?: string | null;
-        category?: string | null;
-        language?: string | null;
-        country?: string | null;
+    id?: string | null;
+    name?: string | null;
+    description?: string | null;
+    url?: string | null;
+    category?: string | null;
+    language?: string | null;
+    country?: string | null;
 }
 
 type Options = Record<string, string>;
@@ -44,7 +44,7 @@ class Loader {
 
     getResp(
         { endpoint, options }: { endpoint: string; options?: Options },
-        callback:(data: IEverything | ISources) => void = () => {
+        callback: (data: IEverything | ISources) => void = () => {
             console.error('No callback for GET response');
         }
     ): void {
@@ -83,8 +83,7 @@ class Loader {
             .then((res: Response) => res.json())
             .then((data: IEverything | ISources) => {
                 callback(data);
-            }
-            )
+            })
             .catch((err: Error) => console.error(err));
     }
 }

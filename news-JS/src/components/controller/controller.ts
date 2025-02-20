@@ -8,9 +8,7 @@ class AppController extends AppLoader {
             {
                 endpoint: 'sources',
             },
-            (data: IEverything | ISources) => {
-                callback(data as ISources)
-            }
+            (data: IEverything | ISources) => callback(data as ISources)
         );
     }
 
@@ -30,9 +28,7 @@ class AppController extends AppLoader {
                                 sources: sourceId || '',
                             },
                         },
-                        (data: IEverything | ISources) => {
-                            callback(data as IEverything)
-                        }
+                        (data: IEverything | ISources) => callback(data as IEverything)
                     );
                 }
                 return;
