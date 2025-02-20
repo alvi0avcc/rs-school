@@ -5,15 +5,15 @@ export type HtmlElType = HTMLElement | null;
 
 class Sources {
     draw(data: ISrc[]): void {
-        const fragment = document.createDocumentFragment();
-        const sourceItemTemp = document.querySelector<HTMLTemplateElement>('#sourceItemTemp');
+        const fragment: DocumentFragment = document.createDocumentFragment();
+        const sourceItemTemp: HTMLTemplateElement | null = document.querySelector('#sourceItemTemp');
 
         if (!sourceItemTemp) {
             console.error('#sourceItemTemp element not found.');
             return;
         }
 
-        data.forEach((item) => {
+        data.forEach((item: ISrc) => {
             const sourceClone: HTMLElement = sourceItemTemp.content.cloneNode(true) as HTMLElement;
 
             const sourceItemName: HtmlElType = sourceClone.querySelector('.source__item-name');
