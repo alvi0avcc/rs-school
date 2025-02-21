@@ -25,6 +25,8 @@ class App {
                 const target: string | undefined | null = element.dataset?.sourceId;
                 if (target)
                     if (target.slice(0, -2) === 'selector') {
+                        const slider: HTMLElement | null = document.querySelector('.sources.buttons');
+                        if (slider) slider.style.left = '0px';
                         this.controller.getSources((data: ISources) => this.view.drawSources(data, target.slice(-1)));
                     }
             }
