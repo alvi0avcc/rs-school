@@ -36,19 +36,30 @@ class App {
 
         document.querySelector('.right')?.addEventListener('click', () => {
             const slider: HTMLElement | null = document.querySelector('.sources.buttons');
+            const container: HTMLElement | null = document.querySelector('.slide-container');
+            const sliderWidth: number | undefined = slider?.clientWidth;
+            const containerWidth: number | undefined = container?.clientWidth;
+
             if (slider) {
                 if (slider.style.left) {
                     slider.style.left = `${parseInt(slider.style.left.slice(0, -2)) - 100}px`;
                 } else slider.style.left = '-100px';
+                if (sliderWidth && containerWidth) {
+                    if (sliderWidth - containerWidth < -parseInt(slider.style.left.slice(0, -2)))
+                        slider.style.left = `${-sliderWidth + containerWidth}px`;
+                    if (sliderWidth < containerWidth) slider.style.left = '0px';
+                }
             }
         });
 
         document.querySelector('.left')?.addEventListener('click', () => {
             const slider: HTMLElement | null = document.querySelector('.sources.buttons');
+
             if (slider) {
                 if (slider.style.left) {
                     slider.style.left = `${parseInt(slider.style.left.slice(0, -2)) + 100}px`;
-                } else slider.style.left = '100px';
+                    if (parseInt(slider.style.left.slice(0, -2)) > 0) slider.style.left = '0px';
+                } else slider.style.left = '0px';
             }
         });
     }
