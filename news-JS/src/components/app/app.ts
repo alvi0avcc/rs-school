@@ -13,7 +13,7 @@ class App {
 
     start(): void {
         document
-            .querySelector('.sources')
+            .querySelector('.sources.buttons')
             ?.addEventListener('click', (e: Event) =>
                 this.controller.getNews(e, (data: IEverything) => this.view.drawNews(data))
             );
