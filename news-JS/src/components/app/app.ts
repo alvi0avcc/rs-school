@@ -31,6 +31,24 @@ class App {
         });
 
         this.controller.getSources((data: ISources) => this.view.drawSources(data, ''));
+
+        document.querySelector('.right')?.addEventListener('click', () => {
+            const slider: HTMLElement | null = document.querySelector('.sources.buttons');
+            if (slider) {
+                if (slider.style.left) {
+                    slider.style.left = `${parseInt(slider.style.left.slice(0, -2)) - 100}px`;
+                } else slider.style.left = '-100px';
+            }
+        });
+
+        document.querySelector('.left')?.addEventListener('click', () => {
+            const slider: HTMLElement | null = document.querySelector('.sources.buttons');
+            if (slider) {
+                if (slider.style.left) {
+                    slider.style.left = `${parseInt(slider.style.left.slice(0, -2)) + 100}px`;
+                } else slider.style.left = '100px';
+            }
+        });
     }
 }
 
