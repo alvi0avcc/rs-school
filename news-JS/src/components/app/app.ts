@@ -18,7 +18,19 @@ class App {
                 this.controller.getNews(e, (data: IEverything) => this.view.drawNews(data))
             );
 
-        this.controller.getSources((data: ISources) => this.view.drawSources(data));
+        document.querySelector('.sources.selectors')?.addEventListener('click', (e: Event) => {
+            const target: HTMLElement | null = e.target as HTMLElement;
+            const element: HTMLElement | null = target?.closest('[data-source-id]');
+            if (element) {
+                const target: string | undefined | null = element.dataset?.sourceId;
+                if (target)
+                    if (target.slice(0, -2) === 'selector') {
+                        this.controller.getSources((data: ISources) => this.view.drawSources(data, target.slice(-1)));
+                    }
+            }
+        });
+
+        this.controller.getSources((data: ISources) => this.view.drawSources(data, ''));
     }
 }
 
