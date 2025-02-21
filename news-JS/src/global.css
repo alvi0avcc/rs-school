@@ -18,6 +18,7 @@ footer {
     display: flex;
     align-items: center;
     justify-content: center;
+    flex-direction: column;
 }
 footer .copyright {
     font-size: 14px;
@@ -32,4 +33,14 @@ footer .copyright a:hover {
 }
 footer .copyright:before {
     content: '©';
+}
+.additional-info{
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.rss-logo{
+    width: 50px;
+    aspect-ratio: 1;
 }
