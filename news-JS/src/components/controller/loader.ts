@@ -35,9 +35,9 @@ export interface ISrc {
 
 type Options = Record<string, string>;
 class Loader {
-    private baseLink: string;
-    private options: Options;
-    constructor(baseLink: string, options: Options) {
+    private baseLink: string | undefined;
+    private options: Options | undefined;
+    constructor(baseLink: string | undefined, options: Options | undefined) {
         this.baseLink = baseLink;
         this.options = options;
     }
@@ -61,7 +61,9 @@ class Loader {
         return res;
     }
 
-    private makeUrl(options: Options, endpoint: string): string {
+    private makeUrl(options: Options, endpoint: string): string | null {
+        if (!this.baseLink || !this.options) return null;
+
         const urlOptions: Options = { ...this.options, ...options };
         let url: string = `${this.baseLink}${endpoint}?`;
 
@@ -78,13 +80,16 @@ class Loader {
         callback: (data: IEverything | ISources) => void,
         options: Options = {}
     ): void {
-        fetch(this.makeUrl(options, endpoint), { method })
-            .then(this.errorHandler)
-            .then((res: Response) => res.json())
-            .then((data: IEverything | ISources) => {
-                callback(data);
-            })
-            .catch((err: Error) => console.error(err));
+        const url: string | null = this.makeUrl(options, endpoint);
+        if (url) {
+            fetch(url, { method })
+                .then(this.errorHandler)
+                .then((res: Response) => res.json())
+                .then((data: IEverything | ISources) => {
+                    callback(data);
+                })
+                .catch((err: Error) => console.error(err));
+        } else console.error('.env file not found or incorrect');
     }
 }
 
