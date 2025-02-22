@@ -35,8 +35,8 @@ export interface ISrc {
 
 type Options = Record<string, string>;
 class Loader {
-    private baseLink: string | undefined;
-    private options: Options | undefined;
+    private baseLink: Readonly<string> | undefined;
+    private options: Readonly<Options> | undefined;
     constructor(baseLink: string | undefined, options: Options | undefined) {
         this.baseLink = baseLink;
         this.options = options;
