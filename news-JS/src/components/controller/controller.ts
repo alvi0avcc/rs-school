@@ -3,7 +3,7 @@ import { IEverything } from './loader';
 import { ISources } from './loader';
 
 class AppController extends AppLoader {
-    getSources(callback: (data: ISources) => void): void {
+    public getSources(callback: (data: ISources) => void): void {
         super.getResp(
             {
                 endpoint: 'sources',
@@ -12,7 +12,7 @@ class AppController extends AppLoader {
         );
     }
 
-    getNews(e: Event, callback: (data: IEverything) => void): void {
+    public getNews(e: Event, callback: (data: IEverything) => void): void {
         let target: HTMLElement | null = e.target as HTMLElement;
         const newsContainer: HTMLElement | null = e.currentTarget as HTMLElement;
 

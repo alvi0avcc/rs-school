@@ -11,7 +11,7 @@ class App {
         this.view = new AppView();
     }
 
-    start(): void {
+    public start(): void {
         document
             .querySelector('.sources.buttons')
             ?.addEventListener('click', (e: Event) =>

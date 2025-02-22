@@ -4,7 +4,7 @@ import { ISrc } from '../../controller/loader';
 export type HtmlElType = HTMLElement | null;
 
 class Sources {
-    draw(data: ISrc[], selector: string): void {
+    public draw(data: ISrc[], selector: string): void {
         const fragment: DocumentFragment = document.createDocumentFragment();
         const sourceItemTemp: HTMLTemplateElement | null = document.querySelector('#sourceItemTemp');
 

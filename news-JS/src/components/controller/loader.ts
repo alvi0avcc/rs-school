@@ -42,7 +42,7 @@ class Loader {
         this.options = options;
     }
 
-    getResp(
+    public getResp(
         { endpoint, options }: { endpoint: string; options?: Options },
         callback: (data: IEverything | ISources) => void = () => {
             console.error('No callback for GET response');
