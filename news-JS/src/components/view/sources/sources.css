@@ -21,6 +21,7 @@
 }
 
 .sources.selectors {
+    width: auto;
     justify-content: center;
     flex-wrap: wrap;
     height: 100%;
