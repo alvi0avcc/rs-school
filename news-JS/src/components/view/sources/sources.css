@@ -87,3 +87,27 @@
     transform: translateY(-0.25em);
     cursor: pointer;
 }
+
+@media screen and ( max-width: 768px) {
+    .source__item {
+        border-width: 2px;
+        margin: 0.25em;
+        padding: 0.5em 1em;
+    }
+
+    .selectors .source__item {
+        padding: 0.4em;
+    }
+}
+
+@media screen and (max-width: 600px) {
+    .source__item {
+        border-width: 1px;
+        margin: 0.15em;
+        padding: 0.3em 0.5em;
+    }
+
+    .selectors .source__item {
+        padding: 0.3em;
+    }
+}
