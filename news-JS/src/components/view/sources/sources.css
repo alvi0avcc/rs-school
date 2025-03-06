@@ -1,0 +1,113 @@
+.sources {
+    display: flex;
+    flex-wrap: nowrap;
+    width: 100%;
+    height: 120px;
+    overflow: hidden;
+    align-items: center;
+    font: 300 1em 'Fira Sans', sans-serif;
+}
+
+.source__item {
+    background: none;
+    border: 2px solid #30c5ff;
+    font: inherit;
+    line-height: 1;
+    margin: 0.5em;
+    padding: 1em 2em;
+    color: #70d6ff;
+    transition: 0.25s;
+    cursor: pointer;
+}
+
+.sources.selectors {
+    width: auto;
+    justify-content: center;
+    flex-wrap: wrap;
+    height: 100%;
+    padding: 5px;
+}
+
+.sources.buttons {
+    width: fit-content;
+    position: relative;
+    flex-shrink: 0;
+    transition: 0.25s;
+}
+
+.slide-container {
+    width: 90dvw;
+    overflow: hidden;
+    display: flex;
+    justify-content: start;
+}
+
+.selectors .source__item{
+    padding: 0.5em;
+    margin: 1px;
+}
+
+.source__item:hover,
+.source__item:focus {
+    border-color: #3fcc59;
+    color: #69db7e;
+    box-shadow: 0 0.5em 0.5em -0.4em #3fcc59;
+    transform: translateY(-0.25em);
+}
+
+.source__item-name {
+    font-weight: 400;
+    white-space: nowrap;
+}
+
+.slider{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+.slide{
+    width: 20px;
+    height: 20px;
+    flex-shrink: 0;
+    margin: 5px;
+    color: #70d6ff;
+    text-align: center;
+    z-index: 5;
+}
+
+.slide:hover,
+.slide:focus {
+    border-color: #3fcc59;
+    border-radius: 50%;
+    color: #69db7e;
+    /* text-shadow: 0 0.5em 0.5em -0.4em #3fcc59; */
+    box-shadow: 3px 0px 2px #3fcc59, 0px 3px 2px #3fcc59, -3px 0px 2px #3fcc59, 0px -3px 2px #3fcc59;
+    transform: translateY(-0.25em);
+    cursor: pointer;
+}
+
+@media screen and ( max-width: 768px) {
+    .source__item {
+        border-width: 2px;
+        margin: 0.25em;
+        padding: 0.5em 1em;
+    }
+
+    .selectors .source__item {
+        padding: 0.4em;
+    }
+}
+
+@media screen and (max-width: 600px) {
+    .source__item {
+        border-width: 1px;
+        margin: 0.15em;
+        padding: 0.3em 0.5em;
+    }
+
+    .selectors .source__item {
+        padding: 0.3em;
+    }
+}
