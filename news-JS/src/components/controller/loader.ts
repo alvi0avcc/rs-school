@@ -42,13 +42,13 @@ class Loader {
         this.options = options;
     }
 
-    public getResp(
+    public getResp<T>(
         { endpoint, options }: { endpoint: string; options?: Options },
-        callback: (data: IEverything | ISources) => void = () => {
+        callback: (data: T) => void = () => {
             console.error('No callback for GET response');
         }
     ): void {
-        this.load('GET', endpoint, callback, options);
+        this.load<T>('GET', endpoint, callback, options);
     }
 
     private errorHandler(res: Response): Response {
@@ -74,18 +74,13 @@ class Loader {
         return url.slice(0, -1);
     }
 
-    private load(
-        method: string,
-        endpoint: string,
-        callback: (data: IEverything | ISources) => void,
-        options: Options = {}
-    ): void {
+    private load<T>(method: string, endpoint: string, callback: (data: T) => void, options: Options = {}): void {
         const url: string | null = this.makeUrl(options, endpoint);
         if (url) {
             fetch(url, { method })
                 .then(this.errorHandler)
                 .then((res: Response) => res.json())
-                .then((data: IEverything | ISources) => {
+                .then((data: T) => {
                     callback(data);
                 })
                 .catch((err: Error) => console.error(err));
