@@ -38,6 +38,15 @@ export default [
       '@typescript-eslint/member-ordering': 'error',
       'class-methods-use-this': 'error',
       '@typescript-eslint/no-unused-vars': 'warn',
+
+      '@typescript-eslint/no-extraneous-class': [
+      'error',
+      {
+        'allowConstructorOnly': true,
+        'allowEmpty': false,
+        'allowStaticOnly': false
+      }
+    ]
     },
   },
 ];
