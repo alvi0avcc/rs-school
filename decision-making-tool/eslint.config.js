@@ -1,9 +1,10 @@
-const ts = require('@typescript-eslint/eslint-plugin');
-const tsParser = require('@typescript-eslint/parser');
-const prettier = require('eslint-plugin-prettier');
-const prettierConfig = require('eslint-config-prettier');
+import ts from '@typescript-eslint/eslint-plugin';
+import tsParser from '@typescript-eslint/parser';
+import unicorn from 'eslint-plugin-unicorn';
+import prettier from 'eslint-plugin-prettier';
+import prettierConfig from 'eslint-config-prettier';
 
-module.exports = [
+export default [
   {
     files: ['src/**/*.ts'],
     ignores: ['node_modules/', 'dist/'],
@@ -14,13 +15,28 @@ module.exports = [
     },
     plugins: {
       '@typescript-eslint': ts,
+      unicorn,
       prettier,
     },
     rules: {
-      ...ts.configs['recommended'].rules,
+      ...ts.configs.recommended.rules,
+      ...ts.configs.strict.rules,
+      ...ts.configs.stylistic.rules,
+      ...unicorn.configs.recommended.rules,
       ...prettierConfig.rules,
       'prettier/prettier': 'error',
-      '@typescript-eslint/explicit-function-return-type': 'off',
+      '@typescript-eslint/consistent-type-assertions': [
+        'error',
+        { assertionStyle: 'never' },
+      ],
+      '@typescript-eslint/consistent-type-imports': 'error',
+      '@typescript-eslint/explicit-function-return-type': 'error',
+      '@typescript-eslint/explicit-member-accessibility': [
+        'error',
+        { accessibility: 'explicit', overrides: { constructors: 'off' } },
+      ],
+      '@typescript-eslint/member-ordering': 'error',
+      'class-methods-use-this': 'error',
       '@typescript-eslint/no-unused-vars': 'warn',
     },
   },
