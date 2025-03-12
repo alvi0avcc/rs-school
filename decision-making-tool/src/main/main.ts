@@ -1,3 +1,5 @@
+import './main.css';
+
 import ElementCreator from '../element-creator/element-creator';
 export default class HeaderView {
   #creator: ElementCreator;

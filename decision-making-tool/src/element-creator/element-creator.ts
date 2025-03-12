@@ -1,11 +1,16 @@
 export default class ElementCreator {
   private defaultTag = 'div';
 
-  public Section(id = '', text = '', callback: EventListener | undefined = undefined): HTMLElement {
-    const section: HTMLElement = this.createElement('section');
+  public Section(
+    tag = 'section',
+    id = '',
+    text = '',
+    callback: EventListener | undefined = undefined
+  ): HTMLElement {
+    const section: HTMLElement = this.createElement(tag);
     section.id = id;
     section.textContent = text;
-    section.classList.add('section');
+    section.classList.add(tag);
     if (callback) section.addEventListener('click', (event) => callback(event));
     return section;
   }
