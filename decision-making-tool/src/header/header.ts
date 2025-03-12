@@ -1,9 +1,10 @@
+import ElementCreator from '../element-creator/element-creator';
 export default class HeaderView {
-  private defaultTag = 'div';
-
-  #header: HTMLElement | null;
+  #creator: ElementCreator;
+  #header: HTMLElement;
   constructor() {
-    this.#header = document.createElement('div');
+    this.#creator = new ElementCreator();
+    this.#header = this.#creator.Section('header');
     this.createHeader();
   }
 
@@ -12,35 +13,16 @@ export default class HeaderView {
     return '';
   }
 
-  public createHeader(): HTMLElement | null {
+  private createHeader(): HTMLElement {
     const page: HTMLElement[] = [
-      this.createButton('btn1', 'btn1', 'Click Me', () => {
+      this.#creator.Button('btn1', 'Click Me', () => {
         console.log('Button1 clicked!');
       }),
-      this.createButton('btn2', 'btn2', 'Click Me', () => {
+      this.#creator.Button('btn2', 'Click Me', () => {
         console.log('Button2 clicked!');
       }),
     ];
-    // this.#header = document.createElement('div');
-    this.#header?.append(...page);
+    this.#header.append(...page);
     return this.#header;
-  }
-
-  public createElement(tag = this.defaultTag): HTMLElement {
-    return document.createElement(tag);
-  }
-
-  private createButton(
-    id = '',
-    name = '',
-    text = 'button',
-    callback: EventListener | undefined = undefined
-  ): HTMLElement {
-    const button: HTMLElement = this.createElement('button');
-    button.id = id;
-    button.textContent = text;
-    button.classList.add('button');
-    if (callback) button.addEventListener('click', (event) => callback(event));
-    return button;
   }
 }
