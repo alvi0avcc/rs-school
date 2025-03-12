@@ -1,3 +1,5 @@
+import '../app.css';
+
 import MainView from '../main/main';
 
 export default class App {
