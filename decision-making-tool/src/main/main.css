@@ -1,0 +1,140 @@
+.main {
+  display: grid;
+  width: 100%;
+  max-width: 48rem;
+  grid-template:
+    "heading heading" min-content
+    "option-list option-list" min-content
+    "add-option-button add-option-button" min-content
+    "paste-list-button paste-list-button" min-content
+    "clear-list-button clear-list-button" min-content
+    "save-list-button load-list-button" min-content
+    "start-button start-button" min-content / 1fr 1fr;
+  gap: 1rem;
+  margin-inline: auto;
+  padding: 1rem;
+}
+
+.h1 {
+  color: var(--color-primary-50);
+  text-align: center;
+  text-shadow: 0 0 .25rem var(--color-primary-50);
+  grid-area: heading;
+
+  display: block;
+  font-size: 2em;
+  margin-block-start: 0.67em;
+  margin-block-end: 0.67em;
+  margin-inline-start: 0px;
+  margin-inline-end: 0px;
+  font-weight: bold;
+  unicode-bidi: isolate;
+}
+
+:is(h1, h2, h3, h4, h5, h6, p, ul, ol) {
+  margin-block: 0px;
+}
+
+.ul {
+  display: flex;
+  flex-direction: column;
+  padding-left: 0px;
+  grid-area: option-list;
+  gap: 0.5rem;
+
+  display: block;
+  list-style-type: disc;
+  margin-block-start: 1em;
+  margin-block-end: 1em;
+  margin-inline-start: 0px;
+  margin-inline-end: 0px;
+  padding-inline-start: 40px;
+  unicode-bidi: isolate;
+}
+
+.li {
+  display: flex;
+  align-items: center;
+  background-image: linear-gradient(var(--color-primary-300), var(--color-primary-700));
+  gap: 1rem;
+  padding: 0.6rem 0.8rem;
+  border-radius: 0.5rem;
+}
+
+.label {
+  cursor: pointer;
+  flex-shrink: 0;
+  width: 3rem;
+  text-align: center;
+  background-image: linear-gradient(var(--color-primary-300), var(--color-primary-700));
+  box-shadow: 0 0 .25rem .1rem var(--color-primary-200);
+  padding: 0.5rem;
+  border-radius: 0.2rem;
+}
+
+.input_title {
+  flex-grow: 1;
+  width: 100%;
+  min-width: 5rem;
+}
+
+.input_weight {
+  max-width: 5rem;
+}
+
+:is(.input_title, .input_weight) {
+  line-height: normal;
+  color: var(--color-primary-50);
+  background-color: var(--color-primary-800);
+  box-shadow: 0 0 .25rem .1rem var(--color-primary-200);
+  transition-duration: var(--transition-duration);
+  transition-property: box-shadow;
+  padding: 0.5rem;
+  border-width: initial;
+  border-style: none;
+  border-color: initial;
+  border-image: initial;
+  outline: none;
+}
+
+.button {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-primary-50);
+  background-image: linear-gradient(var(--color-primary-300), var(--color-primary-700));
+  box-shadow: 0 0 .25rem .1rem var(--color-primary-200);
+  transition-duration: var(--transition-duration);
+  transition-property: filter, box-shadow, opacity;
+  padding: 0.5rem;
+  border-width: initial;
+  border-style: none;
+  border-color: initial;
+  border-image: initial;
+  border-radius: 0.25rem;
+}
+
+.add-option-button{
+  grid-area: add-option-button;
+}
+
+.paste-list-button {
+  grid-area: paste-list-button;
+}
+
+.clear-list-button {
+  grid-area: clear-list-button;
+}
+
+.save-list-button {
+  grid-area: save-list-button;
+}
+
+.load-list-button {
+  grid-area: load-list-button;
+}
+
+.start-button {
+  grid-area: start-button;
+}
