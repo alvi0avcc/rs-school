@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/alvi0avcc/rs-school/issues"
   },
-  "homepage": "https://github.com/alvi0avcc/rs-school/tree/decision-making-tool#readme"
+  "homepage": "https://github.com/alvi0avcc/rs-school/tree/decision-making-tool#readme",
+  "devDependencies": {
+    "typescript": "^5.8.2"
+  }
 }
