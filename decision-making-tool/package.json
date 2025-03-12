@@ -1,0 +1,19 @@
+{
+  "name": "decision-making-tool",
+  "version": "1.0.0",
+  "description": "decision-making-tool",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/alvi0avcc/rs-school.git#decision-making-tool"
+  },
+  "author": "A.Vavilov",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/alvi0avcc/rs-school/issues"
+  },
+  "homepage": "https://github.com/alvi0avcc/rs-school/tree/decision-making-tool#readme"
+}
