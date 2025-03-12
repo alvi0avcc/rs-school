@@ -1,17 +1,15 @@
-import HeaderView from '../header/header';
+import MainView from '../main/main';
 
 export default class App {
-  #header: HeaderView;
-  // main: MainView;
-  // footer: FooterView;
+  #main: MainView;
   // router: Router;
 
   constructor() {
-    this.#header = new HeaderView();
+    this.#main = new MainView();
     this.createView();
   }
 
   public createView(): void {
-    document.body.append(this.#header.getView());
+    document.body.append(this.#main.getView());
   }
 }

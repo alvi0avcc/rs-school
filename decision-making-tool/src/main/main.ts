@@ -1,19 +1,19 @@
 import ElementCreator from '../element-creator/element-creator';
 export default class HeaderView {
   #creator: ElementCreator;
-  #header: HTMLElement;
+  #main: HTMLElement;
   constructor() {
     this.#creator = new ElementCreator();
-    this.#header = this.#creator.Section('header');
-    this.createHeader();
+    this.#main = this.#creator.Section('main');
+    this.createMain();
   }
 
   public getView(): Node | string {
-    if (this.#header) return this.#header;
+    if (this.#main) return this.#main;
     return '';
   }
 
-  private createHeader(): HTMLElement {
+  private createMain(): HTMLElement {
     const page: HTMLElement[] = [
       this.#creator.Button('btn1', 'Click Me', () => {
         console.log('Button1 clicked!');
@@ -22,7 +22,7 @@ export default class HeaderView {
         console.log('Button2 clicked!');
       }),
     ];
-    this.#header.append(...page);
-    return this.#header;
+    this.#main.append(...page);
+    return this.#main;
   }
 }
