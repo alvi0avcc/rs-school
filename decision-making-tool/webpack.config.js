@@ -26,6 +26,17 @@ export default {
         test: /\.css$/,
         use: ['style-loader', 'css-loader'],
       },
+      {
+        test: /\.svg$/,
+        use: [
+          {
+            loader: 'svg-sprite-loader',
+            options: {
+              symbolId: '[name]',
+            },
+          },
+        ],
+      },
     ],
   },
   plugins: [
