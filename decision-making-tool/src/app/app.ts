@@ -14,4 +14,9 @@ export default class App {
   public createView(): void {
     document.body.append(this.#main.getView());
   }
+
+  private updateView(): void {
+    document.body.replaceChildren();
+    this.createView();
+  }
 }
