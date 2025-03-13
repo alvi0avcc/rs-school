@@ -20,7 +20,7 @@ export default class PickerView {
   }
 
   private createPage(): HTMLElement {
-    const form = this.#creator.section('form', 'form');
+    const form = this.#creator.section();
     const buttonUndo = this.#creator.button(
       'btn-undo',
       '',

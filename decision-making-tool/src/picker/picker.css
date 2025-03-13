@@ -18,7 +18,7 @@
   margin-block: 0px;
 }
 
-.form {
+.section {
   display: grid;
   grid-template:
     "back-button sound-button duration-label" 1fr
