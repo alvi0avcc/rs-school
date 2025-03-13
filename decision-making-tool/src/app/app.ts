@@ -8,10 +8,13 @@ export default class App {
 
   constructor() {
     this.#main = new MainView();
+  }
+
+  public start(): void {
     this.createView();
   }
 
-  public createView(): void {
+  private createView(): void {
     document.body.append(this.#main.getView());
   }
 
