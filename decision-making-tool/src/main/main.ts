@@ -2,17 +2,19 @@ import './main.css';
 
 import ElementCreator from '../element-creator/element-creator';
 export default class HeaderView {
+  private onHashChange: (hash: string) => void;
   #creator: ElementCreator;
   #main: HTMLElement;
-  constructor() {
+  constructor(onHashChange: (hash: string) => void) {
+    this.onHashChange = onHashChange;
     this.#creator = new ElementCreator();
     this.#main = this.#creator.section('main');
     this.createMain();
   }
 
-  public getView(): Node | string {
+  public getView(): HTMLElement | undefined {
     if (this.#main) return this.#main;
-    return '';
+    return undefined;
   }
 
   private createMain(): HTMLElement {
@@ -64,6 +66,8 @@ export default class HeaderView {
         'Start',
         () => {
           console.log('Button5 clicked!');
+          history.pushState({ page: 'picker' }, '', '#/picker');
+          this.onHashChange('/picker');
         },
         ['button', 'start-button']
       ),

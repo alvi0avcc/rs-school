@@ -4,17 +4,19 @@ import '../assets/icon.svg';
 import ElementCreator from '../element-creator/element-creator';
 
 export default class PickerView {
+  private onHashChange: (hash: string) => void;
   #creator: ElementCreator;
   #main: HTMLElement;
-  constructor() {
+  constructor(onHashChange: (hash: string) => void) {
+    this.onHashChange = onHashChange;
     this.#creator = new ElementCreator();
     this.#main = this.#creator.section('main');
     this.createPage();
   }
 
-  public getView(): Node | string {
+  public getView(): HTMLElement | undefined {
     if (this.#main) return this.#main;
-    return '';
+    return undefined;
   }
 
   private createPage(): HTMLElement {
@@ -24,6 +26,8 @@ export default class PickerView {
       '',
       () => {
         console.log('btn-undo clicked!');
+        history.pushState({ page: '/' }, '', '#/');
+        this.onHashChange('/');
       },
       ['button', 'btn_undo']
     );
