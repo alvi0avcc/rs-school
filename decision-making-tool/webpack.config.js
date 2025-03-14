@@ -27,13 +27,13 @@ export default {
         use: ['style-loader', 'css-loader'],
       },
       {
-        test: /\.(png|jpe?g|gif|svg)$/i,
+        test: /\.(ico|png|jpe?g|gif|svg)$/i,
         use: [
           {
             loader: 'file-loader',
             options: {
               name: '[path][name].[ext]',
-              outputPath: 'assets',
+              outputPath: '',
             },
           },
         ],
