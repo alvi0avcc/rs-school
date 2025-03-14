@@ -23,10 +23,14 @@ body {
   display: flex;
   flex-direction: column;
   justify-content: center;
+
   min-height: 100dvh;
+  margin: 0;
+
   font-family: Inter, "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   color: var(--color-primary-50);
+
   background-color: var(--color-primary-500);
-  margin: 0px;
+
   transition: opacity ease-in 0.2s;
 }
