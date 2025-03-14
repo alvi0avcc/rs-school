@@ -27,12 +27,13 @@ export default {
         use: ['style-loader', 'css-loader'],
       },
       {
-        test: /\.svg$/,
+        test: /\.(png|jpe?g|gif|svg)$/i,
         use: [
           {
-            loader: 'svg-sprite-loader',
+            loader: 'file-loader',
             options: {
-              symbolId: '[name]',
+              name: '[path][name].[ext]',
+              outputPath: 'assets',
             },
           },
         ],

@@ -1,5 +1,6 @@
 import './picker.css';
-import '../assets/icon.svg';
+// import '../assets/icon.svg';
+import icons from '../assets/icon.svg';
 
 import ElementCreator from '../element-creator/element-creator';
 
@@ -37,7 +38,7 @@ export default class PickerView {
     svgUndo.setAttribute('height', '24');
 
     const svgUseUndo = document.createElementNS('http://www.w3.org/2000/svg', 'use');
-    svgUseUndo.setAttribute('href', '#icon_undo-2');
+    svgUseUndo.setAttribute('href', `${icons}#undo-2`);
     svgUndo.append(svgUseUndo);
     buttonUndo.append(svgUndo);
 
@@ -55,7 +56,7 @@ export default class PickerView {
     svgSound.setAttribute('height', '24');
 
     const svgUseSound = document.createElementNS('http://www.w3.org/2000/svg', 'use');
-    svgUseSound.setAttribute('href', '#icon_volume-2');
+    svgUseSound.setAttribute('href', `${icons}#volume-2`);
     svgSound.append(svgUseSound);
     buttonSound.append(svgSound);
 
@@ -73,7 +74,7 @@ export default class PickerView {
     svgStart.setAttribute('height', '24');
 
     const svgUseStart = document.createElementNS('http://www.w3.org/2000/svg', 'use');
-    svgUseStart.setAttribute('href', '#icon_play');
+    svgUseStart.setAttribute('href', `${icons}#play`);
     svgStart.append(svgUseStart);
     buttonStart.append(svgStart);
 
