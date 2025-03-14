@@ -2,30 +2,44 @@ import './main.css';
 
 import ElementCreator from '../element-creator/element-creator';
 export default class HeaderView {
-  private onHashChange: (hash: string) => void;
+  private onHashChange: (
+    hash: string
+  ) => void;
   #creator: ElementCreator;
   #main: HTMLElement;
-  constructor(onHashChange: (hash: string) => void) {
+  constructor(
+    onHashChange: (hash: string) => void
+  ) {
     this.onHashChange = onHashChange;
-    this.#creator = new ElementCreator();
-    this.#main = this.#creator.section('main');
+    this.#creator =
+      new ElementCreator();
+    this.#main =
+      this.#creator.section('main');
     this.createMain();
   }
 
-  public getView(): HTMLElement | undefined {
+  public getView():
+    | HTMLElement
+    | undefined {
     if (this.#main) return this.#main;
     return undefined;
   }
 
   private createMain(): HTMLElement {
     const page: HTMLElement[] = [
-      this.#creator.label('h1', '', 'Decision Making Tool'),
+      this.#creator.label(
+        'h1',
+        '',
+        'Decision Making Tool'
+      ),
       this.#creator.ul('ul', 'ul'),
       this.#creator.button(
         'btn1',
         'Add Option',
         () => {
-          console.log('Button1 clicked!');
+          console.log(
+            'Button1 clicked!'
+          );
         },
         ['button', 'add-option-button']
       ),
@@ -33,7 +47,9 @@ export default class HeaderView {
         'btn2',
         'Paste list',
         () => {
-          console.log('Button2 clicked!');
+          console.log(
+            'Button2 clicked!'
+          );
         },
         ['button', 'paste-list-button']
       ),
@@ -41,7 +57,9 @@ export default class HeaderView {
         'btn3',
         'Clear list',
         () => {
-          console.log('Button3 clicked!');
+          console.log(
+            'Button3 clicked!'
+          );
         },
         ['button', 'clear-list-button']
       ),
@@ -49,7 +67,9 @@ export default class HeaderView {
         'btn4',
         'Save list to file',
         () => {
-          console.log('Button4 clicked!');
+          console.log(
+            'Button4 clicked!'
+          );
         },
         ['button', 'save-list-button']
       ),
@@ -57,7 +77,9 @@ export default class HeaderView {
         'btn4',
         'Load list from file',
         () => {
-          console.log('Button4 clicked!');
+          console.log(
+            'Button4 clicked!'
+          );
         },
         ['button', 'load-list-button']
       ),
@@ -65,8 +87,14 @@ export default class HeaderView {
         'btn5',
         'Start',
         () => {
-          console.log('Button5 clicked!');
-          history.pushState({ page: 'picker' }, '', '#/picker');
+          console.log(
+            'Button5 clicked!'
+          );
+          history.pushState(
+            { page: 'picker' },
+            '',
+            '#/picker'
+          );
           this.onHashChange('/picker');
         },
         ['button', 'start-button']

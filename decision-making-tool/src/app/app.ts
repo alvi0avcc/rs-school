@@ -20,10 +20,22 @@ export default class App {
   constructor() {
     this.#hash = '/';
     this.#page = document.body;
-    this.#main = new MainView((hash: string) => this.onHashChange(hash));
-    this.#picker = new PickerView((hash: string) => this.onHashChange(hash));
-    this.#error404 = new ErrorView((hash: string) => this.onHashChange(hash));
-    this.#router = new Router((hash: string) => this.onHashChange(hash));
+    this.#main = new MainView(
+      (hash: string) =>
+        this.onHashChange(hash)
+    );
+    this.#picker = new PickerView(
+      (hash: string) =>
+        this.onHashChange(hash)
+    );
+    this.#error404 = new ErrorView(
+      (hash: string) =>
+        this.onHashChange(hash)
+    );
+    this.#router = new Router(
+      (hash: string) =>
+        this.onHashChange(hash)
+    );
   }
 
   public start(): void {
@@ -32,43 +44,78 @@ export default class App {
 
   private createView(): void {
     if (this.#hash === '/') {
-      this.#pageMain = this.#main.getView();
-      if (this.#pageMain) this.#page.append(this.#pageMain);
-      if (this.#pagePicker) this.#pagePicker.remove();
-      if (this.#page404) this.#page404.remove();
+      this.#pageMain =
+        this.#main.getView();
+      if (this.#pageMain)
+        this.#page.append(
+          this.#pageMain
+        );
+      if (this.#pagePicker)
+        this.#pagePicker.remove();
+      if (this.#page404)
+        this.#page404.remove();
     }
 
     if (this.#hash === '/picker') {
-      this.#pagePicker = this.#picker.getView();
-      if (this.#pagePicker) this.#page.append(this.#pagePicker);
-      if (this.#pageMain) this.#pageMain.remove();
-      if (this.#page404) this.#page404.remove();
+      this.#pagePicker =
+        this.#picker.getView();
+      if (this.#pagePicker)
+        this.#page.append(
+          this.#pagePicker
+        );
+      if (this.#pageMain)
+        this.#pageMain.remove();
+      if (this.#page404)
+        this.#page404.remove();
     }
 
     if (this.#hash === '/404') {
-      this.#page404 = this.#error404.getView();
-      if (this.#page404) this.#page.append(this.#page404);
-      if (this.#pageMain) this.#pageMain.remove();
-      if (this.#pagePicker) this.#pagePicker.remove();
+      this.#page404 =
+        this.#error404.getView();
+      if (this.#page404)
+        this.#page.append(
+          this.#page404
+        );
+      if (this.#pageMain)
+        this.#pageMain.remove();
+      if (this.#pagePicker)
+        this.#pagePicker.remove();
     }
   }
 
-  private onHashChange(hash: string): void {
+  private onHashChange(
+    hash: string
+  ): void {
     this.#hash = hash;
-    console.log('Hash changed to:', hash);
+    console.log(
+      'Hash changed to:',
+      hash
+    );
     switch (hash) {
       case '/': {
-        history.pushState({ page: '#/' }, '', '#/');
+        history.pushState(
+          { page: '#/' },
+          '',
+          '#/'
+        );
         break;
       }
 
       case '/picker': {
-        history.pushState({ page: '#/picker' }, '', '#/picker');
+        history.pushState(
+          { page: '#/picker' },
+          '',
+          '#/picker'
+        );
         break;
       }
 
       default: {
-        history.pushState({ page: '#/404' }, '', '#/404');
+        history.pushState(
+          { page: '#/404' },
+          '',
+          '#/404'
+        );
         console.log('error 404');
         this.#hash = '/404';
         break;
