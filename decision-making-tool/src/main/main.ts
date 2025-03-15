@@ -1,16 +1,42 @@
 import './main.css';
 
 import ElementCreator from '../element-creator/element-creator';
-export default class HeaderView {
+import type { List } from '../utils/storage';
+
+export enum OptionRule {
+  add,
+  del,
+  paste,
+  clear,
+  save,
+  load,
+}
+export default class MainView {
   private onHashChange: (
     hash: string
   ) => void;
+  private onOptionsChange: (
+    rule: OptionRule,
+    value: string
+  ) => void;
+  #listOptions: List | undefined;
   #creator: ElementCreator;
   #main: HTMLElement;
+
   constructor(
-    onHashChange: (hash: string) => void
+    onHashChange: (
+      hash: string
+    ) => void,
+    onOptionsChange: (
+      rule: OptionRule,
+      value: string
+    ) => void,
+    listOptions: List | undefined
   ) {
     this.onHashChange = onHashChange;
+    this.onOptionsChange =
+      onOptionsChange;
+    this.#listOptions = listOptions;
     this.#creator =
       new ElementCreator();
     this.#main =
@@ -25,6 +51,14 @@ export default class HeaderView {
     return undefined;
   }
 
+  public setListOptions(
+    listOptions: List
+  ): void {
+    this.#listOptions = listOptions;
+    console.log(this.#listOptions);
+    this.createMain();
+  }
+
   private createMain(): HTMLElement {
     const page: HTMLElement[] = [
       this.#creator.label(
@@ -32,6 +66,8 @@ export default class HeaderView {
         '',
         'Decision Making Tool'
       ),
+      this.createListOption() ||
+        this.#creator.section('div'),
       this.#creator.ul('ul', 'ul'),
       this.#creator.button(
         'btn1',
@@ -39,6 +75,10 @@ export default class HeaderView {
         () => {
           console.log(
             'Button1 clicked!'
+          );
+          this.onOptionsChange(
+            OptionRule.add,
+            'test'
           );
         },
         ['button', 'add-option-button']
@@ -100,7 +140,80 @@ export default class HeaderView {
         ['button', 'start-button']
       ),
     ];
+    this.#main.replaceChildren();
     this.#main.append(...page);
+    this.#main.classList.add(
+      'main-page'
+    );
     return this.#main;
+  }
+
+  private createListOption():
+    | HTMLElement
+    | undefined {
+    console.log(
+      'this.#listOptions =',
+      this.#listOptions
+    );
+
+    if (!this.#listOptions)
+      return undefined;
+
+    const id =
+      this.#listOptions.listOptions[0]
+        .id || 0;
+    const title =
+      this.#listOptions.listOptions[0]
+        .title || '';
+    const weight =
+      this.#listOptions.listOptions[0]
+        .weight || 0;
+    const section: HTMLElement =
+      this.#creator.section();
+    const elementId: HTMLElement =
+      this.#creator.label(
+        'label',
+        `id-${id.toString()}`,
+        id.toString()
+      );
+    const elementTitle: HTMLElement =
+      this.#creator.section(
+        'input',
+        '',
+        title
+      );
+    const elementWeight: HTMLElement =
+      this.#creator.section(
+        'input',
+        '',
+        weight.toString()
+      );
+    const elementButton: HTMLElement =
+      this.#creator.button(
+        `btn-del-${id.toString()}`,
+        'Delete',
+        () => {
+          console.log(
+            'Button1 clicked!'
+          );
+          this.onOptionsChange(
+            OptionRule.add,
+            'test'
+          );
+        },
+        ['button']
+      );
+
+    section.append(
+      elementId,
+      elementTitle,
+      elementWeight,
+      elementButton
+    );
+    section.classList.add(
+      'option-list'
+    );
+
+    return section;
   }
 }

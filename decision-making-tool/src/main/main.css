@@ -1,4 +1,4 @@
-.main {
+.main.main-page {
   display: grid;
   grid-template:
     "heading heading" min-content
@@ -150,4 +150,10 @@
 
 .start-button {
   grid-area: start-button;
+}
+
+.section.option-list{
+  grid-template: unset;
+  grid-area: option-list;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
 }

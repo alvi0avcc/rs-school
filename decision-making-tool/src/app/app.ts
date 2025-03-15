@@ -1,12 +1,19 @@
 import '../app.css';
 
+import type { List } from '../utils/storage';
+import { Storage } from '../utils/storage';
+
 import Router from '../router/router';
 
 import MainView from '../main/main';
+import type { OptionRule } from '../main/main';
 import PickerView from '../picker/picker';
 import ErrorView from '../404/404';
 
 export default class App {
+  #storage: Storage;
+  #listOptions: List | undefined;
+
   #main: MainView;
   #picker: PickerView;
   #error404: ErrorView;
@@ -18,11 +25,22 @@ export default class App {
   #hash: string;
 
   constructor() {
+    this.#storage = new Storage();
+
     this.#hash = '/';
     this.#page = document.body;
     this.#main = new MainView(
       (hash: string) =>
-        this.onHashChange(hash)
+        this.onHashChange(hash),
+      (
+        rule: OptionRule,
+        value: string
+      ) =>
+        this.onOptionsChange(
+          rule,
+          value
+        ),
+      this.#listOptions
     );
     this.#picker = new PickerView(
       (hash: string) =>
@@ -38,18 +56,37 @@ export default class App {
     );
   }
 
-  public start(): void {
+  public async start(): Promise<
+    boolean[]
+  > {
+    const isStarted: boolean[] =
+      await this.#storage.init();
+    this.#listOptions =
+      this.#storage.getList();
+    console.log(
+      'listOptions =',
+      this.#listOptions
+    );
+
+    this.#main.setListOptions(
+      this.#listOptions
+    );
+
     this.createView();
+
+    return isStarted;
   }
 
   private createView(): void {
     if (this.#hash === '/') {
       this.#pageMain =
         this.#main.getView();
-      if (this.#pageMain)
+      if (this.#pageMain) {
+        // this.#pageMain.remove();
         this.#page.append(
           this.#pageMain
         );
+      }
       if (this.#pagePicker)
         this.#pagePicker.remove();
       if (this.#page404)
@@ -121,7 +158,16 @@ export default class App {
         break;
       }
     }
+    this.createView();
+  }
 
+  private onOptionsChange(
+    rule: OptionRule,
+    value: string
+  ): void {
+    console.log('storage clicked');
+    console.log(rule);
+    console.log(value);
     this.createView();
   }
 }
