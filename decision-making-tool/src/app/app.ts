@@ -195,6 +195,11 @@ export default class App {
               (item) =>
                 item.id !== +value
             );
+        if (
+          this.#listOptions?.listOptions
+            .length === 0
+        )
+          this.#listOptions.lastId = 0;
         break;
       }
 
