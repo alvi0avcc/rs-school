@@ -99,6 +99,10 @@ export default class MainView {
           console.log(
             'Button3 clicked!'
           );
+          this.onOptionsChange(
+            OptionRule.clear,
+            ''
+          );
         },
         ['button', 'clear-list-button']
       ),

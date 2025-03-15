@@ -195,6 +195,16 @@ export default class App {
               (item) =>
                 item.id !== +value
             );
+        break;
+      }
+
+      case OptionRule.clear: {
+        if (this.#listOptions) {
+          this.#listOptions.listOptions =
+            [];
+          this.#listOptions.lastId = 0;
+        }
+        break;
       }
 
       default: {
