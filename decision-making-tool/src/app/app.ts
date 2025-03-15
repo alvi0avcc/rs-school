@@ -202,10 +202,15 @@ export default class App {
       }
     }
 
-    if (this.#listOptions)
+    if (this.#listOptions) {
       this.#storage.setList(
         this.#listOptions
       );
+      this.#main.setListOptions(
+        this.#listOptions
+      );
+    }
+
     this.createView();
   }
 }
