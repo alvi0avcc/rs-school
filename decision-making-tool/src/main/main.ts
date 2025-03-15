@@ -206,7 +206,7 @@ export default class MainView {
       const elementWeight: HTMLInputElement =
         this.#creator.input(
           'input',
-          `input-title-${id.toString()}`,
+          `input-weight-${id.toString()}`,
           'number',
           `${weight}`,
           (event: Event) => {
