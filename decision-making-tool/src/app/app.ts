@@ -210,8 +210,13 @@ export default class App {
         if (this.#listOptions) {
           const valueObject: Record<
             string,
-            number | string
+            number | string | undefined
           > = JSON.parse(value);
+          console.log(valueObject);
+          if (valueObject.value === '')
+            valueObject.value =
+              undefined;
+
           const index: number =
             this.#listOptions.listOptions.findIndex(
               (item) =>
@@ -221,8 +226,9 @@ export default class App {
           if (index !== -1) {
             this.#listOptions.listOptions[
               index
-            ].weight =
-              +valueObject.value;
+            ].weight = valueObject.value
+              ? +valueObject.value
+              : undefined;
           }
         }
         break;
