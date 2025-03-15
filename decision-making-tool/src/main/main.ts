@@ -68,7 +68,6 @@ export default class MainView {
       ),
       this.createListOption() ||
         this.#creator.section('div'),
-      this.#creator.ul('ul', 'ul'),
       this.#creator.button(
         'btn1',
         'Add Option',
