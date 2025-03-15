@@ -5,7 +5,8 @@ export default class ElementCreator {
     tag = this.defaultTag,
     id = '',
     type = 'text',
-    value = ''
+    value = '',
+    callback?: (event: Event) => void
   ): HTMLInputElement {
     const input: HTMLInputElement =
       document.createElement('input');
@@ -13,6 +14,12 @@ export default class ElementCreator {
     input.type = type;
     input.value = value;
     input.classList.add(tag);
+    if (callback)
+      input.addEventListener(
+        'input',
+        (event: Event) =>
+          callback(event)
+      );
     return input;
   }
 

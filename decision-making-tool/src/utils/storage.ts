@@ -1,5 +1,5 @@
 interface Option {
-  id: number | undefined;
+  id: number;
   title: string;
   weight: number | undefined;
 }
@@ -20,7 +20,7 @@ export class Storage {
     // this.defaultKeySound = 'sound';
 
     this.defaultList = {
-      id: undefined,
+      id: 0,
       title: '',
       weight: undefined,
     };

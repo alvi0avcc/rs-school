@@ -166,8 +166,6 @@ export default class App {
     value: string
   ): void {
     console.log('storage clicked');
-    console.log(rule);
-    console.log(value);
     switch (rule) {
       case OptionRule.add: {
         const maxId: number =
@@ -183,6 +181,50 @@ export default class App {
         if (this.#listOptions)
           this.#listOptions.lastId =
             maxId + 1;
+        break;
+      }
+
+      case OptionRule.updateTitle: {
+        if (this.#listOptions) {
+          const valueObject: Record<
+            string,
+            number | string
+          > = JSON.parse(value);
+          const index: number =
+            this.#listOptions.listOptions.findIndex(
+              (item) =>
+                item.id ===
+                valueObject.id
+            );
+          if (index !== -1) {
+            this.#listOptions.listOptions[
+              index
+            ].title =
+              `${valueObject.value}`;
+          }
+        }
+        break;
+      }
+
+      case OptionRule.updateWeight: {
+        if (this.#listOptions) {
+          const valueObject: Record<
+            string,
+            number | string
+          > = JSON.parse(value);
+          const index: number =
+            this.#listOptions.listOptions.findIndex(
+              (item) =>
+                item.id ===
+                valueObject.id
+            );
+          if (index !== -1) {
+            this.#listOptions.listOptions[
+              index
+            ].weight =
+              +valueObject.value;
+          }
+        }
         break;
       }
 
@@ -221,11 +263,17 @@ export default class App {
       this.#storage.setList(
         this.#listOptions
       );
-      this.#main.setListOptions(
-        this.#listOptions
-      );
-    }
 
-    this.createView();
+      if (
+        rule !==
+          OptionRule.updateTitle &&
+        rule !== OptionRule.updateWeight
+      ) {
+        this.#main.setListOptions(
+          this.#listOptions
+        );
+        this.createView();
+      }
+    }
   }
 }

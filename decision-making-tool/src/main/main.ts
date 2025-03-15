@@ -10,6 +10,8 @@ export enum OptionRule {
   clear,
   save,
   load,
+  updateTitle,
+  updateWeight,
 }
 export default class MainView {
   private onHashChange: (
@@ -183,16 +185,44 @@ export default class MainView {
       const elementTitle: HTMLInputElement =
         this.#creator.input(
           'input',
-          '',
+          `input-title-${id.toString()}`,
           'text',
-          title
+          title,
+          (event: Event) => {
+            this.onOptionsChange(
+              OptionRule.updateTitle,
+              event.target instanceof
+                HTMLInputElement
+                ? JSON.stringify({
+                    id: id,
+                    value:
+                      event.target
+                        .value,
+                  })
+                : ''
+            );
+          }
         );
       const elementWeight: HTMLInputElement =
         this.#creator.input(
           'input',
-          '',
+          `input-title-${id.toString()}`,
           'number',
-          `${weight}`
+          `${weight}`,
+          (event: Event) => {
+            this.onOptionsChange(
+              OptionRule.updateWeight,
+              event.target instanceof
+                HTMLInputElement
+                ? JSON.stringify({
+                    id: id,
+                    value:
+                      event.target
+                        .value,
+                  })
+                : ''
+            );
+          }
         );
       const elementButton: HTMLElement =
         this.#creator.button(
