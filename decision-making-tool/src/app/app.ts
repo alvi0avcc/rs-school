@@ -170,13 +170,19 @@ export default class App {
     console.log(value);
     switch (rule) {
       case OptionRule.add: {
+        const maxId: number =
+          this.#listOptions?.lastId ||
+          0;
         this.#listOptions?.listOptions.push(
           {
-            id: 0,
-            title: 'title',
-            weight: 0,
+            id: maxId + 1,
+            title: '',
+            weight: undefined,
           }
         );
+        if (this.#listOptions)
+          this.#listOptions.lastId =
+            maxId + 1;
         break;
       }
 

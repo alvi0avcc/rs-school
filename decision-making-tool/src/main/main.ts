@@ -165,7 +165,9 @@ export default class MainView {
       .listOptions) {
       const id = line.id || 0;
       const title = line.title || '';
-      const weight = line.weight || 0;
+      const weight: string = line.weight
+        ? line.weight.toString()
+        : '';
       const sectionLine: HTMLElement =
         this.#creator.li();
       const elementId: HTMLElement =
