@@ -60,6 +60,14 @@ export class Storage {
     return this.list;
   }
 
+  public setList(list: List): void {
+    this.list = list;
+    Storage.setStorage(
+      this.defaultKeyList,
+      JSON.stringify(this.list)
+    );
+  }
+
   public async init(): Promise<
     boolean[]
   > {

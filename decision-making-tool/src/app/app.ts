@@ -185,6 +185,10 @@ export default class App {
       }
     }
 
+    if (this.#listOptions)
+      this.#storage.setList(
+        this.#listOptions
+      );
     this.createView();
   }
 }
