@@ -6,7 +6,7 @@ import { Storage } from '../utils/storage';
 import Router from '../router/router';
 
 import MainView from '../main/main';
-import type { OptionRule } from '../main/main';
+import { OptionRule } from '../main/main';
 import PickerView from '../picker/picker';
 import ErrorView from '../404/404';
 
@@ -168,6 +168,23 @@ export default class App {
     console.log('storage clicked');
     console.log(rule);
     console.log(value);
+    switch (rule) {
+      case OptionRule.add: {
+        this.#listOptions?.listOptions.push(
+          {
+            id: 0,
+            title: 'title',
+            weight: 0,
+          }
+        );
+        break;
+      }
+
+      default: {
+        break;
+      }
+    }
+
     this.createView();
   }
 }

@@ -176,17 +176,19 @@ export default class MainView {
         `id-${id.toString()}`,
         id.toString()
       );
-    const elementTitle: HTMLElement =
-      this.#creator.section(
+    const elementTitle: HTMLInputElement =
+      this.#creator.input(
         'input',
         '',
+        'text',
         title
       );
-    const elementWeight: HTMLElement =
-      this.#creator.section(
+    const elementWeight: HTMLInputElement =
+      this.#creator.input(
         'input',
         '',
-        weight.toString()
+        'number',
+        `${weight}`
       );
     const elementButton: HTMLElement =
       this.#creator.button(

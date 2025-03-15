@@ -1,6 +1,21 @@
 export default class ElementCreator {
   private defaultTag = 'div';
 
+  public input(
+    tag = this.defaultTag,
+    id = '',
+    type = 'text',
+    value = ''
+  ): HTMLInputElement {
+    const input: HTMLInputElement =
+      document.createElement('input');
+    input.id = id;
+    input.type = type;
+    input.value = value;
+    input.classList.add(tag);
+    return input;
+  }
+
   public label(
     tag = 'label',
     id = '',
