@@ -194,11 +194,11 @@ export default class MainView {
           'Delete',
           () => {
             console.log(
-              'Button1 clicked!'
+              'Button del clicked!'
             );
             this.onOptionsChange(
-              OptionRule.add,
-              'test'
+              OptionRule.del,
+              id.toString()
             );
           },
           ['button']

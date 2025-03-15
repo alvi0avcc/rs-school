@@ -180,6 +180,17 @@ export default class App {
         break;
       }
 
+      case OptionRule.del: {
+        if (
+          this.#listOptions?.listOptions
+        )
+          this.#listOptions.listOptions =
+            this.#listOptions?.listOptions.filter(
+              (item) =>
+                item.id !== +value
+            );
+      }
+
       default: {
         break;
       }
