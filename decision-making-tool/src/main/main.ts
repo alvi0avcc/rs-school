@@ -78,7 +78,7 @@ export default class MainView {
           );
           this.onOptionsChange(
             OptionRule.add,
-            'test'
+            ''
           );
         },
         ['button', 'add-option-button']
@@ -159,63 +159,67 @@ export default class MainView {
     if (!this.#listOptions)
       return undefined;
 
-    const id =
-      this.#listOptions.listOptions[0]
-        .id || 0;
-    const title =
-      this.#listOptions.listOptions[0]
-        .title || '';
-    const weight =
-      this.#listOptions.listOptions[0]
-        .weight || 0;
-    const section: HTMLElement =
-      this.#creator.section();
-    const elementId: HTMLElement =
-      this.#creator.label(
-        'label',
-        `id-${id.toString()}`,
-        id.toString()
-      );
-    const elementTitle: HTMLInputElement =
-      this.#creator.input(
-        'input',
-        '',
-        'text',
-        title
-      );
-    const elementWeight: HTMLInputElement =
-      this.#creator.input(
-        'input',
-        '',
-        'number',
-        `${weight}`
-      );
-    const elementButton: HTMLElement =
-      this.#creator.button(
-        `btn-del-${id.toString()}`,
-        'Delete',
-        () => {
-          console.log(
-            'Button1 clicked!'
-          );
-          this.onOptionsChange(
-            OptionRule.add,
-            'test'
-          );
-        },
-        ['button']
-      );
+    const sectionListOption: HTMLElement =
+      this.#creator.ul();
 
-    section.append(
-      elementId,
-      elementTitle,
-      elementWeight,
-      elementButton
-    );
-    section.classList.add(
+    for (const line of this.#listOptions
+      .listOptions) {
+      const id = line.id || 0;
+      const title = line.title || '';
+      const weight = line.weight || 0;
+      const sectionLine: HTMLElement =
+        this.#creator.li();
+      const elementId: HTMLElement =
+        this.#creator.label(
+          'label',
+          `id-${id.toString()}`,
+          id.toString()
+        );
+      const elementTitle: HTMLInputElement =
+        this.#creator.input(
+          'input',
+          '',
+          'text',
+          title
+        );
+      const elementWeight: HTMLInputElement =
+        this.#creator.input(
+          'input',
+          '',
+          'number',
+          `${weight}`
+        );
+      const elementButton: HTMLElement =
+        this.#creator.button(
+          `btn-del-${id.toString()}`,
+          'Delete',
+          () => {
+            console.log(
+              'Button1 clicked!'
+            );
+            this.onOptionsChange(
+              OptionRule.add,
+              'test'
+            );
+          },
+          ['button']
+        );
+
+      sectionLine.append(
+        elementId,
+        elementTitle,
+        elementWeight,
+        elementButton
+      );
+      sectionListOption.append(
+        sectionLine
+      );
+    }
+
+    sectionListOption.classList.add(
       'option-list'
     );
 
-    return section;
+    return sectionListOption;
   }
 }
