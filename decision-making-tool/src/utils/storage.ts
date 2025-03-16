@@ -1,4 +1,4 @@
-interface Option {
+export interface Option {
   id: number;
   title: string;
   weight: number | undefined;

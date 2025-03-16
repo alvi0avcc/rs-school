@@ -48,7 +48,8 @@ export default class App {
       (hash: string) =>
         this.onHashChange(hash),
       (rule: MakeRule, value: string) =>
-        this.onMakeChange(rule, value)
+        this.onMakeChange(rule, value),
+      this.#listOptions?.listOptions
     );
     this.#error404 = new ErrorView(
       (hash: string) =>
@@ -98,6 +99,9 @@ export default class App {
     }
 
     if (this.#hash === '/picker') {
+      this.#picker.setListOptions(
+        this.#listOptions?.listOptions
+      );
       this.#pagePicker =
         this.#picker.getView();
       if (this.#pagePicker)
