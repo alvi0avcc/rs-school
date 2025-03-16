@@ -267,9 +267,144 @@ export default class PickerView {
       this.cleanedList();
 
     if (cleanedList.length > 0) {
+      console.log('list for canvas');
+
       console.log(this.#timer);
       console.log(cleanedList);
+
+      this.drawCanvas(
+        canvas,
+        cleanedList
+      );
     }
     return canvas;
+  }
+
+  private drawCanvas(
+    canvas: HTMLCanvasElement,
+    cleanedList: Option[]
+  ): void {
+    console.log(this.#timer);
+    const context: CanvasRenderingContext2D | null =
+      canvas.getContext('2d');
+    if (context)
+      context.font = '30px Arial';
+    const width: number = canvas.width;
+    const height: number =
+      canvas.height;
+    const Xc: number = width / 2;
+    const Yc: number = height / 2;
+
+    const summ: number =
+      cleanedList.reduce(
+        (accumulator, value) =>
+          accumulator +
+          (value.weight || 0),
+        0
+      );
+
+    let rotation = 0;
+    let accumulator = 0;
+
+    function draw(): void {
+      if (context) {
+        context.imageSmoothingEnabled =
+          true;
+
+        //outer circle
+        context.beginPath();
+        context.arc(
+          Xc,
+          Yc,
+          200,
+          0,
+          Math.PI * 2
+        );
+        context.fillStyle = 'blue';
+        context.fill();
+        context.strokeStyle = 'black';
+        context.lineWidth = 2;
+        context.stroke();
+
+        //segments
+        accumulator = 0;
+
+        context.strokeStyle = 'red';
+        for (const segment of cleanedList) {
+          if (
+            segment.title &&
+            segment.weight
+          ) {
+            accumulator +=
+              segment.weight;
+
+            context.beginPath();
+            context.moveTo(Xc, Yc);
+            const angle: number =
+              (accumulator * 2 * 3.14) /
+                summ +
+              rotation;
+            const angleT: number =
+              ((accumulator -
+                segment.weight / 2) *
+                2 *
+                3.14) /
+                summ +
+              rotation -
+              0.1;
+            const x: number =
+              Xc +
+              200 * Math.sin(angle);
+            const y: number =
+              Yc +
+              200 * Math.cos(angle);
+            const Xt: number =
+              Xc +
+              100 * Math.sin(angleT);
+            const Yt: number =
+              Yc +
+              100 * Math.cos(angleT);
+
+            context.lineTo(x, y);
+            context.stroke();
+            if (segment.weight >= 0.5) {
+              context.save();
+              context.translate(Xt, Yt);
+              context.rotate(
+                3.14 / 2 - angleT
+              );
+              context.fillStyle =
+                'lime';
+              context.fillText(
+                `${segment.title}`,
+                0,
+                0
+              );
+              context.restore();
+            }
+          }
+        }
+
+        //inner circle
+        context.beginPath();
+        context.arc(
+          Xc,
+          Yc,
+          30,
+          0,
+          Math.PI * 2
+        );
+        context.fillStyle = 'green';
+        context.fill();
+        context.strokeStyle = 'black';
+        context.lineWidth = 2;
+        context.stroke();
+      }
+
+      rotation -= 0.01;
+
+      requestAnimationFrame(draw);
+    }
+    draw();
   }
 }
