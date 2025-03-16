@@ -157,3 +157,56 @@
   grid-area: option-list;
   grid-template-columns: 1fr 1fr 1fr 1fr;
 }
+
+.dialog{
+  overflow: unset;
+  padding: 0;
+  border: unset;
+  background: unset;
+  width: 600px;
+  height: 500px;
+  max-width: 95%;
+}
+
+.dialog::backdrop {
+  -webkit-backdrop-filter: blur(.1875rem);
+  backdrop-filter: blur(.1875rem);
+  transition-duration: var(--transition-duration);
+  transition-property: backdrop-filter;
+}
+
+.form-dialog {
+  display: grid;
+  height: min-content;
+  grid-template:
+    "textarea textarea" min-content
+    "cancel confirm" min-content / 1fr 1fr;
+  gap: 1rem;
+  padding: 1rem;
+  border-radius: .5rem;
+  background-image: linear-gradient(var(--color-primary-300), var(--color-primary-700));
+  box-shadow: 0 0 .25rem .1rem var(--color-primary-200);
+}
+
+.text-csv{
+  resize: none;
+  height: 300px;
+  grid-area: textarea;
+  padding: .5rem;
+  font-family: Victor Mono, Courier New, Courier, monospace;
+  color: var(--color-primary-50);
+  background-color: var(--color-primary-800);
+}
+
+:is(body, .scrollbar)::-webkit-scrollbar {
+  width: .6rem;
+  height: .6rem;
+}
+
+.btn-cancel {
+  grid-area: cancel;
+}
+
+.btn-confirm {
+  grid-area: confirm;
+}

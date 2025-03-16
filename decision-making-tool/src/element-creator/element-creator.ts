@@ -113,19 +113,76 @@ export default class ElementCreator {
     callback:
       | EventListener
       | undefined = undefined,
-    style: string[]
-  ): HTMLElement {
-    const button: HTMLElement =
-      this.createElement('button');
+    style: string[] = [],
+    type:
+      | 'reset'
+      | 'submit'
+      | 'button' = 'button',
+    attributes: Record<
+      string,
+      string
+    > = {}
+  ): HTMLButtonElement {
+    const button: HTMLButtonElement =
+      document.createElement('button');
     button.id = id;
+    button.textContent =
+      this.defaultTag;
     button.textContent = text;
+    button.type = type;
     button.classList.add(...style);
     if (callback)
       button.addEventListener(
         'click',
         (event) => callback(event)
       );
+    for (const [
+      key,
+      value,
+    ] of Object.entries(attributes)) {
+      button.setAttribute(key, value);
+    }
     return button;
+  }
+
+  public dialog(
+    id = 'dialog'
+  ): HTMLDialogElement {
+    const dialog: HTMLDialogElement =
+      document.createElement('dialog');
+    dialog.id = id;
+    dialog.textContent =
+      this.defaultTag;
+    dialog.textContent = '';
+    dialog.classList.add('dialog');
+
+    return dialog;
+  }
+
+  public form(
+    id = 'form'
+  ): HTMLFormElement {
+    const form =
+      document.createElement('form');
+    form.id = id;
+    form.textContent = this.defaultTag;
+    form.textContent = '';
+
+    return form;
+  }
+
+  public textArea(
+    id = 'text-area'
+  ): HTMLTextAreaElement {
+    const text =
+      document.createElement(
+        'textarea'
+      );
+    text.id = id;
+    text.textContent = this.defaultTag;
+    text.textContent = '';
+
+    return text;
   }
 
   private createElement(

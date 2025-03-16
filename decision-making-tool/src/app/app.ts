@@ -251,6 +251,45 @@ export default class App {
         break;
       }
 
+      case OptionRule.paste: {
+        if (this.#listOptions) {
+          console.log('dialog open');
+          if (value === 'open')
+            this.#main.dialogShow();
+          if (value !== 'open') {
+            console.log('paste');
+            const options: [
+              string,
+              number | undefined,
+            ][] =
+              Storage.pasteOption(
+                value
+              );
+            if (options.length > 0) {
+              console.log(
+                'paste options =',
+                options
+              );
+              for (const line of options) {
+                console.log(line);
+                this.#listOptions.listOptions.push(
+                  {
+                    id:
+                      this.#listOptions
+                        .lastId + 1,
+                    title: line[0],
+                    weight: line[1],
+                  }
+                );
+                this.#listOptions
+                  .lastId++;
+              }
+            }
+          }
+          break;
+        }
+      }
+
       case OptionRule.clear: {
         if (this.#listOptions) {
           this.#listOptions.listOptions =

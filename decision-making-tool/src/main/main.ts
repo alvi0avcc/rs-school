@@ -24,6 +24,8 @@ export default class MainView {
   #listOptions: List | undefined;
   #creator: ElementCreator;
   #main: HTMLElement;
+  #dialog: HTMLDialogElement;
+  #text: string;
 
   constructor(
     onHashChange: (
@@ -43,7 +45,19 @@ export default class MainView {
       new ElementCreator();
     this.#main =
       this.#creator.section('main');
+    this.#text = '';
+    this.#dialog =
+      this.#creator.dialog();
+    this.createDialog();
     this.createMain();
+  }
+
+  public setText(text: string): void {
+    this.#text = text;
+  }
+
+  public getText(): string {
+    return this.#text;
   }
 
   public getView():
@@ -53,12 +67,79 @@ export default class MainView {
     return undefined;
   }
 
+  public dialogShow(): void {
+    if (!this.#dialog.open)
+      this.#dialog.showModal();
+  }
+
+  public dialogClose(): void {
+    this.#dialog.close();
+  }
+
   public setListOptions(
     listOptions: List
   ): void {
     this.#listOptions = listOptions;
     console.log(this.#listOptions);
     this.createMain();
+  }
+
+  private createDialog(): void {
+    this.#dialog.classList.add(
+      'dialog'
+    );
+    const form = this.#creator.form(
+      'form-dialog'
+    );
+    form.classList.add('form-dialog');
+    const text =
+      this.#creator.textArea();
+    text.classList.add('text-csv');
+    text.placeholder = `
+      Paste a list of new options in a CSV-like format:
+
+      title,1                 -> | title                 | 1 |
+      title with whitespace,2 -> | title with whitespace | 2 |
+      title , with , commas,3 -> | title , with , commas | 3 |
+      title with &quot;quotes&quot;,4   -> | title with &quot;quotes&quot;   | 4 |
+    `;
+    const buttonCancel =
+      this.#creator.button(
+        'btn-cancel',
+        'Cancel',
+        () => {
+          console.log(
+            'Button1 clicked!'
+          );
+          this.dialogClose();
+        },
+        ['button', 'btn-cancel'],
+        'reset'
+      );
+    const buttonConfirm =
+      this.#creator.button(
+        'btn-confirm',
+        'Confirm',
+        () => {
+          console.log(
+            'btn-confirm clicked!'
+          );
+          this.onOptionsChange(
+            OptionRule.paste,
+            text.value
+          );
+          this.dialogClose();
+        },
+        ['button', 'btn-confirm'],
+        'reset'
+      );
+    form.append(
+      text,
+      buttonCancel,
+      buttonConfirm
+    );
+
+    this.#dialog.append(form);
   }
 
   private createMain(): HTMLElement {
@@ -137,6 +218,7 @@ export default class MainView {
       'hidden',
       ''
     );
+
     const page: HTMLElement[] = [
       this.#creator.label(
         'h1',
@@ -165,6 +247,10 @@ export default class MainView {
         () => {
           console.log(
             'Button2 clicked!'
+          );
+          this.onOptionsChange(
+            OptionRule.paste,
+            'open'
           );
         },
         ['button', 'paste-list-button']
@@ -215,6 +301,7 @@ export default class MainView {
         },
         ['button', 'start-button']
       ),
+      this.#dialog,
     ];
     this.#main.replaceChildren();
     this.#main.append(...page);
@@ -316,7 +403,8 @@ export default class MainView {
         elementId,
         elementTitle,
         elementWeight,
-        elementButton
+        elementButton,
+        this.#dialog
       );
       sectionListOption.append(
         sectionLine

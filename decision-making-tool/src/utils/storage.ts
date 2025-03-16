@@ -56,6 +56,50 @@ export class Storage {
     localStorage.setItem(key, value);
   }
 
+  public static pasteOption(
+    text: string
+  ): [string, number | undefined][] {
+    const textLines: string[] =
+      text.split('\n');
+    const options: [
+      string,
+      number | undefined,
+    ][] = [];
+    for (const line of textLines) {
+      const lastCommaIndex: number =
+        line.lastIndexOf(',');
+
+      let firstPart: string = line;
+      let secondPart = undefined;
+
+      if (lastCommaIndex === -1) {
+        if (firstPart.length > 0)
+          options.push([
+            firstPart,
+            undefined,
+          ]);
+      } else {
+        firstPart = line
+          .slice(0, lastCommaIndex)
+          .trim();
+        secondPart = line
+          .slice(lastCommaIndex + 1)
+          .trim();
+        if (
+          firstPart.length > 0 ||
+          secondPart.length > 0
+        ) {
+          options.push([
+            firstPart,
+            Number(secondPart) ||
+              undefined,
+          ]);
+        }
+      }
+    }
+    return options;
+  }
+
   public saveStorageToFile(): void {
     const blob = new Blob(
       [JSON.stringify(this.list)],
