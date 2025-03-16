@@ -62,6 +62,81 @@ export default class MainView {
   }
 
   private createMain(): HTMLElement {
+    const loadButton =
+      this.#creator.label(
+        'label',
+        'label-load',
+        'Load list from file'
+      );
+    loadButton.setAttribute(
+      'for',
+      'load-input'
+    );
+    loadButton.classList.add(
+      'button',
+      'load-list-button'
+    );
+    loadButton.classList.remove(
+      'label'
+    );
+    const loadInput =
+      this.#creator.input(
+        'input',
+        'load-input',
+        'file',
+        '',
+        (event: Event) => {
+          console.log('load clicked!');
+
+          if (
+            event.target instanceof
+            HTMLInputElement
+          ) {
+            const files =
+              event.target.files;
+            if (
+              files &&
+              files.length > 0
+            ) {
+              const file = files[0];
+              file
+                .text()
+                .then(
+                  (
+                    fileContent: string
+                  ) => {
+                    this.onOptionsChange(
+                      OptionRule.load,
+                      fileContent
+                    );
+                  }
+                )
+                .catch((error) => {
+                  console.error(
+                    'Error reading file:',
+                    error
+                  );
+                });
+            } else {
+              console.error(
+                'No file selected'
+              );
+            }
+          } else {
+            console.error(
+              'Event target is not an input element'
+            );
+          }
+        }
+      );
+    loadInput.setAttribute(
+      'accept',
+      '.json'
+    );
+    loadInput.setAttribute(
+      'hidden',
+      ''
+    );
     const page: HTMLElement[] = [
       this.#creator.label(
         'h1',
@@ -115,19 +190,15 @@ export default class MainView {
           console.log(
             'Button4 clicked!'
           );
+          this.onOptionsChange(
+            OptionRule.save,
+            ''
+          );
         },
         ['button', 'save-list-button']
       ),
-      this.#creator.button(
-        'btn4',
-        'Load list from file',
-        () => {
-          console.log(
-            'Button4 clicked!'
-          );
-        },
-        ['button', 'load-list-button']
-      ),
+      loadButton,
+      loadInput,
       this.#creator.button(
         'btn5',
         'Start',

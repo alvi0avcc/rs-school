@@ -56,6 +56,21 @@ export class Storage {
     localStorage.setItem(key, value);
   }
 
+  public saveStorageToFile(): void {
+    const blob = new Blob(
+      [JSON.stringify(this.list)],
+      { type: 'application/json' }
+    );
+    const url =
+      URL.createObjectURL(blob);
+    const a =
+      document.createElement('a');
+    a.href = url;
+    a.download = 'test.json';
+    a.click();
+    URL.revokeObjectURL(url);
+  }
+
   public getList(): List {
     return this.list;
   }

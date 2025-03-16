@@ -260,6 +260,22 @@ export default class App {
         break;
       }
 
+      case OptionRule.save: {
+        if (this.#listOptions) {
+          this.#storage.saveStorageToFile();
+        }
+        break;
+      }
+
+      case OptionRule.load: {
+        if (this.#listOptions) {
+          const loaded: List =
+            JSON.parse(value);
+          this.#listOptions = loaded;
+        }
+        break;
+      }
+
       default: {
         break;
       }
@@ -273,7 +289,9 @@ export default class App {
       if (
         rule !==
           OptionRule.updateTitle &&
-        rule !== OptionRule.updateWeight
+        rule !==
+          OptionRule.updateWeight &&
+        rule !== OptionRule.save
       ) {
         this.#main.setListOptions(
           this.#listOptions
