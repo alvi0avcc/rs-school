@@ -1,19 +1,36 @@
 import './picker.css';
-// import '../assets/icon.svg';
 import icons from '../assets/icon.svg';
 
 import ElementCreator from '../element-creator/element-creator';
+
+export enum MakeRule {
+  sound,
+  timer,
+  run,
+}
 
 export default class PickerView {
   private onHashChange: (
     hash: string
   ) => void;
+  private onMakeChange: (
+    rule: MakeRule,
+    value: string
+  ) => void;
   #creator: ElementCreator;
   #main: HTMLElement;
+
   constructor(
-    onHashChange: (hash: string) => void
+    onHashChange: (
+      hash: string
+    ) => void,
+    onMakeChange: (
+      rule: MakeRule,
+      value: string
+    ) => void
   ) {
     this.onHashChange = onHashChange;
+    this.onMakeChange = onMakeChange;
     this.#creator =
       new ElementCreator();
     this.#main =
@@ -83,6 +100,10 @@ export default class PickerView {
           console.log(
             'btn-sound clicked!'
           );
+          this.onMakeChange(
+            MakeRule.sound,
+            ''
+          );
         },
         ['button', 'btn_sound']
       );
@@ -123,6 +144,10 @@ export default class PickerView {
         () => {
           console.log(
             'btn-start clicked!'
+          );
+          this.onMakeChange(
+            MakeRule.run,
+            ''
           );
         },
         ['button', 'btn_start']
@@ -169,16 +194,11 @@ export default class PickerView {
       buttonStart
     );
 
-    const canvas =
-      this.#creator.section(
-        'canvas',
-        'canvas'
-      );
-    canvas.setAttribute('width', '512');
-    canvas.setAttribute(
-      'height',
-      '512'
-    );
+    const canvas: HTMLCanvasElement =
+      document.createElement('canvas');
+    canvas.id = 'canvas';
+    canvas.width = 512;
+    canvas.height = 512;
 
     const page: HTMLElement[] = [
       this.#creator.label(

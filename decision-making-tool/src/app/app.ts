@@ -7,7 +7,9 @@ import Router from '../router/router';
 
 import MainView from '../main/main';
 import { OptionRule } from '../main/main';
-import PickerView from '../picker/picker';
+import PickerView, {
+  MakeRule,
+} from '../picker/picker';
 import ErrorView from '../404/404';
 
 export default class App {
@@ -44,7 +46,9 @@ export default class App {
     );
     this.#picker = new PickerView(
       (hash: string) =>
-        this.onHashChange(hash)
+        this.onHashChange(hash),
+      (rule: MakeRule, value: string) =>
+        this.onMakeChange(rule, value)
     );
     this.#error404 = new ErrorView(
       (hash: string) =>
@@ -117,6 +121,38 @@ export default class App {
         this.#pageMain.remove();
       if (this.#pagePicker)
         this.#pagePicker.remove();
+    }
+  }
+
+  private onMakeChange(
+    rule: MakeRule,
+    value: string
+  ): void {
+    switch (rule) {
+      case MakeRule.sound: {
+        console.log('sound'); //temp
+
+        console.log(value); //temp
+        console.log(this.#hash); //temp
+
+        break;
+      }
+
+      case MakeRule.timer: {
+        console.log('timer'); //temp
+
+        break;
+      }
+
+      case MakeRule.run: {
+        console.log('run'); //temp
+
+        break;
+      }
+
+      default: {
+        break;
+      }
     }
   }
 
