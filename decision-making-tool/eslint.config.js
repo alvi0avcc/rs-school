@@ -18,6 +18,10 @@ export default [
       unicorn,
       prettier,
     },
+    linterOptions: {
+      noInlineConfig: true,
+      reportUnusedDisableDirectives: true,
+    },
     rules: {
       ...ts.configs.recommended.rules,
       ...ts.configs.strict.rules,
