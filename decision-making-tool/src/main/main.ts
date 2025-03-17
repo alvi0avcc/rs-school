@@ -228,6 +228,7 @@ export default class MainView {
           );
         }
       );
+      elementTitle.classList.add('input-title');
       const elementWeight: HTMLInputElement = this.#creator.input(
         'input',
         `input-weight-${id.toString()}`,
@@ -245,6 +246,8 @@ export default class MainView {
           );
         }
       );
+      elementWeight.classList.add('input-weight');
+
       const elementButton: HTMLElement = this.#creator.button(
         `btn-del-${id.toString()}`,
         'Delete',

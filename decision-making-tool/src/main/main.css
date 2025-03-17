@@ -38,7 +38,7 @@
 .ul {
   unicode-bidi: isolate;
   display: flex;
-  display: block;
+  justify-self: center;
   grid-area: option-list;
   flex-direction: column;
   gap: 0.5rem;
@@ -77,17 +77,17 @@
   box-shadow: 0 0 .25rem .1rem var(--color-primary-200);
 }
 
-.input_title {
+.input-title {
   flex-grow: 1;
   width: 100%;
   min-width: 5rem;
 }
 
-.input_weight {
+.input-weight {
   max-width: 5rem;
 }
 
-:is(.input_title, .input_weight) {
+:is(.input-title, .input-weight) {
   padding: 0.5rem;
   border-color: initial;
   border-style: none;
