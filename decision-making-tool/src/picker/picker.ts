@@ -18,6 +18,9 @@ export default class PickerView {
   #main: HTMLElement;
   #listOptions: Option[] | undefined;
   #timer: number;
+  #stateRotary: number;
+  #rotation: number;
+  #startTime: number;
 
   constructor(
     onHashChange: (hash: string) => void,
@@ -29,8 +32,18 @@ export default class PickerView {
     this.onMakeChange = onMakeChange;
     this.#creator = new ElementCreator();
     this.#main = this.#creator.section('main');
-    this.#timer = 16;
+    this.#timer = 3000;
+    this.#stateRotary = -1;
+    this.#rotation = 10 * 3.14;
+    this.#startTime = 0;
+
     this.createPage();
+  }
+
+  public startRotary(): void {
+    this.#stateRotary = 0;
+    this.#startTime = performance.now();
+    console.log(this.#timer);
   }
 
   public getView(): HTMLElement | undefined {
@@ -168,19 +181,16 @@ export default class PickerView {
       0
     );
 
-    let rotation = 10 * 3.14;
     let accumulator = 0;
-    const duration = 3000; //ms
 
-    const startTime = performance.now();
-
-    function draw(): void {
+    const draw = (): void => {
       const currentTime: number = performance.now();
-      const elapsedTime: number = currentTime - startTime;
-      const t: number = Math.min(elapsedTime / duration, 1);
+      const elapsedTime: number = currentTime - this.#startTime;
+      const t: number = Math.min(elapsedTime / this.#timer, 1);
 
       // const easedT: number = EasingTimerFunction.easeInOutBack(t);
-      const easedT: number = EasingTimerFunction.easeInOut(t);
+      let easedT: number = EasingTimerFunction.easeInOut(t);
+      if (this.#stateRotary === -1) easedT = 0;
 
       if (context) {
         context.imageSmoothingEnabled = true;
@@ -204,9 +214,11 @@ export default class PickerView {
 
             context.beginPath();
             context.moveTo(Xc, Yc);
-            const angle: number = (accumulator * 2 * 3.14) / summ + rotation * easedT;
+            const angle: number = (accumulator * 2 * 3.14) / summ + this.#rotation * easedT;
             const angleT: number =
-              ((accumulator - segment.weight / 2) * 2 * 3.14) / summ + rotation * easedT - 0.1;
+              ((accumulator - segment.weight / 2) * 2 * 3.14) / summ +
+              this.#rotation * easedT -
+              0.1;
             const x: number = Xc + 200 * Math.sin(angle);
             const y: number = Yc + 200 * Math.cos(angle);
             const Xt: number = Xc + 100 * Math.sin(angleT);
@@ -235,10 +247,9 @@ export default class PickerView {
         context.stroke();
       }
 
-      // rotation -= 0.01;
-
+      // if (PickerView.stateRotary >= 0) requestAnimationFrame(draw);
       requestAnimationFrame(draw);
-    }
+    };
     draw();
   }
 }

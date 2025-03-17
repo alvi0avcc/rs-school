@@ -101,6 +101,7 @@ export default class App {
 
       case MakeRule.run: {
         console.log('run'); //temp
+        this.#picker.startRotary();
 
         break;
       }
