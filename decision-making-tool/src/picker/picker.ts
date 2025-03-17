@@ -21,6 +21,7 @@ export default class PickerView {
   #stateRotary: number;
   #rotation: number;
   #startTime: number;
+  #pickingLabel: HTMLParagraphElement;
 
   constructor(
     onHashChange: (hash: string) => void,
@@ -32,16 +33,18 @@ export default class PickerView {
     this.onMakeChange = onMakeChange;
     this.#creator = new ElementCreator();
     this.#main = this.#creator.section('main');
-    this.#timer = 3000;
+    this.#timer = 5000;
     this.#stateRotary = -1;
-    this.#rotation = 10 * 3.14;
+    this.#rotation = 10 * 3.14 + Math.random() * 2 * 3.14;
     this.#startTime = 0;
+    this.#pickingLabel = document.createElement('p');
 
     this.createPage();
   }
 
   public startRotary(): void {
     this.#stateRotary = 0;
+    this.#rotation = 10 * 3.14 + Math.random() * 2 * 3.14;
     this.#startTime = performance.now();
     console.log(this.#timer);
   }
@@ -122,17 +125,21 @@ export default class PickerView {
     timer.classList.add('form_timer');
     form.append(buttonUndo, buttonSound, timer, buttonStart);
 
+    this.#pickingLabel.id = 'picking-label';
+    this.#pickingLabel.textContent = 'PRESS START BUTTON';
+    this.#pickingLabel.classList.add('p');
+
     const page: HTMLElement[] = [
       this.#creator.label('h1', '', 'Decision Making Tool'),
       form,
-      this.#creator.label('p', '', 'PRESS START BUTTON'),
+      this.#pickingLabel,
       this.getCanvas(),
     ];
     this.#main.append(...page);
     return this.#main;
   }
 
-  private cleanedList(): Option[] {
+  private cleanedList(shuffle = false): Option[] {
     console.log(this.#timer);
     console.log('picker this.#listOptions =', this.#listOptions);
 
@@ -141,6 +148,7 @@ export default class PickerView {
         (item) => item.title !== '' && item.weight !== undefined
       );
       console.log('cleanedList=', cleanedList);
+      if (shuffle) return cleanedList.sort(() => Math.random() - 0.5);
       return cleanedList;
     }
 
@@ -154,17 +162,36 @@ export default class PickerView {
     canvas.classList.add('canvas');
     canvas.width = 512;
     canvas.height = 512;
-    const cleanedList: Option[] = this.cleanedList();
+    const cleanedList: Option[] = this.cleanedList(true);
 
     if (cleanedList.length > 0) {
-      console.log('list for canvas');
-
       console.log(this.#timer);
-      console.log(cleanedList);
-
       this.drawCanvas(canvas, cleanedList);
     }
     return canvas;
+  }
+
+  private stateCircle(list: Option[], summ: number, state: number): boolean {
+    if (this.#stateRotary === -1) return false;
+    let angle: number = this.#rotation * state;
+    const angles: number[] = list.map((value) => ((value.weight || 1) / summ) * 2 * Math.PI);
+    const cumulativeAngles: number[] = [];
+    let cumulativeSum = 0;
+
+    for (const angle of angles) {
+      cumulativeSum += angle;
+      cumulativeAngles.push(cumulativeSum);
+    }
+    let index = -1;
+    if (angle > 2 * Math.PI) angle = angle % (2 * Math.PI);
+    for (let index_ = 0; index_ < cumulativeAngles.length; index_++) {
+      if (index_ === 0 && cumulativeAngles[index_] > angle) index = index_;
+      if (index_ !== 0 && cumulativeAngles[index_ - 1] <= angle && cumulativeAngles[index_] > angle)
+        index = index_;
+    }
+
+    if (list[index]) this.#pickingLabel.textContent = list[index].title;
+    return true;
   }
 
   private drawCanvas(canvas: HTMLCanvasElement, cleanedList: Option[]): void {
@@ -188,11 +215,13 @@ export default class PickerView {
       const elapsedTime: number = currentTime - this.#startTime;
       const t: number = Math.min(elapsedTime / this.#timer, 1);
 
-      // const easedT: number = EasingTimerFunction.easeInOutBack(t);
+      // let easedT: number = EasingTimerFunction.easeInOutBack(t);
       let easedT: number = EasingTimerFunction.easeInOut(t);
       if (this.#stateRotary === -1) easedT = 0;
 
       if (context) {
+        this.stateCircle(cleanedList, summ, easedT);
+
         context.imageSmoothingEnabled = true;
 
         //outer circle
@@ -214,9 +243,11 @@ export default class PickerView {
 
             context.beginPath();
             context.moveTo(Xc, Yc);
-            const angle: number = (accumulator * 2 * 3.14) / summ + this.#rotation * easedT;
+            const angle: number = 3.14 + (accumulator * 2 * 3.14) / summ - this.#rotation * easedT;
             const angleT: number =
-              ((accumulator - segment.weight / 2) * 2 * 3.14) / summ + this.#rotation * easedT;
+              3.14 +
+              ((accumulator - segment.weight / 2) * 2 * 3.14) / summ -
+              this.#rotation * easedT;
             const x: number = Xc + 200 * Math.sin(angle);
             const y: number = Yc + 200 * Math.cos(angle);
             const Xt: number = Xc + 110 * Math.sin(angleT);
