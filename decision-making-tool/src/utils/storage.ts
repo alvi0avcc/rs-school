@@ -30,70 +30,35 @@ export class Storage {
     };
   }
 
-  public static async getStorage(
-    key: string
-  ): Promise<string | undefined> {
+  public static async getStorage(key: string): Promise<string | undefined> {
     return new Promise((resolve) => {
-      const value =
-        localStorage.getItem(key);
-      console.log(
-        'storageGet =',
-        value
-      );
+      const value = localStorage.getItem(key);
+      console.log('storageGet =', value);
 
-      resolve(
-        value === null
-          ? undefined
-          : value
-      );
+      resolve(value === null ? undefined : value);
     });
   }
 
-  public static setStorage(
-    key: string,
-    value: string
-  ): void {
+  public static setStorage(key: string, value: string): void {
     localStorage.setItem(key, value);
   }
 
-  public static pasteOption(
-    text: string
-  ): [string, number | undefined][] {
-    const textLines: string[] =
-      text.split('\n');
-    const options: [
-      string,
-      number | undefined,
-    ][] = [];
+  public static pasteOption(text: string): [string, number | undefined][] {
+    const textLines: string[] = text.split('\n');
+    const options: [string, number | undefined][] = [];
     for (const line of textLines) {
-      const lastCommaIndex: number =
-        line.lastIndexOf(',');
+      const lastCommaIndex: number = line.lastIndexOf(',');
 
       let firstPart: string = line;
       let secondPart = undefined;
 
       if (lastCommaIndex === -1) {
-        if (firstPart.length > 0)
-          options.push([
-            firstPart,
-            undefined,
-          ]);
+        if (firstPart.length > 0) options.push([firstPart, undefined]);
       } else {
-        firstPart = line
-          .slice(0, lastCommaIndex)
-          .trim();
-        secondPart = line
-          .slice(lastCommaIndex + 1)
-          .trim();
-        if (
-          firstPart.length > 0 ||
-          secondPart.length > 0
-        ) {
-          options.push([
-            firstPart,
-            Number(secondPart) ||
-              undefined,
-          ]);
+        firstPart = line.slice(0, lastCommaIndex).trim();
+        secondPart = line.slice(lastCommaIndex + 1).trim();
+        if (firstPart.length > 0 || secondPart.length > 0) {
+          options.push([firstPart, Number(secondPart) || undefined]);
         }
       }
     }
@@ -101,14 +66,11 @@ export class Storage {
   }
 
   public saveStorageToFile(): void {
-    const blob = new Blob(
-      [JSON.stringify(this.list)],
-      { type: 'application/json' }
-    );
-    const url =
-      URL.createObjectURL(blob);
-    const a =
-      document.createElement('a');
+    const blob = new Blob([JSON.stringify(this.list)], {
+      type: 'application/json',
+    });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
     a.href = url;
     a.download = 'test.json';
     a.click();
@@ -121,54 +83,31 @@ export class Storage {
 
   public setList(list: List): void {
     this.list = list;
-    Storage.setStorage(
-      this.defaultKeyList,
-      JSON.stringify(this.list)
-    );
+    Storage.setStorage(this.defaultKeyList, JSON.stringify(this.list));
   }
 
-  public async init(): Promise<
-    boolean[]
-  > {
-    const results = await Promise.all([
-      this.getStorageList(),
-      this.getStorageList(),
-    ]);
+  public async init(): Promise<boolean[]> {
+    const results = await Promise.all([this.getStorageList(), this.getStorageList()]);
     return results;
   }
 
   private setStorageList(): void {
-    Storage.setStorage(
-      this.defaultKeyList,
-      JSON.stringify(this.list)
-    );
+    Storage.setStorage(this.defaultKeyList, JSON.stringify(this.list));
   }
 
   private async getStorageList(): Promise<boolean> {
     try {
-      const response:
-        | string
-        | undefined =
-        await Storage.getStorage(
-          this.defaultKeyList
-        );
+      const response: string | undefined = await Storage.getStorage(this.defaultKeyList);
       if (response) {
-        this.list =
-          JSON.parse(response);
-        console.log(
-          'list =',
-          this.list
-        );
+        this.list = JSON.parse(response);
+        console.log('list =', this.list);
       } else {
         this.list.lastId = 1;
         this.setStorageList();
       }
       return true;
     } catch (error) {
-      console.error(
-        'Error fetching storage:',
-        error
-      );
+      console.error('Error fetching storage:', error);
       return false;
     }
   }
