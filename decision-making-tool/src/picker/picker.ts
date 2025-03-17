@@ -216,13 +216,11 @@ export default class PickerView {
             context.moveTo(Xc, Yc);
             const angle: number = (accumulator * 2 * 3.14) / summ + this.#rotation * easedT;
             const angleT: number =
-              ((accumulator - segment.weight / 2) * 2 * 3.14) / summ +
-              this.#rotation * easedT -
-              0.1;
+              ((accumulator - segment.weight / 2) * 2 * 3.14) / summ + this.#rotation * easedT;
             const x: number = Xc + 200 * Math.sin(angle);
             const y: number = Yc + 200 * Math.cos(angle);
-            const Xt: number = Xc + 100 * Math.sin(angleT);
-            const Yt: number = Yc + 100 * Math.cos(angleT);
+            const Xt: number = Xc + 110 * Math.sin(angleT);
+            const Yt: number = Yc + 110 * Math.cos(angleT);
 
             context.lineTo(x, y);
             context.stroke();
@@ -231,7 +229,9 @@ export default class PickerView {
               context.translate(Xt, Yt);
               context.rotate(3.14 / 2 - angleT);
               context.fillStyle = 'lime';
-              context.fillText(`${segment.title}`, 0, 0);
+              context.textAlign = 'center';
+              context.textBaseline = 'middle';
+              context.fillText(`${segment.title}`, 0, 0, 150);
               context.restore();
             }
           }
