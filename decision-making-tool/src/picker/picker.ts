@@ -3,6 +3,7 @@ import icons from '../assets/icon.svg';
 
 import ElementCreator from '../element-creator/element-creator';
 import type { Option } from '../utils/storage';
+import { EasingTimerFunction } from '../utils/easing';
 
 export enum MakeRule {
   sound,
@@ -167,10 +168,20 @@ export default class PickerView {
       0
     );
 
-    let rotation = 0;
+    let rotation = 10 * 3.14;
     let accumulator = 0;
+    const duration = 3000; //ms
+
+    const startTime = performance.now();
 
     function draw(): void {
+      const currentTime: number = performance.now();
+      const elapsedTime: number = currentTime - startTime;
+      const t: number = Math.min(elapsedTime / duration, 1);
+
+      // const easedT: number = EasingTimerFunction.easeInOutBack(t);
+      const easedT: number = EasingTimerFunction.easeInOut(t);
+
       if (context) {
         context.imageSmoothingEnabled = true;
 
@@ -193,9 +204,9 @@ export default class PickerView {
 
             context.beginPath();
             context.moveTo(Xc, Yc);
-            const angle: number = (accumulator * 2 * 3.14) / summ + rotation;
+            const angle: number = (accumulator * 2 * 3.14) / summ + rotation * easedT;
             const angleT: number =
-              ((accumulator - segment.weight / 2) * 2 * 3.14) / summ + rotation - 0.1;
+              ((accumulator - segment.weight / 2) * 2 * 3.14) / summ + rotation * easedT - 0.1;
             const x: number = Xc + 200 * Math.sin(angle);
             const y: number = Yc + 200 * Math.cos(angle);
             const Xt: number = Xc + 100 * Math.sin(angleT);
@@ -224,7 +235,7 @@ export default class PickerView {
         context.stroke();
       }
 
-      rotation -= 0.01;
+      // rotation -= 0.01;
 
       requestAnimationFrame(draw);
     }
