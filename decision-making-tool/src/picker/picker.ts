@@ -11,6 +11,10 @@ export enum MakeRule {
   run,
 }
 
+interface ColoredOption extends Option {
+  color: string;
+}
+
 export default class PickerView {
   private onHashChange: (hash: string) => void;
   private onMakeChange: (rule: MakeRule, value: string) => void;
@@ -33,7 +37,7 @@ export default class PickerView {
     this.onMakeChange = onMakeChange;
     this.#creator = new ElementCreator();
     this.#main = this.#creator.section('main');
-    this.#timer = 5000;
+    this.#timer = 16_000;
     this.#stateRotary = -1;
     this.#rotation = 10 * 3.14 + Math.random() * 2 * 3.14;
     this.#startTime = 0;
@@ -41,6 +45,13 @@ export default class PickerView {
 
     this.createPage();
   }
+
+  private static getRandomColor = (): string => {
+    const r = Math.floor(Math.random() * 256);
+    const g = Math.floor(Math.random() * 256);
+    const b = Math.floor(Math.random() * 256);
+    return `rgb(${r}, ${g}, ${b})`;
+  };
 
   public startRotary(): void {
     this.#stateRotary = 0;
@@ -121,8 +132,23 @@ export default class PickerView {
     svgStart.append(svgUseStart);
     buttonStart.append(svgStart);
 
-    const timer = this.#creator.label('label', 'label');
-    timer.classList.add('form_timer');
+    // const timer = this.#creator.label('label', 'label');
+    const timer: HTMLLabelElement = document.createElement('label');
+    timer.classList.add('label', 'form_timer', 'timer-label');
+    const svgTimer = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+    svgTimer.setAttribute('viewBox', '0 0 24 24');
+    svgTimer.setAttribute('width', '24');
+    svgTimer.setAttribute('height', '24');
+    const svgUseTimer = document.createElementNS('http://www.w3.org/2000/svg', 'use');
+    svgUseTimer.setAttribute('href', `${icons}#timer`);
+    svgTimer.append(svgUseTimer);
+    const timerInput: HTMLInputElement = document.createElement('input');
+    timerInput.classList.add('input', 'timer-input');
+    timerInput.type = 'number';
+    timerInput.value = '16';
+
+    timer.append(svgTimer, timerInput);
+
     form.append(buttonUndo, buttonSound, timer, buttonStart);
 
     this.#pickingLabel.id = 'picking-label';
@@ -139,17 +165,21 @@ export default class PickerView {
     return this.#main;
   }
 
-  private cleanedList(shuffle = false): Option[] {
-    console.log(this.#timer);
-    console.log('picker this.#listOptions =', this.#listOptions);
-
+  private cleanedList(shuffle = false): ColoredOption[] {
     if (this.#listOptions) {
-      const cleanedList: Option[] = this.#listOptions.filter(
+      let cleanedList: Option[] = this.#listOptions.filter(
         (item) => item.title !== '' && item.weight !== undefined
       );
-      console.log('cleanedList=', cleanedList);
-      if (shuffle) return cleanedList.sort(() => Math.random() - 0.5);
-      return cleanedList;
+      if (shuffle) cleanedList = cleanedList.sort(() => Math.random() - 0.5);
+
+      const coloredList: ColoredOption[] = cleanedList.map((element) => ({
+        id: element.id,
+        title: element.title,
+        weight: element.weight,
+        color: PickerView.getRandomColor(),
+      }));
+
+      return coloredList;
     }
 
     return [];
@@ -162,11 +192,10 @@ export default class PickerView {
     canvas.classList.add('canvas');
     canvas.width = 512;
     canvas.height = 512;
-    const cleanedList: Option[] = this.cleanedList(true);
+    const coloredList: ColoredOption[] = this.cleanedList(true);
 
-    if (cleanedList.length > 0) {
-      console.log(this.#timer);
-      this.drawCanvas(canvas, cleanedList);
+    if (coloredList.length > 0) {
+      this.drawCanvas(canvas, coloredList);
     }
     return canvas;
   }
@@ -194,21 +223,26 @@ export default class PickerView {
     return true;
   }
 
-  private drawCanvas(canvas: HTMLCanvasElement, cleanedList: Option[]): void {
-    console.log(this.#timer);
+  private drawCanvas(canvas: HTMLCanvasElement, coloredList: ColoredOption[]): void {
     const context: CanvasRenderingContext2D | null = canvas.getContext('2d');
-    if (context) context.font = '30px Arial';
+    if (context) {
+      context.font = '20px Arial';
+      context.textAlign = 'center';
+      context.textBaseline = 'middle';
+
+      context.shadowColor = 'black';
+      context.shadowOffsetX = 2;
+      context.shadowOffsetY = 2;
+    }
     const width: number = canvas.width;
     const height: number = canvas.height;
     const Xc: number = width / 2;
     const Yc: number = height / 2;
 
-    const summ: number = cleanedList.reduce(
+    const summ: number = coloredList.reduce(
       (accumulator, value) => accumulator + (value.weight || 0),
       0
     );
-
-    let accumulator = 0;
 
     const draw = (): void => {
       const currentTime: number = performance.now();
@@ -220,62 +254,71 @@ export default class PickerView {
       if (this.#stateRotary === -1) easedT = 0;
 
       if (context) {
-        this.stateCircle(cleanedList, summ, easedT);
-
-        context.imageSmoothingEnabled = true;
+        this.stateCircle(coloredList, summ, easedT);
 
         //outer circle
         context.beginPath();
         context.arc(Xc, Yc, 200, 0, Math.PI * 2);
         context.fillStyle = 'blue';
         context.fill();
-        context.strokeStyle = 'black';
+        context.strokeStyle = 'white';
         context.lineWidth = 2;
         context.stroke();
 
-        //segments
-        accumulator = 0;
+        let startAngle = -Math.PI / 2;
 
-        context.strokeStyle = 'red';
-        for (const segment of cleanedList) {
+        context.imageSmoothingEnabled = true;
+
+        //segments
+        context.strokeStyle = 'white';
+
+        for (const segment of coloredList) {
           if (segment.title && segment.weight) {
-            accumulator += segment.weight;
+            const endAngle: number = startAngle + (segment.weight / summ) * 2 * Math.PI;
+
+            const rotatedStartAngle = startAngle - this.#rotation * easedT;
+            const rotatedEndAngle = endAngle - this.#rotation * easedT;
 
             context.beginPath();
             context.moveTo(Xc, Yc);
-            const angle: number = 3.14 + (accumulator * 2 * 3.14) / summ - this.#rotation * easedT;
-            const angleT: number =
-              3.14 +
-              ((accumulator - segment.weight / 2) * 2 * 3.14) / summ -
-              this.#rotation * easedT;
-            const x: number = Xc + 200 * Math.sin(angle);
-            const y: number = Yc + 200 * Math.cos(angle);
-            const Xt: number = Xc + 110 * Math.sin(angleT);
-            const Yt: number = Yc + 110 * Math.cos(angleT);
-
-            context.lineTo(x, y);
+            context.arc(Xc, Yc, 200, rotatedStartAngle, rotatedEndAngle);
+            context.closePath();
+            context.fillStyle = segment.color;
+            context.fill();
             context.stroke();
+
             if (segment.weight >= 0.5) {
+              const midAngle = (rotatedStartAngle + rotatedEndAngle) / 2;
+              const x: number = Xc + 115 * Math.cos(midAngle);
+              const y: number = Yc + 115 * Math.sin(midAngle);
+
               context.save();
-              context.translate(Xt, Yt);
-              context.rotate(3.14 / 2 - angleT);
-              context.fillStyle = 'lime';
-              context.textAlign = 'center';
-              context.textBaseline = 'middle';
+              context.translate(x, y);
+              context.rotate(midAngle);
+              context.fillStyle = 'white';
+              context.shadowColor = 'black';
+              context.shadowBlur = 5;
               context.fillText(`${segment.title}`, 0, 0, 150);
               context.restore();
             }
+            startAngle = endAngle;
           }
         }
 
         //inner circle
+        context.save();
+        context.shadowColor = 'black';
+
+        context.shadowBlur = 20;
+
         context.beginPath();
         context.arc(Xc, Yc, 30, 0, Math.PI * 2);
         context.fillStyle = 'green';
         context.fill();
-        context.strokeStyle = 'black';
+        context.strokeStyle = 'white';
         context.lineWidth = 2;
         context.stroke();
+        context.restore();
       }
 
       // if (PickerView.stateRotary >= 0) requestAnimationFrame(draw);
