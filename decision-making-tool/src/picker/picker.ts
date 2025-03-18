@@ -254,11 +254,14 @@ export default class PickerView {
       if (this.#stateRotary === -1) easedT = 0;
 
       if (context) {
+        const cursorYpos = 70;
+        const circleInnerRadius = 25;
+        const spinnerRadius = 200;
         this.stateCircle(coloredList, summ, easedT);
 
         //outer circle
         context.beginPath();
-        context.arc(Xc, Yc, 200, 0, Math.PI * 2);
+        context.arc(Xc, Yc, spinnerRadius, 0, Math.PI * 2);
         context.fillStyle = 'blue';
         context.fill();
         context.strokeStyle = 'white';
@@ -281,7 +284,7 @@ export default class PickerView {
 
             context.beginPath();
             context.moveTo(Xc, Yc);
-            context.arc(Xc, Yc, 200, rotatedStartAngle, rotatedEndAngle);
+            context.arc(Xc, Yc, spinnerRadius, rotatedStartAngle, rotatedEndAngle);
             context.closePath();
             context.fillStyle = segment.color;
             context.fill();
@@ -289,8 +292,8 @@ export default class PickerView {
 
             if (segment.weight >= 0.5) {
               const midAngle = (rotatedStartAngle + rotatedEndAngle) / 2;
-              const x: number = Xc + 115 * Math.cos(midAngle);
-              const y: number = Yc + 115 * Math.sin(midAngle);
+              const x: number = Xc + spinnerRadius * 0.6 * Math.cos(midAngle);
+              const y: number = Yc + spinnerRadius * 0.6 * Math.sin(midAngle);
 
               context.save();
               context.translate(x, y);
@@ -298,7 +301,7 @@ export default class PickerView {
               context.fillStyle = 'white';
               context.shadowColor = 'black';
               context.shadowBlur = 5;
-              context.fillText(`${segment.title}`, 0, 0, 150);
+              context.fillText(`${segment.title}`, 0, 0, spinnerRadius * 0.7);
               context.restore();
             }
             startAngle = endAngle;
@@ -312,11 +315,28 @@ export default class PickerView {
         context.shadowBlur = 20;
 
         context.beginPath();
-        context.arc(Xc, Yc, 30, 0, Math.PI * 2);
+        context.arc(Xc, Yc, circleInnerRadius, 0, Math.PI * 2);
         context.fillStyle = 'green';
         context.fill();
         context.strokeStyle = 'white';
         context.lineWidth = 2;
+        context.stroke();
+        context.restore();
+
+        //cursor
+        context.save();
+
+        context.shadowOffsetX = 0;
+        context.shadowOffsetY = 0;
+        context.beginPath();
+
+        context.moveTo(Xc, cursorYpos);
+        context.lineTo(Xc + 15, cursorYpos - 30);
+        context.lineTo(Xc, cursorYpos - 20);
+        context.lineTo(Xc - 15, cursorYpos - 30);
+        context.closePath();
+        context.fillStyle = '#33a3a3';
+        context.fill();
         context.stroke();
         context.restore();
       }
