@@ -145,7 +145,11 @@ export default class PickerView {
     const timerInput: HTMLInputElement = document.createElement('input');
     timerInput.classList.add('input', 'timer-input');
     timerInput.type = 'number';
-    timerInput.value = '16';
+    timerInput.value = (this.#timer / 1000).toString();
+    timerInput.addEventListener('change', () => {
+      if (+timerInput.value < 0 || timerInput.value === '') timerInput.value = '0';
+      this.#timer = +timerInput.value * 1000;
+    });
 
     timer.append(svgTimer, timerInput);
 
