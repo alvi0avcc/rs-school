@@ -229,6 +229,7 @@ export default class MainView {
           );
         }
       );
+      elementTitle.placeholder = 'Title';
       elementTitle.classList.add('input-title');
       const elementWeight: HTMLInputElement = this.#creator.input(
         'input',
@@ -247,6 +248,7 @@ export default class MainView {
           );
         }
       );
+      elementWeight.placeholder = 'Weight';
       elementWeight.classList.add('input-weight');
 
       const elementButton: HTMLElement = this.#creator.button(
