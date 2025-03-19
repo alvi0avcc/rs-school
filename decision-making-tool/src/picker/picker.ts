@@ -4,6 +4,7 @@ import icons from '../assets/icon.svg';
 import ElementCreator from '../element-creator/element-creator';
 import type { Option } from '../utils/storage';
 import { EasingTimerFunction } from '../utils/easing';
+import { cleanedList } from '../utils/option-list';
 
 export enum MakeRule {
   sound,
@@ -11,7 +12,7 @@ export enum MakeRule {
   run,
 }
 
-interface ColoredOption extends Option {
+export interface ColoredOption extends Option {
   color: string;
 }
 
@@ -45,13 +46,6 @@ export default class PickerView {
 
     this.createPage();
   }
-
-  private static getRandomColor = (): string => {
-    const r = Math.floor(Math.random() * 256);
-    const g = Math.floor(Math.random() * 256);
-    const b = Math.floor(Math.random() * 256);
-    return `rgb(${r}, ${g}, ${b})`;
-  };
 
   public startRotary(): void {
     this.#stateRotary = 0;
@@ -169,26 +163,6 @@ export default class PickerView {
     return this.#main;
   }
 
-  private cleanedList(shuffle = false): ColoredOption[] {
-    if (this.#listOptions) {
-      let cleanedList: Option[] = this.#listOptions.filter(
-        (item) => item.title !== '' && item.weight !== undefined
-      );
-      if (shuffle) cleanedList = cleanedList.sort(() => Math.random() - 0.5);
-
-      const coloredList: ColoredOption[] = cleanedList.map((element) => ({
-        id: element.id,
-        title: element.title,
-        weight: element.weight,
-        color: PickerView.getRandomColor(),
-      }));
-
-      return coloredList;
-    }
-
-    return [];
-  }
-
   private getCanvas(): HTMLCanvasElement {
     const canvas: HTMLCanvasElement = document.createElement('canvas');
 
@@ -196,7 +170,7 @@ export default class PickerView {
     canvas.classList.add('canvas');
     canvas.width = 512;
     canvas.height = 512;
-    const coloredList: ColoredOption[] = this.cleanedList(true);
+    const coloredList: ColoredOption[] = cleanedList(this.#listOptions, true);
 
     if (coloredList.length > 0) {
       this.drawCanvas(canvas, coloredList);
