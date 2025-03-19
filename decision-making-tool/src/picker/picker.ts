@@ -141,7 +141,8 @@ export default class PickerView {
     timerInput.type = 'number';
     timerInput.value = (this.#timer / 1000).toString();
     timerInput.addEventListener('change', () => {
-      if (+timerInput.value < 0 || timerInput.value === '') timerInput.value = '0';
+      if (+timerInput.value < 5 || timerInput.value === '') timerInput.value = '5';
+      if (+timerInput.value > 30) timerInput.value = '30';
       this.#timer = +timerInput.value * 1000;
     });
 
