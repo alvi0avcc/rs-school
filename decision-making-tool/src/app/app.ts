@@ -142,7 +142,7 @@ export default class App {
       case OptionRule.add: {
         const maxId: number = this.#listOptions?.lastId || 0;
         this.#listOptions?.listOptions.push({
-          id: maxId + 1,
+          id: `#${maxId + 1}`,
           title: '',
           weight: undefined,
         });
@@ -184,7 +184,7 @@ export default class App {
       case OptionRule.del: {
         if (this.#listOptions?.listOptions)
           this.#listOptions.listOptions = this.#listOptions?.listOptions.filter(
-            (item) => item.id !== +value
+            (item) => item.id !== value
           );
         if (this.#listOptions?.listOptions.length === 0) this.#listOptions.lastId = 0;
         break;
@@ -202,7 +202,7 @@ export default class App {
               for (const line of options) {
                 console.log(line);
                 this.#listOptions.listOptions.push({
-                  id: this.#listOptions.lastId + 1,
+                  id: `#${this.#listOptions.lastId + 1}`,
                   title: line[0],
                   weight: line[1],
                 });
