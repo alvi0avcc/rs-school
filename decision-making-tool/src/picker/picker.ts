@@ -268,7 +268,7 @@ export default class PickerView {
             context.fill();
             context.stroke();
 
-            if (segment.weight >= 0.5) {
+            if (endAngle - startAngle >= 0.2) {
               const midAngle = (rotatedStartAngle + rotatedEndAngle) / 2;
               const x: number = Xc + spinnerRadius * 0.6 * Math.cos(midAngle);
               const y: number = Yc + spinnerRadius * 0.6 * Math.sin(midAngle);
