@@ -20,13 +20,13 @@ export class Storage {
     // this.defaultKeySound = 'sound';
 
     this.defaultList = {
-      id: 0,
+      id: 1,
       title: '',
       weight: undefined,
     };
     this.list = {
       listOptions: [this.defaultList],
-      lastId: 0,
+      lastId: 1,
     };
   }
 

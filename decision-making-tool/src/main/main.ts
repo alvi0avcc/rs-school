@@ -202,15 +202,11 @@ export default class MainView {
     const sectionListOption: HTMLElement = this.#creator.ul();
 
     for (const line of this.#listOptions.listOptions) {
-      const id = line.id || 0;
+      const id = line.id || 1;
       const title = line.title || '';
       const weight: string = line.weight === undefined ? '' : line.weight.toString();
       const sectionLine: HTMLElement = this.#creator.li();
-      const elementId: HTMLElement = this.#creator.label(
-        'label',
-        `id-${id.toString()}`,
-        `#${(id + 1).toString()}`
-      );
+      const elementId: HTMLElement = this.#creator.label('label', `id-${id}`, `#${id}`);
       const elementTitle: HTMLInputElement = this.#creator.input(
         'input',
         `input-title-${id.toString()}`,
