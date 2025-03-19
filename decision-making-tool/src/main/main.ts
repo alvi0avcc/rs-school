@@ -2,6 +2,7 @@ import './main.css';
 
 import ElementCreator from '../element-creator/element-creator';
 import type { List } from '../utils/storage';
+import { cleanedList } from '../utils/option-list';
 
 export enum OptionRule {
   add,
@@ -180,9 +181,13 @@ export default class MainView {
         'btn5',
         'Start',
         () => {
-          console.log('Button5 clicked!');
-          history.pushState({ page: 'picker' }, '', '#/picker');
-          this.onHashChange('/picker');
+          if (cleanedList(this.#listOptions?.listOptions, false).length > 1) {
+            history.pushState({ page: 'picker' }, '', '#/picker');
+            this.onHashChange('/picker');
+          } else {
+            console.log('not valid list');
+            //TODO add modal message "not valid list"
+          }
         },
         ['button', 'start-button']
       ),
