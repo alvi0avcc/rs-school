@@ -197,7 +197,9 @@ export default class PickerView {
         index = index_;
     }
 
-    if (list[index]) this.#pickingLabel.textContent = list[index].title;
+    if (list[index])
+      this.#pickingLabel.textContent =
+        list[index].title.length > 15 ? list[index].title.slice(0, 15) + '...' : list[index].title;
     return true;
   }
 
@@ -279,7 +281,11 @@ export default class PickerView {
               context.fillStyle = 'white';
               context.shadowColor = 'black';
               context.shadowBlur = 5;
-              context.fillText(`${segment.title}`, 0, 0, spinnerRadius * 0.7);
+              context.fillText(
+                segment.title.length > 9 ? `${segment.title.slice(0, 10)}...` : segment.title,
+                0,
+                0
+              );
               context.restore();
             }
             startAngle = endAngle;
