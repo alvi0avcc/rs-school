@@ -46,7 +46,6 @@ export default class App {
   public async start(): Promise<boolean[]> {
     const isStarted: boolean[] = await this.#storage.init();
     this.#listOptions = this.#storage.getList();
-    console.log('listOptions =', this.#listOptions);
 
     this.#main.setListOptions(this.#listOptions);
 
@@ -85,24 +84,20 @@ export default class App {
   private onMakeChange(rule: MakeRule, value: string): void {
     switch (rule) {
       case MakeRule.sound: {
-        console.log('sound'); //temp
-
-        console.log(value); //temp
-        console.log(this.#hash); //temp
+        //TODO - toggle sound on/off
+        console.log('sound clicked'); //temp
+        console.log('sound value =', value); //temp
 
         break;
       }
 
       case MakeRule.timer: {
-        console.log('timer'); //temp
-
+        console.log('timer clicked'); //temp
         break;
       }
 
       case MakeRule.run: {
-        console.log('run'); //temp
         this.#picker.startRotary();
-
         break;
       }
 
@@ -114,7 +109,6 @@ export default class App {
 
   private onHashChange(hash: string): void {
     this.#hash = hash;
-    console.log('Hash changed to:', hash);
     switch (hash) {
       case '/': {
         history.pushState({ page: '#/' }, '', '#/');
@@ -128,7 +122,6 @@ export default class App {
 
       default: {
         history.pushState({ page: '#/404' }, '', '#/404');
-        console.log('error 404');
         this.#hash = '/404';
         break;
       }
@@ -137,111 +130,133 @@ export default class App {
   }
 
   private onOptionsChange(rule: OptionRule, value: string): void {
-    console.log('storage clicked');
     switch (rule) {
       case OptionRule.add: {
-        const maxId: number = this.#listOptions?.lastId || 0;
-        this.#listOptions?.listOptions.push({
-          id: `#${maxId + 1}`,
-          title: '',
-          weight: undefined,
-        });
-        if (this.#listOptions) this.#listOptions.lastId = maxId + 1;
+        this.optionRuleAdd();
         break;
       }
-
       case OptionRule.updateTitle: {
-        if (this.#listOptions) {
-          const valueObject: Record<string, number | string> = JSON.parse(value);
-          const index: number = this.#listOptions.listOptions.findIndex(
-            (item) => item.id === valueObject.id
-          );
-          if (index !== -1) {
-            this.#listOptions.listOptions[index].title = `${valueObject.value}`;
-          }
-        }
+        this.optionRuleUpdateTitle(value);
         break;
       }
-
       case OptionRule.updateWeight: {
-        if (this.#listOptions) {
-          const valueObject: Record<string, number | string | undefined> = JSON.parse(value);
-          console.log(valueObject);
-          if (valueObject.value === '') valueObject.value = undefined;
-
-          const index: number = this.#listOptions.listOptions.findIndex(
-            (item) => item.id === valueObject.id
-          );
-          if (index !== -1) {
-            this.#listOptions.listOptions[index].weight = valueObject.value
-              ? +valueObject.value
-              : undefined;
-          }
-        }
+        this.optionRuleUpdateWeight(value);
         break;
       }
-
       case OptionRule.del: {
-        if (this.#listOptions?.listOptions)
-          this.#listOptions.listOptions = this.#listOptions?.listOptions.filter(
-            (item) => item.id !== value
-          );
-        if (this.#listOptions?.listOptions.length === 0) this.#listOptions.lastId = 0;
+        this.optionRuleDel(value);
         break;
       }
-
       case OptionRule.paste: {
-        if (this.#listOptions) {
-          console.log('dialog open');
-          if (value === 'open') this.#main.dialogShow();
-          if (value !== 'open') {
-            console.log('paste');
-            const options: [string, number | undefined][] = Storage.pasteOption(value);
-            if (options.length > 0) {
-              console.log('paste options =', options);
-              for (const line of options) {
-                console.log(line);
-                this.#listOptions.listOptions.push({
-                  id: `#${this.#listOptions.lastId + 1}`,
-                  title: line[0],
-                  weight: line[1],
-                });
-                this.#listOptions.lastId++;
-              }
-            }
-          }
-          break;
-        }
+        this.optionRulePaste(value);
+        break;
       }
-
       case OptionRule.clear: {
-        if (this.#listOptions) {
-          this.#listOptions.listOptions = [];
-          this.#listOptions.lastId = 0;
-        }
+        this.optionRuleClear();
         break;
       }
-
       case OptionRule.save: {
-        if (this.#listOptions) {
-          this.#storage.saveStorageToFile();
-        }
+        this.optionRuleSave();
         break;
       }
-
       case OptionRule.load: {
-        if (this.#listOptions) {
-          const loaded: List = JSON.parse(value);
-          this.#listOptions = loaded;
-        }
+        this.optionRuleLoad(value);
         break;
       }
-
       default: {
         break;
       }
     }
 
+    this.optionsChangeUpdateView(rule);
+  }
+
+  private optionRuleAdd(): void {
+    const maxId: number = this.#listOptions?.lastId || 0;
+    this.#listOptions?.listOptions.push({
+      id: `#${maxId + 1}`,
+      title: '',
+      weight: undefined,
+    });
+    if (this.#listOptions) this.#listOptions.lastId = maxId + 1;
+  }
+
+  private optionRuleUpdateTitle(value: string): void {
+    if (this.#listOptions) {
+      const valueObject: Record<string, number | string> = JSON.parse(value);
+      const index: number = this.#listOptions.listOptions.findIndex(
+        (item) => item.id === valueObject.id
+      );
+      if (index !== -1) {
+        this.#listOptions.listOptions[index].title = `${valueObject.value}`;
+      }
+    }
+  }
+
+  private optionRuleUpdateWeight(value: string): void {
+    if (this.#listOptions) {
+      const valueObject: Record<string, number | string | undefined> = JSON.parse(value);
+      if (valueObject.value === '') valueObject.value = undefined;
+
+      const index: number = this.#listOptions.listOptions.findIndex(
+        (item) => item.id === valueObject.id
+      );
+      if (index !== -1) {
+        this.#listOptions.listOptions[index].weight = valueObject.value
+          ? +valueObject.value
+          : undefined;
+      }
+    }
+  }
+
+  private optionRuleDel(value: string): void {
+    if (this.#listOptions?.listOptions)
+      this.#listOptions.listOptions = this.#listOptions?.listOptions.filter(
+        (item) => item.id !== value
+      );
+    if (this.#listOptions?.listOptions.length === 0) this.#listOptions.lastId = 0;
+  }
+
+  private optionRulePaste(value: string): void {
+    if (this.#listOptions) {
+      if (value === 'open') this.#main.dialogShow();
+      if (value !== 'open') {
+        const options: [string, number | undefined][] = Storage.pasteOption(value);
+        if (options.length > 0) {
+          for (const line of options) {
+            this.#listOptions.listOptions.push({
+              id: `#${this.#listOptions.lastId + 1}`,
+              title: line[0],
+              weight: line[1],
+            });
+            this.#listOptions.lastId++;
+          }
+        }
+      }
+    }
+  }
+
+  private optionRuleClear(): void {
+    if (this.#listOptions) {
+      this.#listOptions.listOptions = [];
+      this.#listOptions.lastId = 0;
+    }
+  }
+
+  private optionRuleSave(): void {
+    if (this.#listOptions) {
+      this.#storage.saveStorageToFile();
+    }
+  }
+
+  private optionRuleLoad(value: string): void {
+    if (this.#listOptions) {
+      const loaded: List = JSON.parse(value);
+      this.#listOptions = loaded;
+    }
+  }
+
+  private optionsChangeUpdateView(rule: OptionRule): void {
     if (this.#listOptions) {
       this.#storage.setList(this.#listOptions);
 

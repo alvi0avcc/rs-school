@@ -13,6 +13,17 @@ export const input = (
   return input;
 };
 
+export const inputFileLoad = (id = '', callback?: (event: Event) => void): HTMLInputElement => {
+  const input: HTMLInputElement = document.createElement('input');
+  input.id = id;
+  input.type = 'file';
+  input.accept = '.json';
+  input.hidden = true;
+  input.value = '';
+  if (callback) input.addEventListener('input', (event: Event) => callback(event));
+  return input;
+};
+
 export const label = ({
   id = '',
   text = 'label',

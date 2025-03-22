@@ -6,6 +6,13 @@ import * as htmlElement from '../element-creator/element-creator';
 import type { Option } from '../utils/storage';
 import { EasingTimerFunction } from '../utils/easing';
 import { cleanedList } from '../utils/option-list';
+import {
+  drawAllSegments,
+  drawCursor,
+  drawInnerCircle,
+  drawOuterCircle,
+  drawTextStyle,
+} from './draw';
 
 export enum MakeRule {
   sound,
@@ -67,6 +74,31 @@ export default class PickerView {
 
   private createPage(): HTMLElement {
     const form = htmlElement.section();
+
+    const buttonUndo = this.buttonUndo();
+    const buttonSound = this.buttonSound();
+    const buttonTimer: HTMLLabelElement = this.buttonTimer();
+    const buttonStart = this.buttonStart();
+
+    form.append(buttonUndo, buttonSound, buttonTimer, buttonStart);
+
+    this.#pickingLabel.id = 'picking-label';
+    this.#pickingLabel.textContent = 'PRESS START BUTTON';
+    this.#pickingLabel.classList.add('p');
+
+    const page: HTMLElement[] = [
+      //TODO replace label to h1
+      htmlElement.label({ id: 'h1', text: 'Decision Making Tool', styles: ['h1'] }),
+
+      form,
+      this.#pickingLabel,
+      this.getCanvas(),
+    ];
+    this.#main.append(...page);
+    return this.#main;
+  }
+
+  private buttonUndo(): HTMLButtonElement {
     const buttonUndo = htmlElement.button(
       'btn-undo',
       '',
@@ -87,6 +119,10 @@ export default class PickerView {
     svgUndo.append(svgUseUndo);
     buttonUndo.append(svgUndo);
 
+    return buttonUndo;
+  }
+
+  private buttonSound(): HTMLButtonElement {
     const buttonSound = htmlElement.button(
       'btn-sound',
       '',
@@ -106,6 +142,10 @@ export default class PickerView {
     svgSound.append(svgUseSound);
     buttonSound.append(svgSound);
 
+    return buttonSound;
+  }
+
+  private buttonStart(): HTMLButtonElement {
     const buttonStart = htmlElement.button(
       'btn-start',
       '',
@@ -125,7 +165,10 @@ export default class PickerView {
     svgStart.append(svgUseStart);
     buttonStart.append(svgStart);
 
-    // const timer = this.#creator.label('label', 'label');
+    return buttonStart;
+  }
+
+  private buttonTimer(): HTMLLabelElement {
     const timer: HTMLLabelElement = document.createElement('label');
     timer.classList.add('label', 'form_timer', 'timer-label');
     const svgTimer = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
@@ -147,22 +190,7 @@ export default class PickerView {
 
     timer.append(svgTimer, timerInput);
 
-    form.append(buttonUndo, buttonSound, timer, buttonStart);
-
-    this.#pickingLabel.id = 'picking-label';
-    this.#pickingLabel.textContent = 'PRESS START BUTTON';
-    this.#pickingLabel.classList.add('p');
-
-    const page: HTMLElement[] = [
-      //TODO replace label to h1
-      htmlElement.label({ id: 'h1', text: 'Decision Making Tool', styles: ['h1'] }),
-
-      form,
-      this.#pickingLabel,
-      this.getCanvas(),
-    ];
-    this.#main.append(...page);
-    return this.#main;
+    return timer;
   }
 
   private getCanvas(): HTMLCanvasElement {
@@ -180,10 +208,10 @@ export default class PickerView {
     return canvas;
   }
 
-  private stateCircle(list: Option[], summ: number, state: number): boolean {
+  private stateCircle(list: Option[], sum: number, state: number): boolean {
     if (this.#stateRotary === -1) return false;
     let angle: number = this.#rotation * state;
-    const angles: number[] = list.map((value) => ((value.weight || 1) / summ) * 2 * Math.PI);
+    const angles: number[] = list.map((value) => ((value.weight || 1) / sum) * 2 * Math.PI);
     const cumulativeAngles: number[] = [];
     let cumulativeSum = 0;
 
@@ -207,21 +235,13 @@ export default class PickerView {
 
   private drawCanvas(canvas: HTMLCanvasElement, coloredList: ColoredOption[]): void {
     const context: CanvasRenderingContext2D | null = canvas.getContext('2d');
-    if (context) {
-      context.font = '20px Arial';
-      context.textAlign = 'center';
-      context.textBaseline = 'middle';
 
-      context.shadowColor = 'black';
-      context.shadowOffsetX = 2;
-      context.shadowOffsetY = 2;
-    }
-    const width: number = canvas.width;
-    const height: number = canvas.height;
-    const Xc: number = width / 2;
-    const Yc: number = height / 2;
+    if (context) drawTextStyle(context);
 
-    const summ: number = coloredList.reduce(
+    const Xc: number = canvas.width / 2;
+    const Yc: number = canvas.height / 2;
+
+    const sum: number = coloredList.reduce(
       (accumulator, value) => accumulator + (value.weight || 0),
       0
     );
@@ -239,95 +259,28 @@ export default class PickerView {
         const cursorYpos = 70;
         const circleInnerRadius = 25;
         const spinnerRadius = 200;
-        this.stateCircle(coloredList, summ, easedT);
+        this.stateCircle(coloredList, sum, easedT);
 
-        //outer circle
-        context.beginPath();
-        context.arc(Xc, Yc, spinnerRadius, 0, Math.PI * 2);
-        context.fillStyle = 'blue';
-        context.fill();
-        context.strokeStyle = 'white';
-        context.lineWidth = 2;
-        context.stroke();
+        drawOuterCircle(context, Xc, Yc, spinnerRadius);
 
         let startAngle = -Math.PI / 2;
 
-        context.imageSmoothingEnabled = true;
+        drawAllSegments(
+          context,
+          Xc,
+          Yc,
+          spinnerRadius,
+          this.#rotation,
+          startAngle,
+          sum,
+          easedT,
+          coloredList
+        );
 
-        //segments
-        context.strokeStyle = 'white';
-
-        for (const segment of coloredList) {
-          if (segment.title && segment.weight) {
-            const endAngle: number = startAngle + (segment.weight / summ) * 2 * Math.PI;
-
-            const rotatedStartAngle = startAngle - this.#rotation * easedT;
-            const rotatedEndAngle = endAngle - this.#rotation * easedT;
-
-            context.beginPath();
-            context.moveTo(Xc, Yc);
-            context.arc(Xc, Yc, spinnerRadius, rotatedStartAngle, rotatedEndAngle);
-            context.closePath();
-            context.fillStyle = segment.color;
-            context.fill();
-            context.stroke();
-
-            if (endAngle - startAngle >= 0.2) {
-              const midAngle = (rotatedStartAngle + rotatedEndAngle) / 2;
-              const x: number = Xc + spinnerRadius * 0.6 * Math.cos(midAngle);
-              const y: number = Yc + spinnerRadius * 0.6 * Math.sin(midAngle);
-
-              context.save();
-              context.translate(x, y);
-              context.rotate(midAngle);
-              context.fillStyle = 'white';
-              context.shadowColor = 'black';
-              context.shadowBlur = 5;
-              context.fillText(
-                segment.title.length > 9 ? `${segment.title.slice(0, 10)}...` : segment.title,
-                0,
-                0
-              );
-              context.restore();
-            }
-            startAngle = endAngle;
-          }
-        }
-
-        //inner circle
-        context.save();
-        context.shadowColor = 'black';
-
-        context.shadowBlur = 20;
-
-        context.beginPath();
-        context.arc(Xc, Yc, circleInnerRadius, 0, Math.PI * 2);
-        context.fillStyle = 'green';
-        context.fill();
-        context.strokeStyle = 'white';
-        context.lineWidth = 2;
-        context.stroke();
-        context.restore();
-
-        //cursor
-        context.save();
-
-        context.shadowOffsetX = 0;
-        context.shadowOffsetY = 0;
-        context.beginPath();
-
-        context.moveTo(Xc, cursorYpos);
-        context.lineTo(Xc + 15, cursorYpos - 30);
-        context.lineTo(Xc, cursorYpos - 20);
-        context.lineTo(Xc - 15, cursorYpos - 30);
-        context.closePath();
-        context.fillStyle = '#33a3a3';
-        context.fill();
-        context.stroke();
-        context.restore();
+        drawInnerCircle(context, Xc, Yc, circleInnerRadius);
+        drawCursor(context, Xc, cursorYpos);
       }
 
-      // if (PickerView.stateRotary >= 0) requestAnimationFrame(draw);
       requestAnimationFrame(draw);
     };
     draw();

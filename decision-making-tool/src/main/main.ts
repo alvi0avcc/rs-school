@@ -1,7 +1,7 @@
 import './main.css';
 
 import * as htmlElement from '../element-creator/element-creator';
-import type { List } from '../utils/storage';
+import type { List, Option } from '../utils/storage';
 import { cleanedList } from '../utils/option-list';
 
 export enum OptionRule {
@@ -96,94 +96,19 @@ export default class MainView {
   }
 
   private createMain(): HTMLElement {
-    const loadButton = htmlElement.label({
-      text: 'Load list from file',
-      htmlFor: 'load-input',
-      styles: ['button', 'load-list-button'],
-    });
-    const loadInput = htmlElement.input('load-input', 'file', '', (event: Event) => {
-      if (event.target instanceof HTMLInputElement) {
-        const files = event.target.files;
-        if (files && files.length > 0) {
-          const file = files[0];
-          file
-            .text()
-            .then((fileContent: string) => {
-              this.onOptionsChange(OptionRule.load, fileContent);
-            })
-            .catch((error) => {
-              console.error('Error reading file:', error);
-            });
-        } else {
-          console.error('No file selected');
-        }
-      } else {
-        console.error('Event target is not an input element');
-      }
-    });
-    loadInput.setAttribute('accept', '.json');
-    loadInput.setAttribute('hidden', '');
-
-    const page: HTMLElement[] = [
-      //TODO replace label to h1
-      htmlElement.label({ id: 'h1', text: 'Decision Making Tool', styles: ['h1'] }),
-      this.createListOption() || htmlElement.section('div'),
-      htmlElement.button(
-        'btn1',
-        'Add Option',
-        () => {
-          console.log('Button1 clicked!');
-          this.onOptionsChange(OptionRule.add, '');
-        },
-        ['button', 'add-option-button']
-      ),
-      htmlElement.button(
-        'btn2',
-        'Paste list',
-        () => {
-          console.log('Button2 clicked!');
-          this.onOptionsChange(OptionRule.paste, 'open');
-        },
-        ['button', 'paste-list-button']
-      ),
-      htmlElement.button(
-        'btn3',
-        'Clear list',
-        () => {
-          console.log('Button3 clicked!');
-          this.onOptionsChange(OptionRule.clear, '');
-        },
-        ['button', 'clear-list-button']
-      ),
-      htmlElement.button(
-        'btn4',
-        'Save list to file',
-        () => {
-          console.log('Button4 clicked!');
-          this.onOptionsChange(OptionRule.save, '');
-        },
-        ['button', 'save-list-button']
-      ),
-      loadButton,
-      loadInput,
-      htmlElement.button(
-        'btn5',
-        'Start',
-        () => {
-          if (cleanedList(this.#listOptions?.listOptions, false).length > 1) {
-            history.pushState({ page: 'picker' }, '', '#/picker');
-            this.onHashChange('/picker');
-          } else {
-            console.log('not valid list');
-            //TODO add modal message "not valid list"
-          }
-        },
-        ['button', 'start-button']
-      ),
-      this.#dialog,
-    ];
     this.#main.replaceChildren();
-    this.#main.append(...page);
+
+    this.#main.append(
+      // //TODO replace label to h1
+      htmlElement.label({
+        id: 'h1',
+        text: 'Decision Making Tool',
+        styles: ['h1'],
+      }),
+
+      this.createListOption() || htmlElement.section('div'),
+      ...this.sectionButton()
+    );
     this.#main.classList.add('main-page');
     return this.#main;
   }
@@ -195,47 +120,11 @@ export default class MainView {
 
     for (const line of this.#listOptions.listOptions) {
       const id = line.id || '#1';
-      const title = line.title || '';
-      const weight: string = line.weight === undefined ? '' : line.weight.toString();
       const sectionLine: HTMLElement = htmlElement.li();
       const elementId: HTMLLabelElement = htmlElement.label({ id: `id-${id}`, text: `${id}` });
 
-      const elementTitle: HTMLInputElement = htmlElement.input(
-        `input-title-${id.toString()}`,
-        'text',
-        title,
-        (event: Event) => {
-          this.onOptionsChange(
-            OptionRule.updateTitle,
-            event.target instanceof HTMLInputElement
-              ? JSON.stringify({
-                  id: id,
-                  value: event.target.value,
-                })
-              : ''
-          );
-        }
-      );
-      elementTitle.placeholder = 'Title';
-      elementTitle.classList.add('input-title');
-      const elementWeight: HTMLInputElement = htmlElement.input(
-        `input-weight-${id.toString()}`,
-        'number',
-        `${weight}`,
-        (event: Event) => {
-          this.onOptionsChange(
-            OptionRule.updateWeight,
-            event.target instanceof HTMLInputElement
-              ? JSON.stringify({
-                  id: id,
-                  value: event.target.value,
-                })
-              : ''
-          );
-        }
-      );
-      elementWeight.placeholder = 'Weight';
-      elementWeight.classList.add('input-weight');
+      const elementTitle: HTMLInputElement = this.OptionTitle(line);
+      const elementWeight: HTMLInputElement = this.OptionWeight(line);
 
       const elementButton: HTMLElement = htmlElement.button(
         `btn-del-${id.toString()}`,
@@ -254,5 +143,153 @@ export default class MainView {
     sectionListOption.classList.add('option-list');
 
     return sectionListOption;
+  }
+
+  private OptionTitle(line: Option): HTMLInputElement {
+    const title: HTMLInputElement = htmlElement.input(
+      `input-title-${line.id.toString()}`,
+      'text',
+      line.title,
+      (event: Event) => {
+        this.onOptionsChange(
+          OptionRule.updateTitle,
+          event.target instanceof HTMLInputElement
+            ? JSON.stringify({
+                id: line.id,
+                value: event.target.value,
+              })
+            : ''
+        );
+      }
+    );
+    title.placeholder = 'Title';
+    title.classList.add('input-title');
+
+    return title;
+  }
+
+  private OptionWeight(line: Option): HTMLInputElement {
+    const weight: HTMLInputElement = htmlElement.input(
+      `input-weight-${line.id.toString()}`,
+      'number',
+      `${line.weight}`,
+      (event: Event) => {
+        this.onOptionsChange(
+          OptionRule.updateWeight,
+          event.target instanceof HTMLInputElement
+            ? JSON.stringify({
+                id: line.id,
+                value: event.target.value,
+              })
+            : ''
+        );
+      }
+    );
+    weight.placeholder = 'Weight';
+    weight.classList.add('input-weight');
+    return weight;
+  }
+
+  private loadInputEvent(event: Event): void {
+    if (event.target instanceof HTMLInputElement) {
+      const files = event.target.files;
+      if (files && files.length > 0) {
+        const file = files[0];
+        file
+          .text()
+          .then((fileContent: string) => {
+            this.onOptionsChange(OptionRule.load, fileContent);
+          })
+          .catch((error) => {
+            console.error('Error reading file:', error);
+          });
+      } else {
+        console.error('No file selected');
+      }
+    } else {
+      console.error('Event target is not an input element');
+    }
+  }
+
+  private sectionButton(): HTMLElement[] {
+    const section: HTMLElement[] = [
+      this.buttonAdd(),
+      this.buttonOpen(),
+      this.buttonClear(),
+      this.buttonSave(),
+      htmlElement.label({
+        text: 'Load list from file',
+        htmlFor: 'load-input',
+        styles: ['button', 'load-list-button'],
+      }),
+      htmlElement.inputFileLoad('load-input', (event: Event) => {
+        this.loadInputEvent(event);
+      }),
+      this.buttonStart(),
+      this.#dialog,
+    ];
+
+    return section;
+  }
+
+  private buttonClear(): HTMLElement {
+    return htmlElement.button(
+      'btn3',
+      'Clear list',
+      () => {
+        this.onOptionsChange(OptionRule.clear, '');
+      },
+      ['button', 'clear-list-button']
+    );
+  }
+
+  private buttonOpen(): HTMLElement {
+    return htmlElement.button(
+      'btn2',
+      'Paste list',
+      () => {
+        this.onOptionsChange(OptionRule.paste, 'open');
+      },
+      ['button', 'paste-list-button']
+    );
+  }
+
+  private buttonSave(): HTMLElement {
+    return htmlElement.button(
+      'btn4',
+      'Save list to file',
+      () => {
+        this.onOptionsChange(OptionRule.save, '');
+      },
+      ['button', 'save-list-button']
+    );
+  }
+
+  private buttonAdd(): HTMLElement {
+    return htmlElement.button(
+      'btn1',
+      'Add Option',
+      () => {
+        this.onOptionsChange(OptionRule.add, '');
+      },
+      ['button', 'add-option-button']
+    );
+  }
+
+  private buttonStart(): HTMLElement {
+    return htmlElement.button(
+      'btn5',
+      'Start',
+      () => {
+        if (cleanedList(this.#listOptions?.listOptions, false).length > 1) {
+          history.pushState({ page: 'picker' }, '', '#/picker');
+          this.onHashChange('/picker');
+        } else {
+          console.log('not valid list');
+          //TODO add modal message "not valid list"
+        }
+      },
+      ['button', 'start-button']
+    );
   }
 }
