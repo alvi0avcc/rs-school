@@ -50,7 +50,15 @@ export default [
         'allowEmpty': false,
         'allowStaticOnly': false
       }
-    ]
+    ],
+    'max-lines-per-function': [
+        'error',
+        {
+          max: 40,
+          skipComments: true,
+          skipBlankLines: true,
+        },
+      ],
     },
   },
 ];
