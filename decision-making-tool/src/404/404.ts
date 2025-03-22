@@ -20,7 +20,8 @@ export default class ErrorView {
 
   private createMain(): HTMLElement {
     const page: HTMLElement[] = [
-      this.#creator.label('h1', '', 'Something went wrong'),
+      //TODO replace label to h1
+      this.#creator.label({ id: 'h1', text: 'Something went wrong', styles: ['h1'] }),
       this.#creator.button(
         'back-main',
         'Back to main',

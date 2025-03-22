@@ -155,7 +155,9 @@ export default class PickerView {
     this.#pickingLabel.classList.add('p');
 
     const page: HTMLElement[] = [
-      this.#creator.label('h1', '', 'Decision Making Tool'),
+      //TODO replace label to h1
+      this.#creator.label({ id: 'h1', text: 'Decision Making Tool', styles: ['h1'] }),
+
       form,
       this.#pickingLabel,
       this.getCanvas(),

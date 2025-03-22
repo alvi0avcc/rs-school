@@ -107,13 +107,12 @@ export default class MainView {
   }
 
   private createMain(): HTMLElement {
-    const loadButton = this.#creator.label('label', 'label-load', 'Load list from file');
-    loadButton.setAttribute('for', 'load-input');
-    loadButton.classList.add('button', 'load-list-button');
-    loadButton.classList.remove('label');
+    const loadButton = this.#creator.label({
+      text: 'Load list from file',
+      htmlFor: 'load-input',
+      styles: ['button', 'load-list-button'],
+    });
     const loadInput = this.#creator.input('input', 'load-input', 'file', '', (event: Event) => {
-      console.log('load clicked!');
-
       if (event.target instanceof HTMLInputElement) {
         const files = event.target.files;
         if (files && files.length > 0) {
@@ -137,7 +136,8 @@ export default class MainView {
     loadInput.setAttribute('hidden', '');
 
     const page: HTMLElement[] = [
-      this.#creator.label('h1', '', 'Decision Making Tool'),
+      //TODO replace label to h1
+      this.#creator.label({ id: 'h1', text: 'Decision Making Tool', styles: ['h1'] }),
       this.createListOption() || this.#creator.section('div'),
       this.#creator.button(
         'btn1',
@@ -200,8 +200,6 @@ export default class MainView {
   }
 
   private createListOption(): HTMLElement | undefined {
-    console.log('this.#listOptions =', this.#listOptions);
-
     if (!this.#listOptions) return undefined;
 
     const sectionListOption: HTMLElement = this.#creator.ul();
@@ -211,7 +209,8 @@ export default class MainView {
       const title = line.title || '';
       const weight: string = line.weight === undefined ? '' : line.weight.toString();
       const sectionLine: HTMLElement = this.#creator.li();
-      const elementId: HTMLElement = this.#creator.label('label', `id-${id}`, `${id}`);
+      const elementId: HTMLLabelElement = this.#creator.label({ id: `id-${id}`, text: `${id}` });
+
       const elementTitle: HTMLInputElement = this.#creator.input(
         'input',
         `input-title-${id.toString()}`,

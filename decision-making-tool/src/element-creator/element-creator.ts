@@ -17,16 +17,24 @@ export default class ElementCreator {
     return input;
   }
 
-  public label(
-    tag = 'label',
+  public label({
     id = '',
-    text = tag,
-    callback: EventListener | undefined = undefined
-  ): HTMLElement {
-    const label: HTMLElement = this.createElement(tag);
-    label.id = id;
-    label.textContent = text;
-    label.classList.add(tag);
+    text = 'label',
+    htmlFor = undefined,
+    callback = undefined,
+    styles = ['label'],
+  }: {
+    id?: string;
+    text?: string;
+    htmlFor?: string;
+    callback?: EventListener;
+    styles?: string[];
+  }): HTMLLabelElement {
+    const label: HTMLLabelElement = document.createElement('label');
+    if (id) label.id = id;
+    if (text) label.textContent = text;
+    if (htmlFor) label.htmlFor = htmlFor;
+    if (styles) label.classList.add(...styles);
     if (callback) label.addEventListener('click', (event) => callback(event));
     return label;
   }
