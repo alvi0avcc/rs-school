@@ -33,7 +33,6 @@ export class Storage {
   public static async getStorage(key: string): Promise<string | undefined> {
     return new Promise((resolve) => {
       const value = localStorage.getItem(key);
-      console.log('storageGet =', value);
 
       resolve(value === null ? undefined : value);
     });
@@ -87,7 +86,8 @@ export class Storage {
   }
 
   public async init(): Promise<boolean[]> {
-    const results = await Promise.all([this.getStorageList(), this.getStorageList()]);
+    //TODO implement sound and replace "true" to this.getSoundState()
+    const results = await Promise.all([this.getStorageList(), true]);
     return results;
   }
 
@@ -100,7 +100,6 @@ export class Storage {
       const response: string | undefined = await Storage.getStorage(this.defaultKeyList);
       if (response) {
         this.list = JSON.parse(response);
-        console.log('list =', this.list);
       } else {
         this.list.lastId = 1;
         this.setStorageList();

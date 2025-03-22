@@ -13,7 +13,6 @@ export default class Router {
 
   private handleRouting(): void {
     const currentHash = globalThis.location.hash.slice(1) || '/';
-    console.log('currentHash=', currentHash);
 
     try {
       this.onHashChange(currentHash);

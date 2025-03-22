@@ -50,7 +50,6 @@ export default class MainView {
 
   public setListOptions(listOptions: List): void {
     this.#listOptions = listOptions;
-    console.log(this.#listOptions);
     this.createMain();
   }
 
@@ -73,7 +72,6 @@ export default class MainView {
       'btn-cancel',
       'Cancel',
       () => {
-        console.log('Button1 clicked!');
         this.dialogClose();
       },
       ['button', 'btn-cancel'],
@@ -83,7 +81,6 @@ export default class MainView {
       'btn-confirm',
       'Confirm',
       () => {
-        console.log('btn-confirm clicked!');
         this.onOptionsChange(OptionRule.paste, text.value);
         this.dialogClose();
       },
@@ -130,7 +127,6 @@ export default class MainView {
         `btn-del-${id.toString()}`,
         'Delete',
         () => {
-          console.log('Button del clicked!');
           this.onOptionsChange(OptionRule.del, id.toString());
         },
         ['button']

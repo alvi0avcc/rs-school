@@ -57,7 +57,6 @@ export default class PickerView {
     this.#stateRotary = 0;
     this.#rotation = 10 * 3.14 + Math.random() * 2 * 3.14;
     this.#startTime = performance.now();
-    console.log(this.#timer);
   }
 
   public getView(): HTMLElement | undefined {
@@ -67,7 +66,6 @@ export default class PickerView {
 
   public setListOptions(options: Option[] | undefined): void {
     if (options) this.#listOptions = options;
-    console.log('set picker option =', this.#listOptions);
     this.#main.replaceChildren();
     this.createPage();
   }
@@ -103,7 +101,6 @@ export default class PickerView {
       'btn-undo',
       '',
       () => {
-        console.log('btn-undo clicked!');
         history.pushState({ page: '/' }, '', '#/');
         this.onHashChange('/');
       },
@@ -127,7 +124,6 @@ export default class PickerView {
       'btn-sound',
       '',
       () => {
-        console.log('btn-sound clicked!');
         this.onMakeChange(MakeRule.sound, '');
       },
       ['button', 'btn_sound']
@@ -150,7 +146,6 @@ export default class PickerView {
       'btn-start',
       '',
       () => {
-        console.log('btn-start clicked!');
         this.onMakeChange(MakeRule.run, '');
       },
       ['button', 'btn_start']
