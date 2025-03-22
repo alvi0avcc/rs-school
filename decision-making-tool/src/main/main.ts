@@ -1,6 +1,6 @@
 import './main.css';
 
-import ElementCreator from '../element-creator/element-creator';
+import * as htmlElement from '../element-creator/element-creator';
 import type { List } from '../utils/storage';
 import { cleanedList } from '../utils/option-list';
 
@@ -18,10 +18,8 @@ export default class MainView {
   private onHashChange: (hash: string) => void;
   private onOptionsChange: (rule: OptionRule, value: string) => void;
   #listOptions: List | undefined;
-  #creator: ElementCreator;
   #main: HTMLElement;
   #dialog: HTMLDialogElement;
-  #text: string;
 
   constructor(
     onHashChange: (hash: string) => void,
@@ -31,20 +29,10 @@ export default class MainView {
     this.onHashChange = onHashChange;
     this.onOptionsChange = onOptionsChange;
     this.#listOptions = listOptions;
-    this.#creator = new ElementCreator();
-    this.#main = this.#creator.section('main');
-    this.#text = '';
-    this.#dialog = this.#creator.dialog();
+    this.#main = htmlElement.section('main');
+    this.#dialog = htmlElement.dialog();
     this.createDialog();
     this.createMain();
-  }
-
-  public setText(text: string): void {
-    this.#text = text;
-  }
-
-  public getText(): string {
-    return this.#text;
   }
 
   public getView(): HTMLElement | undefined {
@@ -68,9 +56,10 @@ export default class MainView {
 
   private createDialog(): void {
     this.#dialog.classList.add('dialog');
-    const form = this.#creator.form('form-dialog');
+    const form = htmlElement.form('form-dialog');
+
     form.classList.add('form-dialog');
-    const text = this.#creator.textArea();
+    const text = htmlElement.textArea();
     text.classList.add('text-csv');
     text.placeholder = `
       Paste a list of new options in a CSV-like format:
@@ -80,7 +69,7 @@ export default class MainView {
       title , with , commas,3 -> | title , with , commas | 3 |
       title with &quot;quotes&quot;,4   -> | title with &quot;quotes&quot;   | 4 |
     `;
-    const buttonCancel = this.#creator.button(
+    const buttonCancel = htmlElement.button(
       'btn-cancel',
       'Cancel',
       () => {
@@ -90,7 +79,7 @@ export default class MainView {
       ['button', 'btn-cancel'],
       'reset'
     );
-    const buttonConfirm = this.#creator.button(
+    const buttonConfirm = htmlElement.button(
       'btn-confirm',
       'Confirm',
       () => {
@@ -107,12 +96,12 @@ export default class MainView {
   }
 
   private createMain(): HTMLElement {
-    const loadButton = this.#creator.label({
+    const loadButton = htmlElement.label({
       text: 'Load list from file',
       htmlFor: 'load-input',
       styles: ['button', 'load-list-button'],
     });
-    const loadInput = this.#creator.input('input', 'load-input', 'file', '', (event: Event) => {
+    const loadInput = htmlElement.input('load-input', 'file', '', (event: Event) => {
       if (event.target instanceof HTMLInputElement) {
         const files = event.target.files;
         if (files && files.length > 0) {
@@ -137,9 +126,9 @@ export default class MainView {
 
     const page: HTMLElement[] = [
       //TODO replace label to h1
-      this.#creator.label({ id: 'h1', text: 'Decision Making Tool', styles: ['h1'] }),
-      this.createListOption() || this.#creator.section('div'),
-      this.#creator.button(
+      htmlElement.label({ id: 'h1', text: 'Decision Making Tool', styles: ['h1'] }),
+      this.createListOption() || htmlElement.section('div'),
+      htmlElement.button(
         'btn1',
         'Add Option',
         () => {
@@ -148,7 +137,7 @@ export default class MainView {
         },
         ['button', 'add-option-button']
       ),
-      this.#creator.button(
+      htmlElement.button(
         'btn2',
         'Paste list',
         () => {
@@ -157,7 +146,7 @@ export default class MainView {
         },
         ['button', 'paste-list-button']
       ),
-      this.#creator.button(
+      htmlElement.button(
         'btn3',
         'Clear list',
         () => {
@@ -166,7 +155,7 @@ export default class MainView {
         },
         ['button', 'clear-list-button']
       ),
-      this.#creator.button(
+      htmlElement.button(
         'btn4',
         'Save list to file',
         () => {
@@ -177,7 +166,7 @@ export default class MainView {
       ),
       loadButton,
       loadInput,
-      this.#creator.button(
+      htmlElement.button(
         'btn5',
         'Start',
         () => {
@@ -202,17 +191,16 @@ export default class MainView {
   private createListOption(): HTMLElement | undefined {
     if (!this.#listOptions) return undefined;
 
-    const sectionListOption: HTMLElement = this.#creator.ul();
+    const sectionListOption: HTMLElement = htmlElement.ul();
 
     for (const line of this.#listOptions.listOptions) {
       const id = line.id || '#1';
       const title = line.title || '';
       const weight: string = line.weight === undefined ? '' : line.weight.toString();
-      const sectionLine: HTMLElement = this.#creator.li();
-      const elementId: HTMLLabelElement = this.#creator.label({ id: `id-${id}`, text: `${id}` });
+      const sectionLine: HTMLElement = htmlElement.li();
+      const elementId: HTMLLabelElement = htmlElement.label({ id: `id-${id}`, text: `${id}` });
 
-      const elementTitle: HTMLInputElement = this.#creator.input(
-        'input',
+      const elementTitle: HTMLInputElement = htmlElement.input(
         `input-title-${id.toString()}`,
         'text',
         title,
@@ -230,8 +218,7 @@ export default class MainView {
       );
       elementTitle.placeholder = 'Title';
       elementTitle.classList.add('input-title');
-      const elementWeight: HTMLInputElement = this.#creator.input(
-        'input',
+      const elementWeight: HTMLInputElement = htmlElement.input(
         `input-weight-${id.toString()}`,
         'number',
         `${weight}`,
@@ -250,7 +237,7 @@ export default class MainView {
       elementWeight.placeholder = 'Weight';
       elementWeight.classList.add('input-weight');
 
-      const elementButton: HTMLElement = this.#creator.button(
+      const elementButton: HTMLElement = htmlElement.button(
         `btn-del-${id.toString()}`,
         'Delete',
         () => {

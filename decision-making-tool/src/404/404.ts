@@ -1,15 +1,13 @@
 // import './404.css';
 
-import ElementCreator from '../element-creator/element-creator';
+import * as htmlElement from '../element-creator/element-creator';
 
 export default class ErrorView {
   private onHashChange: (hash: string) => void;
-  #creator: ElementCreator;
   #main: HTMLElement;
   constructor(onHashChange: (hash: string) => void) {
     this.onHashChange = onHashChange;
-    this.#creator = new ElementCreator();
-    this.#main = this.#creator.section('main');
+    this.#main = htmlElement.section('main');
     this.createMain();
   }
 
@@ -21,8 +19,8 @@ export default class ErrorView {
   private createMain(): HTMLElement {
     const page: HTMLElement[] = [
       //TODO replace label to h1
-      this.#creator.label({ id: 'h1', text: 'Something went wrong', styles: ['h1'] }),
-      this.#creator.button(
+      htmlElement.label({ id: 'h1', text: 'Something went wrong', styles: ['h1'] }),
+      htmlElement.button(
         'back-main',
         'Back to main',
         () => {

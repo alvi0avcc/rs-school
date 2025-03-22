@@ -1,7 +1,8 @@
 import './picker.css';
 import icons from '../assets/icon.svg';
 
-import ElementCreator from '../element-creator/element-creator';
+import * as htmlElement from '../element-creator/element-creator';
+
 import type { Option } from '../utils/storage';
 import { EasingTimerFunction } from '../utils/easing';
 import { cleanedList } from '../utils/option-list';
@@ -19,7 +20,6 @@ export interface ColoredOption extends Option {
 export default class PickerView {
   private onHashChange: (hash: string) => void;
   private onMakeChange: (rule: MakeRule, value: string) => void;
-  #creator: ElementCreator;
   #main: HTMLElement;
   #listOptions: Option[] | undefined;
   #timer: number;
@@ -36,8 +36,7 @@ export default class PickerView {
     this.#listOptions = listOptions;
     this.onHashChange = onHashChange;
     this.onMakeChange = onMakeChange;
-    this.#creator = new ElementCreator();
-    this.#main = this.#creator.section('main');
+    this.#main = htmlElement.section('main');
     this.#timer = 16_000;
     this.#stateRotary = -1;
     this.#rotation = 10 * 3.14 + Math.random() * 2 * 3.14;
@@ -67,8 +66,8 @@ export default class PickerView {
   }
 
   private createPage(): HTMLElement {
-    const form = this.#creator.section();
-    const buttonUndo = this.#creator.button(
+    const form = htmlElement.section();
+    const buttonUndo = htmlElement.button(
       'btn-undo',
       '',
       () => {
@@ -88,7 +87,7 @@ export default class PickerView {
     svgUndo.append(svgUseUndo);
     buttonUndo.append(svgUndo);
 
-    const buttonSound = this.#creator.button(
+    const buttonSound = htmlElement.button(
       'btn-sound',
       '',
       () => {
@@ -107,7 +106,7 @@ export default class PickerView {
     svgSound.append(svgUseSound);
     buttonSound.append(svgSound);
 
-    const buttonStart = this.#creator.button(
+    const buttonStart = htmlElement.button(
       'btn-start',
       '',
       () => {
@@ -156,7 +155,7 @@ export default class PickerView {
 
     const page: HTMLElement[] = [
       //TODO replace label to h1
-      this.#creator.label({ id: 'h1', text: 'Decision Making Tool', styles: ['h1'] }),
+      htmlElement.label({ id: 'h1', text: 'Decision Making Tool', styles: ['h1'] }),
 
       form,
       this.#pickingLabel,
