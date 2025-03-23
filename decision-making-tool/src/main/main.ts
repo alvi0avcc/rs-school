@@ -19,7 +19,7 @@ export default class MainView {
   private onOptionsChange: (rule: OptionRule, value: string) => void;
   #listOptions: List | undefined;
   #main: HTMLElement;
-  #dialog: HTMLDialogElement;
+  #dialog: HTMLDialogElement | undefined;
 
   constructor(
     onHashChange: (hash: string) => void,
@@ -29,9 +29,9 @@ export default class MainView {
     this.onHashChange = onHashChange;
     this.onOptionsChange = onOptionsChange;
     this.#listOptions = listOptions;
-    this.#main = htmlElement.section('main');
-    this.#dialog = htmlElement.dialog();
-    this.createDialog();
+    this.#main = htmlElement.main({});
+    this.#dialog = undefined;
+    // this.createDialog();
     this.createMain();
   }
 
@@ -40,27 +40,30 @@ export default class MainView {
     return undefined;
   }
 
-  public dialogShow(): void {
-    if (!this.#dialog.open) this.#dialog.showModal();
-  }
-
-  public dialogClose(): void {
-    this.#dialog.close();
-  }
-
   public setListOptions(listOptions: List): void {
     this.#listOptions = listOptions;
     this.createMain();
   }
 
-  private createDialog(): void {
-    this.#dialog.classList.add('dialog');
-    const form = htmlElement.form('form-dialog');
+  public dialogClose(): void {
+    if (this.#dialog) {
+      this.#dialog.close();
+      this.#dialog.remove();
+      this.#dialog = undefined;
+    }
+  }
 
-    form.classList.add('form-dialog');
-    const text = htmlElement.textArea();
-    text.classList.add('text-csv');
-    text.placeholder = `
+  public fillDialog(): void {
+    this.createDialog();
+
+    if (this.#dialog && !this.#dialog.hasChildNodes()) {
+      this.#dialog.classList.add('dialog');
+      const form = htmlElement.form('form-dialog');
+
+      form.classList.add('form-dialog');
+      const text = htmlElement.textArea();
+      text.classList.add('text-csv');
+      text.placeholder = `
       Paste a list of new options in a CSV-like format:
 
       title,1                 -> | title                 | 1 |
@@ -68,28 +71,37 @@ export default class MainView {
       title , with , commas,3 -> | title , with , commas | 3 |
       title with &quot;quotes&quot;,4   -> | title with &quot;quotes&quot;   | 4 |
     `;
-    const buttonCancel = htmlElement.button(
-      'btn-cancel',
-      'Cancel',
-      () => {
-        this.dialogClose();
-      },
-      ['button', 'btn-cancel'],
-      'reset'
-    );
-    const buttonConfirm = htmlElement.button(
-      'btn-confirm',
-      'Confirm',
-      () => {
-        this.onOptionsChange(OptionRule.paste, text.value);
-        this.dialogClose();
-      },
-      ['button', 'btn-confirm'],
-      'reset'
-    );
-    form.append(text, buttonCancel, buttonConfirm);
+      const buttonCancel = htmlElement.button(
+        'btn-cancel',
+        'Cancel',
+        () => {
+          this.dialogClose();
+        },
+        ['button', 'btn-cancel'],
+        'reset'
+      );
+      const buttonConfirm = htmlElement.button(
+        'btn-confirm',
+        'Confirm',
+        () => {
+          this.onOptionsChange(OptionRule.paste, text.value);
+          this.dialogClose();
+        },
+        ['button', 'btn-confirm'],
+        'reset'
+      );
+      form.append(text, buttonCancel, buttonConfirm);
 
-    this.#dialog.append(form);
+      this.#dialog.append(form);
+    }
+    if (this.#dialog) this.#dialog.showModal();
+  }
+
+  private createDialog(): void {
+    if (!this.#dialog) {
+      this.#dialog = htmlElement.dialog();
+      document.body.append(this.#dialog);
+    }
   }
 
   private createMain(): HTMLElement {
@@ -132,7 +144,7 @@ export default class MainView {
         ['button']
       );
 
-      sectionLine.append(elementId, elementTitle, elementWeight, elementButton, this.#dialog);
+      sectionLine.append(elementId, elementTitle, elementWeight, elementButton);
       sectionListOption.append(sectionLine);
     }
 
@@ -210,7 +222,7 @@ export default class MainView {
   private sectionButton(): HTMLElement[] {
     const section: HTMLElement[] = [
       this.buttonAdd(),
-      this.buttonOpen(),
+      this.buttonPaste(),
       this.buttonClear(),
       this.buttonSave(),
       htmlElement.label({
@@ -222,7 +234,6 @@ export default class MainView {
         this.loadInputEvent(event);
       }),
       this.buttonStart(),
-      this.#dialog,
     ];
 
     return section;
@@ -230,7 +241,7 @@ export default class MainView {
 
   private buttonClear(): HTMLElement {
     return htmlElement.button(
-      'btn3',
+      'btn-clear',
       'Clear list',
       () => {
         this.onOptionsChange(OptionRule.clear, '');
@@ -239,9 +250,9 @@ export default class MainView {
     );
   }
 
-  private buttonOpen(): HTMLElement {
+  private buttonPaste(): HTMLElement {
     return htmlElement.button(
-      'btn2',
+      'btn-paste',
       'Paste list',
       () => {
         this.onOptionsChange(OptionRule.paste, 'open');
@@ -252,7 +263,7 @@ export default class MainView {
 
   private buttonSave(): HTMLElement {
     return htmlElement.button(
-      'btn4',
+      'btn-save',
       'Save list to file',
       () => {
         this.onOptionsChange(OptionRule.save, '');
@@ -263,7 +274,7 @@ export default class MainView {
 
   private buttonAdd(): HTMLElement {
     return htmlElement.button(
-      'btn1',
+      'btn-add',
       'Add Option',
       () => {
         this.onOptionsChange(OptionRule.add, '');
@@ -274,7 +285,7 @@ export default class MainView {
 
   private buttonStart(): HTMLElement {
     return htmlElement.button(
-      'btn5',
+      'btn-start',
       'Start',
       () => {
         if (cleanedList(this.#listOptions?.listOptions, false).length > 1) {

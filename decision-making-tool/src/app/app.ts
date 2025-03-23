@@ -219,7 +219,7 @@ export default class App {
 
   private optionRulePaste(value: string): void {
     if (this.#listOptions) {
-      if (value === 'open') this.#main.dialogShow();
+      if (value === 'open') this.#main.fillDialog();
       if (value !== 'open') {
         const options: [string, number | undefined][] = Storage.pasteOption(value);
         if (options.length > 0) {

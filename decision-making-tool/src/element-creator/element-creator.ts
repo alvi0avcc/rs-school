@@ -138,7 +138,6 @@ export const dialog = (id = 'dialog'): HTMLDialogElement => {
   dialog.id = id;
   dialog.textContent = '';
   dialog.classList.add('dialog');
-
   return dialog;
 };
 

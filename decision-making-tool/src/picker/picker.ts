@@ -43,7 +43,7 @@ export default class PickerView {
     this.#listOptions = listOptions;
     this.onHashChange = onHashChange;
     this.onMakeChange = onMakeChange;
-    this.#main = htmlElement.section('main');
+    this.#main = htmlElement.main({});
     this.#timer = 16_000;
     this.#stateRotary = -1;
     this.#rotation = 10 * 3.14 + Math.random() * 2 * 3.14;
