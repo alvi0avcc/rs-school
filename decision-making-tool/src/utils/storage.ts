@@ -98,16 +98,65 @@ export class Storage {
   private async getStorageList(): Promise<boolean> {
     try {
       const response: string | undefined = await Storage.getStorage(this.defaultKeyList);
-      if (response) {
-        this.list = JSON.parse(response);
-      } else {
-        this.list.lastId = 1;
-        this.setStorageList();
-      }
+      this.list = this.isListGuard(response);
       return true;
     } catch (error) {
       console.error('Error fetching storage:', error);
       return false;
     }
   }
+
+  private isListGuard(data: string | undefined): List {
+    const defaultList: List = { lastId: 1, listOptions: [] };
+
+    if (!data) {
+      this.setStorageList();
+      return defaultList;
+    }
+
+    try {
+      const parsed: unknown = JSON.parse(data);
+
+      if (isList(parsed)) {
+        return parsed;
+      } else {
+        console.error('The data does not match the List type.');
+        this.setStorageList();
+        return defaultList;
+      }
+    } catch (error) {
+      console.error('Error while parsing data:', error);
+      this.setStorageList();
+      return defaultList;
+    }
+  }
+}
+
+function isOption(data: unknown): data is Option {
+  if (typeof data !== 'object' || data === null) {
+    return false;
+  }
+
+  return (
+    'id' in data &&
+    typeof data.id === 'string' &&
+    'title' in data &&
+    typeof data.title === 'string' &&
+    'weight' in data &&
+    (typeof data.weight === 'number' || data.weight === undefined)
+  );
+}
+
+function isList(data: unknown): data is List {
+  if (typeof data !== 'object' || data === null) {
+    return false;
+  }
+
+  return (
+    'lastId' in data &&
+    typeof data.lastId === 'number' &&
+    'listOptions' in data &&
+    Array.isArray(data.listOptions) &&
+    data.listOptions.every((item) => isOption(item))
+  );
 }
