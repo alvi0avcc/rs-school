@@ -1,0 +1,136 @@
+.main.main-page {
+  display: grid;
+  grid-template:
+    "heading heading" min-content
+    "option-list option-list" min-content
+    "add-option-button add-option-button" min-content
+    "paste-list-button paste-list-button" min-content
+    "clear-list-button clear-list-button" min-content
+    "save-list-button load-list-button" min-content
+    "start-button start-button" min-content / 1fr 1fr;
+}
+
+.ul {
+  unicode-bidi: isolate;
+  display: flex;
+  justify-self: center;
+  grid-area: option-list;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-block: 1em;
+  padding-left: 0;
+  list-style-type: none;
+}
+
+.li {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  padding: 0.6rem 0.8rem;
+  border-radius: 0.5rem;
+  background-image: linear-gradient(var(--color-primary-300), var(--color-primary-700));
+}
+
+.input-title {
+  flex-grow: 1;
+  width: 100%;
+  min-width: 5rem;
+}
+
+.input-weight {
+  max-width: 5rem;
+}
+
+:is(.input-title, .input-weight) {
+  padding: 0.5rem;
+  border-color: initial;
+  border-style: none;
+  border-width: initial;
+  border-image: initial;
+  line-height: normal;
+  color: var(--color-primary-50);
+  background-color: var(--color-primary-800);
+  outline: none;
+  box-shadow: 0 0 .25rem .1rem var(--color-primary-200);
+  transition-duration: var(--transition-duration);
+  transition-property: box-shadow;
+}
+
+.add-option-button{
+  grid-area: add-option-button;
+}
+
+.paste-list-button {
+  grid-area: paste-list-button;
+}
+
+.clear-list-button {
+  grid-area: clear-list-button;
+}
+
+.save-list-button {
+  grid-area: save-list-button;
+}
+
+.load-list-button {
+  grid-area: load-list-button;
+}
+
+.start-button {
+  grid-area: start-button;
+}
+
+.section.option-list{
+  grid-template: unset;
+  grid-area: option-list;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+}
+
+.dialog{
+  overflow: unset;
+  padding: 0;
+  border: unset;
+  background: unset;
+  width: 600px;
+  height: 500px;
+  max-width: 95%;
+  margin: auto;
+}
+
+.dialog::backdrop {
+  -webkit-backdrop-filter: blur(.1875rem);
+  backdrop-filter: blur(.1875rem);
+  transition-duration: var(--transition-duration);
+  transition-property: backdrop-filter;
+}
+
+.form-dialog {
+  display: grid;
+  height: min-content;
+  grid-template:
+    "textarea textarea" min-content
+    "cancel confirm" min-content / 1fr 1fr;
+  gap: 1rem;
+  padding: 1rem;
+  border-radius: .5rem;
+  background-image: linear-gradient(var(--color-primary-300), var(--color-primary-700));
+  box-shadow: 0 0 .25rem .1rem var(--color-primary-200);
+}
+
+.text-csv{
+  resize: none;
+  height: 300px;
+  grid-area: textarea;
+  padding: .5rem;
+  font-family: Victor Mono, Courier New, Courier, monospace;
+  color: var(--color-primary-50);
+  background-color: var(--color-primary-800);
+}
+
+.btn-cancel {
+  grid-area: cancel;
+}
+
+.btn-confirm {
+  grid-area: confirm;
+}
