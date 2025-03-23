@@ -1,7 +1,7 @@
 import '../app.css';
 
 import type { List } from '../utils/storage';
-import { Storage } from '../utils/storage';
+import { isList, Storage } from '../utils/storage';
 
 import Router from '../router/router';
 
@@ -250,9 +250,17 @@ export default class App {
   }
 
   private optionRuleLoad(value: string): void {
-    if (this.#listOptions) {
-      const loaded: List = JSON.parse(value);
-      this.#listOptions = loaded;
+    try {
+      const parsed: unknown = JSON.parse(value);
+      if (isList(parsed)) {
+        this.#listOptions = parsed;
+      } else {
+        console.error('The data from the file does not match the List type.');
+        this.#listOptions = { lastId: 1, listOptions: [] };
+      }
+    } catch (error) {
+      console.error('Error parsing data from file:', error);
+      this.#listOptions = { lastId: 1, listOptions: [] };
     }
   }
 

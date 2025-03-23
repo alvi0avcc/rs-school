@@ -147,7 +147,7 @@ function isOption(data: unknown): data is Option {
   );
 }
 
-function isList(data: unknown): data is List {
+export function isList(data: unknown): data is List {
   if (typeof data !== 'object' || data === null) {
     return false;
   }
