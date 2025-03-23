@@ -8,31 +8,6 @@
     "clear-list-button clear-list-button" min-content
     "save-list-button load-list-button" min-content
     "start-button start-button" min-content / 1fr 1fr;
-  gap: 1rem;
-
-  width: 100%;
-  max-width: 48rem;
-  margin-inline: auto;
-  padding: 1rem;
-}
-
-.h1 {
-  unicode-bidi: isolate;
-  display: block;
-  grid-area: heading;
-
-  margin-block: 0.67em;
-  margin-inline: 0;
-
-  font-size: 2em;
-  font-weight: bold;
-  color: var(--color-primary-50);
-  text-align: center;
-  text-shadow: 0 0 .25rem var(--color-primary-50);
-}
-
-:is(h1, h2, h3, h4, h5, h6, p, ul, ol) {
-  margin-block: 0;
 }
 
 .ul {
@@ -42,39 +17,18 @@
   grid-area: option-list;
   flex-direction: column;
   gap: 0.5rem;
-
   margin-block: 1em;
-  margin-inline: 0;
   padding-left: 0;
-  padding-inline-start: 40px;
-
-  list-style-type: disc;
+  list-style-type: none;
 }
 
 .li {
   display: flex;
   gap: 1rem;
   align-items: center;
-
   padding: 0.6rem 0.8rem;
   border-radius: 0.5rem;
-
   background-image: linear-gradient(var(--color-primary-300), var(--color-primary-700));
-}
-
-.label {
-  cursor: pointer;
-
-  flex-shrink: 0;
-
-  width: 3rem;
-  padding: 0.5rem;
-  border-radius: 0.2rem;
-
-  text-align: center;
-
-  background-image: linear-gradient(var(--color-primary-300), var(--color-primary-700));
-  box-shadow: 0 0 .25rem .1rem var(--color-primary-200);
 }
 
 .input-title {
@@ -93,39 +47,13 @@
   border-style: none;
   border-width: initial;
   border-image: initial;
-
   line-height: normal;
   color: var(--color-primary-50);
-
   background-color: var(--color-primary-800);
   outline: none;
   box-shadow: 0 0 .25rem .1rem var(--color-primary-200);
-
   transition-duration: var(--transition-duration);
   transition-property: box-shadow;
-}
-
-.button {
-  cursor: pointer;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  padding: 0.5rem;
-  border-color: initial;
-  border-style: none;
-  border-width: initial;
-  border-radius: 0.25rem;
-  border-image: initial;
-
-  color: var(--color-primary-50);
-
-  background-image: linear-gradient(var(--color-primary-300), var(--color-primary-700));
-  box-shadow: 0 0 .25rem .1rem var(--color-primary-200);
-
-  transition-duration: var(--transition-duration);
-  transition-property: filter, box-shadow, opacity;
 }
 
 .add-option-button{
@@ -166,6 +94,7 @@
   width: 600px;
   height: 500px;
   max-width: 95%;
+  margin: auto;
 }
 
 .dialog::backdrop {
@@ -196,11 +125,6 @@
   font-family: Victor Mono, Courier New, Courier, monospace;
   color: var(--color-primary-50);
   background-color: var(--color-primary-800);
-}
-
-:is(body, .scrollbar)::-webkit-scrollbar {
-  width: .6rem;
-  height: .6rem;
 }
 
 .btn-cancel {
