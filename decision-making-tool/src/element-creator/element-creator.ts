@@ -1,3 +1,28 @@
+export const main = ({
+  id = 'main',
+  text = '',
+  callback = undefined,
+  styles = ['main'],
+  attributes = {},
+}: {
+  id?: string;
+  text?: string;
+  callback?: EventListener;
+  styles?: string[];
+  attributes?: Record<string, string>;
+}): HTMLElement => {
+  const main: HTMLElement = document.createElement('main');
+  if (id) main.id = id;
+  if (text) main.textContent = text;
+  if (styles) main.classList.add(...styles);
+  if (attributes)
+    for (const [key, value] of Object.entries(attributes)) {
+      main.setAttribute(key, value);
+    }
+  if (callback) main.addEventListener('click', (event) => callback(event));
+  return main;
+};
+
 export const input = (
   id = '',
   type = 'text',
