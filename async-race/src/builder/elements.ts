@@ -53,6 +53,40 @@ export const h = ({
   return element;
 };
 
+export const a = ({
+  id = '',
+  text = '',
+  href = '',
+  target = '_self',
+  callback = undefined,
+  styles = ['a'],
+  attributes = {},
+}: {
+  id?: string;
+  text?: string;
+  href?: string;
+  target?: '_blank' | '_self' | '_parent' | '_top';
+  callback?: EventListener;
+  styles?: string[];
+  attributes?: Record<string, string>;
+}): HTMLAnchorElement => {
+  const element: HTMLAnchorElement = document.createElement('a');
+  if (id) element.id = id;
+  if (text) element.textContent = text;
+  if (href) element.href = href;
+  if (target) element.target = target;
+  if (target === '_blank') {
+    element.rel = 'noopener noreferrer';
+  }
+  if (styles) element.classList.add(...styles);
+  if (attributes)
+    for (const [key, value] of Object.entries(attributes)) {
+      element.setAttribute(key, value);
+    }
+  if (callback) element.addEventListener('click', (event) => callback(event));
+  return element;
+};
+
 export const button = ({
   id = '',
   text = '',
@@ -173,26 +207,6 @@ export const section = (
   if (callback) section.addEventListener('click', (event) => callback(event));
   return section;
 };
-
-// export const button = (
-//   id = '',
-//   text = 'button',
-//   callback: EventListener | undefined = undefined,
-//   style: string[] = [],
-//   type: 'reset' | 'submit' | 'button' = 'button',
-//   attributes: Record<string, string> = {}
-// ): HTMLButtonElement => {
-//   const button: HTMLButtonElement = document.createElement('button');
-//   button.id = id;
-//   button.textContent = text;
-//   button.type = type;
-//   button.classList.add(...style);
-//   if (callback) button.addEventListener('click', (event) => callback(event));
-//   for (const [key, value] of Object.entries(attributes)) {
-//     button.setAttribute(key, value);
-//   }
-//   return button;
-// };
 
 export const dialog = (id = 'dialog'): HTMLDialogElement => {
   const dialog: HTMLDialogElement = document.createElement('dialog');
