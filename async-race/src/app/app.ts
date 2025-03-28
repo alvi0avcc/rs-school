@@ -4,12 +4,12 @@ import * as create from '../builder/elements';
 
 // import GarageView from '../pages/garage';
 // import WinnersView from '../pages/winners';
-// import ErrorsView from '../pages/404';
+import { notFoundView } from '../pages/404/404';
 
 const notFoundPage: Route = {
   path: '/404',
   view: async (root) => {
-    root.append(create.main({ text: '404 - Page Not Found' }));
+    root.append(notFoundView());
   },
 };
 

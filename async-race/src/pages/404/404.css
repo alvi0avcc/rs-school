@@ -1,0 +1,10 @@
+.main{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 100dvh;
+}
+
+.a{
+  align-self: center;
+}
