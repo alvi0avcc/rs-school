@@ -24,7 +24,7 @@ export const main = ({
 };
 
 export const h = ({
-  id = 'main',
+  id = '',
   tag = 'h1',
   text = '',
   align = 'center',
@@ -44,6 +44,37 @@ export const h = ({
   if (id) element.id = id;
   if (text) element.textContent = text;
   if (align) element.style.textAlign = align;
+  if (styles) element.classList.add(...styles);
+  if (attributes)
+    for (const [key, value] of Object.entries(attributes)) {
+      element.setAttribute(key, value);
+    }
+  if (callback) element.addEventListener('click', (event) => callback(event));
+  return element;
+};
+
+export const button = ({
+  id = '',
+  text = '',
+  type = 'button',
+  disabled = false,
+  callback = undefined,
+  styles = ['button'],
+  attributes = {},
+}: {
+  id?: string;
+  text?: string;
+  type?: 'reset' | 'submit' | 'button';
+  disabled?: boolean;
+  callback?: EventListener;
+  styles?: string[];
+  attributes?: Record<string, string>;
+}): HTMLButtonElement => {
+  const element: HTMLButtonElement = document.createElement('button');
+  if (id) element.id = id;
+  if (text) element.textContent = text;
+  if (type) element.type = type;
+  if (disabled) element.disabled = disabled;
   if (styles) element.classList.add(...styles);
   if (attributes)
     for (const [key, value] of Object.entries(attributes)) {
@@ -143,25 +174,25 @@ export const section = (
   return section;
 };
 
-export const button = (
-  id = '',
-  text = 'button',
-  callback: EventListener | undefined = undefined,
-  style: string[] = [],
-  type: 'reset' | 'submit' | 'button' = 'button',
-  attributes: Record<string, string> = {}
-): HTMLButtonElement => {
-  const button: HTMLButtonElement = document.createElement('button');
-  button.id = id;
-  button.textContent = text;
-  button.type = type;
-  button.classList.add(...style);
-  if (callback) button.addEventListener('click', (event) => callback(event));
-  for (const [key, value] of Object.entries(attributes)) {
-    button.setAttribute(key, value);
-  }
-  return button;
-};
+// export const button = (
+//   id = '',
+//   text = 'button',
+//   callback: EventListener | undefined = undefined,
+//   style: string[] = [],
+//   type: 'reset' | 'submit' | 'button' = 'button',
+//   attributes: Record<string, string> = {}
+// ): HTMLButtonElement => {
+//   const button: HTMLButtonElement = document.createElement('button');
+//   button.id = id;
+//   button.textContent = text;
+//   button.type = type;
+//   button.classList.add(...style);
+//   if (callback) button.addEventListener('click', (event) => callback(event));
+//   for (const [key, value] of Object.entries(attributes)) {
+//     button.setAttribute(key, value);
+//   }
+//   return button;
+// };
 
 export const dialog = (id = 'dialog'): HTMLDialogElement => {
   const dialog: HTMLDialogElement = document.createElement('dialog');
