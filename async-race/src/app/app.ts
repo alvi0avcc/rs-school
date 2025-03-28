@@ -1,5 +1,6 @@
 import type { Route } from '../router/router';
 import { Router } from '../router/router';
+import * as create from '../builder/elements';
 
 // import GarageView from '../pages/garage';
 // import WinnersView from '../pages/winners';
@@ -8,7 +9,7 @@ import { Router } from '../router/router';
 const notFoundPage: Route = {
   path: '/404',
   view: async (root) => {
-    root.innerHTML = '<h1>404 - Page Not Found</h1>';
+    root.append(create.main({ text: '404 - Page Not Found' }));
   },
 };
 
@@ -16,14 +17,16 @@ const routes: Route[] = [
   {
     path: '/',
     view: (root) => {
-      root.innerHTML = '<h1>Garage Page. Loading...</h1>';
+      root.append(create.main({ text: 'Garage Page. Loading...' }));
+
       //todo () => await fetchGarage();
     },
   },
   {
     path: '/winners',
     view: async (root) => {
-      root.innerHTML = '<h1>Winners Page. Loading...</h1>';
+      root.append(create.main({ text: 'Winners Page. Loading...' }));
+
       //todo () => await fetchWinners();
     },
   },

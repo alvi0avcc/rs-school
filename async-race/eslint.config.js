@@ -59,6 +59,13 @@ export default [
           skipBlankLines: true,
         },
       ],
+      "no-restricted-syntax": [
+        "error",
+        {
+          selector: "MemberExpression[property.name='innerHTML']",
+          message: "Use textContent or safe DOM manipulation methods instead of innerHTML"
+        }
+      ]
     },
   },
 ];
