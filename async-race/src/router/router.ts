@@ -52,12 +52,14 @@ export class Router {
         console.warn(`Route not found: ${path}`);
         this.clearRootElement();
         globalThis.history.replaceState({}, '', normalizePath(this.notFoundRoute.path));
+        this.currentRoute = this.notFoundRoute;
         await this.notFoundRoute.view(this.rootElement);
       }
     } catch (error) {
       console.error('Error during route rendering:', error);
       this.clearRootElement();
       globalThis.history.replaceState({}, '', normalizePath(this.notFoundRoute.path));
+      this.currentRoute = this.notFoundRoute;
       await this.notFoundRoute.view(this.rootElement);
     }
   }
