@@ -23,6 +23,36 @@ export const main = ({
   return main;
 };
 
+export const h = ({
+  id = 'main',
+  tag = 'h1',
+  text = '',
+  align = 'center',
+  callback = undefined,
+  styles = [tag],
+  attributes = {},
+}: {
+  id?: string;
+  tag?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
+  text?: string;
+  align?: string;
+  callback?: EventListener;
+  styles?: string[];
+  attributes?: Record<string, string>;
+}): HTMLHeadingElement => {
+  const element: HTMLHeadingElement = document.createElement(tag);
+  if (id) element.id = id;
+  if (text) element.textContent = text;
+  if (align) element.style.textAlign = align;
+  if (styles) element.classList.add(...styles);
+  if (attributes)
+    for (const [key, value] of Object.entries(attributes)) {
+      element.setAttribute(key, value);
+    }
+  if (callback) element.addEventListener('click', (event) => callback(event));
+  return element;
+};
+
 export const input = (
   id = '',
   type = 'text',
