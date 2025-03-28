@@ -16,39 +16,27 @@ export class Router {
     this.init();
   }
 
+  public navigateTo(path: string): void {
+    const normalizedPath = normalizePath(path);
+    if (getCurrentHashPath() !== normalizedPath.slice(1)) {
+      globalThis.history.pushState({}, '', normalizedPath);
+      this.handleRouteChange();
+    }
+  }
+
   private init(): void {
-    this.ensureHashRouting();
+    ensureHashRouting();
     globalThis.addEventListener('popstate', () => this.handleRouteChange());
     globalThis.addEventListener('load', () => this.handleRouteChange());
     this.setupLinkInterception();
-  }
-
-  private normalizePath(path: string): string {
-    const cleanPath = path.replace(/^[#/]+/, '').replaceAll(/\/+/g, '/');
-    return cleanPath ? `#/${cleanPath}` : '#/';
-  }
-
-  private ensureHashRouting(): void {
-    if (!globalThis.location.hash) {
-      const baseUrl = globalThis.location.origin;
-      const path = globalThis.location.pathname === '/' ? '#/' : `#${globalThis.location.pathname}`;
-      globalThis.history.replaceState({}, '', `${baseUrl}${path}`);
-    } else if (!globalThis.location.hash.startsWith('#/')) {
-      const newHash = `#/${globalThis.location.hash.slice(1)}`;
-      globalThis.history.replaceState({}, '', `${globalThis.location.pathname}${newHash}`);
-    }
   }
 
   private clearRootElement(): void {
     this.rootElement.replaceChildren();
   }
 
-  private getCurrentHashPath(): string {
-    return globalThis.location.hash.slice(1) || '/';
-  }
-
   private async handleRouteChange(): Promise<void> {
-    const path = this.getCurrentHashPath();
+    const path = getCurrentHashPath();
     console.log(path);
 
     const matchingRoute = this.routes.find((route) => route.path === path);
@@ -63,13 +51,13 @@ export class Router {
       } else {
         console.warn(`Route not found: ${path}`);
         this.clearRootElement();
-        globalThis.history.replaceState({}, '', this.normalizePath(this.notFoundRoute.path));
+        globalThis.history.replaceState({}, '', normalizePath(this.notFoundRoute.path));
         await this.notFoundRoute.view(this.rootElement);
       }
     } catch (error) {
       console.error('Error during route rendering:', error);
       this.clearRootElement();
-      globalThis.history.replaceState({}, '', this.normalizePath(this.notFoundRoute.path));
+      globalThis.history.replaceState({}, '', normalizePath(this.notFoundRoute.path));
       await this.notFoundRoute.view(this.rootElement);
     }
   }
@@ -86,16 +74,24 @@ export class Router {
       this.navigateTo(href);
     });
   }
+}
 
-  public navigateTo(path: string): void {
-    const normalizedPath = this.normalizePath(path);
-    if (this.getCurrentHashPath() !== normalizedPath.slice(1)) {
-      globalThis.history.pushState({}, '', normalizedPath);
-      this.handleRouteChange();
-    }
-  }
+function normalizePath(path: string): string {
+  const cleanPath: string = path.replace(/^[#/]+/, '').replaceAll(/\/+/g, '/');
+  return cleanPath ? `#/${cleanPath}` : '#/';
+}
 
-  public getCurrentPath(): string {
-    return this.getCurrentHashPath();
+function ensureHashRouting(): void {
+  if (!globalThis.location.hash) {
+    const baseUrl = globalThis.location.origin;
+    const path = globalThis.location.pathname === '/' ? '#/' : `#${globalThis.location.pathname}`;
+    globalThis.history.replaceState({}, '', `${baseUrl}${path}`);
+  } else if (!globalThis.location.hash.startsWith('#/')) {
+    const newHash = `#/${globalThis.location.hash.slice(1)}`;
+    globalThis.history.replaceState({}, '', `${globalThis.location.pathname}${newHash}`);
   }
+}
+
+function getCurrentHashPath(): string {
+  return globalThis.location.hash.slice(1) || '/';
 }
