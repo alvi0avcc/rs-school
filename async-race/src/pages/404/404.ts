@@ -3,7 +3,10 @@ import './404.css';
 import * as create from '../../builder/elements';
 
 export const notFoundView = (): HTMLElement => {
-  const page: HTMLElement = create.main({ id: 'main' });
+  const page: HTMLElement = create.section({
+    id: 'main',
+    tag: 'main',
+  });
   const h1: HTMLHeadingElement = create.h({ id: 'h1', tag: 'h1', text: 'Wrong page! Error - 404' });
   const button: HTMLAnchorElement = create.a({
     id: 'btn-return',

@@ -1,26 +1,31 @@
-export const main = ({
-  id = 'main',
+export const section = ({
+  id = undefined,
+  tag = 'section',
   text = '',
+  children = undefined,
   callback = undefined,
-  styles = ['main'],
+  styles = [tag],
   attributes = {},
 }: {
   id?: string;
+  tag: string;
   text?: string;
+  children?: HTMLElement[];
   callback?: EventListener;
   styles?: string[];
   attributes?: Record<string, string>;
 }): HTMLElement => {
-  const main: HTMLElement = document.createElement('main');
-  if (id) main.id = id;
-  if (text) main.textContent = text;
-  if (styles) main.classList.add(...styles);
+  const element: HTMLElement = document.createElement(tag);
+  if (id) element.id = id;
+  if (text) element.textContent = text;
+  if (styles) element.classList.add(...styles);
+  if (children) element.append(...children);
   if (attributes)
     for (const [key, value] of Object.entries(attributes)) {
-      main.setAttribute(key, value);
+      element.setAttribute(key, value);
     }
-  if (callback) main.addEventListener('click', (event) => callback(event));
-  return main;
+  if (callback) element.addEventListener('click', (event) => callback(event));
+  return element;
 };
 
 export const h = ({
@@ -192,20 +197,6 @@ export const li = (
   li.classList.add(tag);
   if (callback) li.addEventListener('click', (event) => callback(event));
   return li;
-};
-
-export const section = (
-  tag = 'section',
-  id = '',
-  text = '',
-  callback: EventListener | undefined = undefined
-): HTMLElement => {
-  const section: HTMLElement = document.createElement('section');
-  section.id = id;
-  section.textContent = text;
-  section.classList.add(tag);
-  if (callback) section.addEventListener('click', (event) => callback(event));
-  return section;
 };
 
 export const dialog = (id = 'dialog'): HTMLDialogElement => {
