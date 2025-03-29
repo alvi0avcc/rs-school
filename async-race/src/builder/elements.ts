@@ -123,19 +123,38 @@ export const button = ({
   return element;
 };
 
-export const input = (
+export const input = ({
   id = '',
+  placeholder = '',
   type = 'text',
   value = '',
-  callback?: (event: Event) => void
-): HTMLInputElement => {
-  const input: HTMLInputElement = document.createElement('input');
-  input.id = id;
-  input.type = type;
-  input.value = value;
-  input.classList.add('input');
-  if (callback) input.addEventListener('input', (event: Event) => callback(event));
-  return input;
+  disabled = false,
+  callback = undefined,
+  styles = ['input'],
+  attributes = {},
+}: {
+  id?: string;
+  placeholder?: string;
+  type?: 'text' | 'number' | 'color';
+  value?: string;
+  disabled?: boolean;
+  callback?: EventListener;
+  styles?: string[];
+  attributes?: Record<string, string>;
+}): HTMLInputElement => {
+  const element: HTMLInputElement = document.createElement('input');
+  if (id) element.id = id;
+  if (placeholder) element.placeholder = placeholder;
+  if (type) element.type = type;
+  if (value) element.value = value;
+  if (disabled) element.disabled = disabled;
+  if (styles) element.classList.add(...styles);
+  if (attributes)
+    for (const [key, value] of Object.entries(attributes)) {
+      element.setAttribute(key, value);
+    }
+  if (callback) element.addEventListener('click', (event) => callback(event));
+  return element;
 };
 
 export const inputFileLoad = (id = '', callback?: (event: Event) => void): HTMLInputElement => {
