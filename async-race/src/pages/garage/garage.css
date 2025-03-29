@@ -1,0 +1,37 @@
+.main.main-garage{
+  justify-content: flex-start;
+}
+
+.section-management{
+  display: grid;
+  grid-template-columns: 100px 100px 40px 100px;
+  row-gap: 10px;
+  column-gap: 5px;
+}
+
+.section-management .car-name{
+  grid-column: 1 / 3;
+}
+
+.section-management .car-color {
+  grid-column: 3 / 4;
+}
+
+.car-color{
+  width: 100%;
+}
+
+.btn-race {
+  grid-column: 1 / 2;
+  width: 100%;
+}
+
+.btn-reset {
+  grid-column: 2 / 3;
+  width: 100%;
+}
+
+.btn-generate {
+  grid-column: 3 / 5;
+  width: 100%;
+}
