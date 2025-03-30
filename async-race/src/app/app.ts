@@ -20,14 +20,15 @@ const notFoundPage: Route = {
 const routes: Route[] = [
   {
     path: '/',
-    view: (root): void => {
+    view: async (root): Promise<void> => {
       if (header) root.append(header);
+      await garage.init();
       root.append(...garage.getView());
     },
   },
   {
     path: '/winners',
-    view: (root): void => {
+    view: async (root): Promise<void> => {
       if (header) root.append(header);
       root.append(create.section({ tag: 'main', text: 'Winners Page. Loading...' }));
     },
@@ -37,11 +38,10 @@ const routes: Route[] = [
 
 export default class App {
   private root: HTMLElement;
-  private router: Router;
+  private router: Router | undefined;
 
   constructor() {
     this.root = document.body;
-    this.router = new Router(this.root, routes, notFoundPage);
   }
 
   public init(): void {
