@@ -192,12 +192,12 @@ export const label = ({
 
 export const img = ({
   id = '',
-  src: source = '',
+  source = '',
   callback = undefined,
   styles = ['img'],
 }: {
   id?: string;
-  src?: string;
+  source?: string;
   callback?: EventListener;
   styles?: string[];
 }): HTMLImageElement => {
@@ -205,6 +205,116 @@ export const img = ({
   if (id) element.id = id;
   if (source) element.src = source;
   if (styles) element.classList.add(...styles);
+  if (callback) element.addEventListener('click', (event) => callback(event));
+  return element;
+};
+
+export const svg = ({
+  id = '',
+  viewBox = '',
+  width = '',
+  height = '',
+  callback = undefined,
+  styles = ['svg'],
+  children = [],
+  attributes = undefined,
+}: {
+  id?: string;
+  width?: string;
+  height?: string;
+  viewBox?: string;
+  callback?: EventListener;
+  styles?: string[];
+  children?: SVGElement[];
+  attributes?: Record<string, string>;
+}): HTMLElement => {
+  const element: SVGSVGElement = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+
+  if (id) element.id = id;
+  if (viewBox) element.setAttribute('viewBox', viewBox);
+  if (width) element.setAttribute('width', width);
+  if (height) element.setAttribute('height', height);
+  for (const child of children) {
+    if (child instanceof SVGElement) {
+      element.append(child);
+    }
+  }
+  if (styles) element.classList.add(...styles);
+  if (attributes)
+    for (const [key, value] of Object.entries(attributes)) {
+      element.setAttribute(key, value);
+    }
+  if (callback) element.addEventListener('click', (event) => callback(event));
+  const container: HTMLElement = document.createElement('div');
+  container.append(element);
+
+  return container;
+};
+
+export const svgImage = ({
+  id = '',
+  href = '',
+  viewBox = '',
+  width = '',
+  height = '',
+  callback = undefined,
+  styles = ['svg-image'],
+  children = [],
+  attributes = undefined,
+}: {
+  id?: string;
+  href?: string;
+  width?: string;
+  height?: string;
+  viewBox?: string;
+  callback?: EventListener;
+  styles?: string[];
+  children?: SVGElement[];
+  attributes?: Record<string, string>;
+}): SVGImageElement => {
+  const element: SVGImageElement = document.createElementNS('http://www.w3.org/2000/svg', 'image');
+
+  if (id) element.id = id;
+  if (href) element.setAttribute('href', href);
+  if (viewBox) element.setAttribute('viewBox', viewBox);
+  if (width) element.setAttribute('width', width);
+  if (height) element.setAttribute('height', height);
+  for (const child of children) {
+    if (child instanceof SVGElement) {
+      element.append(child);
+    }
+  }
+  if (styles) element.classList.add(...styles);
+  if (attributes)
+    for (const [key, value] of Object.entries(attributes)) {
+      element.setAttribute(key, value);
+    }
+  if (callback) element.addEventListener('click', (event) => callback(event));
+
+  return element;
+};
+
+export const use = ({
+  id = '',
+  href = '',
+  callback = undefined,
+  styles = ['use'],
+  attributes = undefined,
+}: {
+  id?: string;
+  href?: string;
+  callback?: EventListener;
+  styles?: string[];
+  attributes?: Record<string, string>;
+}): SVGUseElement => {
+  const element: SVGUseElement = document.createElementNS('http://www.w3.org/2000/svg', 'use');
+  if (id) element.id = id;
+  if (href) element.setAttribute('href', href);
+  if (styles) element.classList.add(...styles);
+  if (attributes)
+    for (const [key, value] of Object.entries(attributes)) {
+      element.setAttribute(key, value);
+    }
   if (callback) element.addEventListener('click', (event) => callback(event));
   return element;
 };
