@@ -190,6 +190,25 @@ export const label = ({
   return label;
 };
 
+export const img = ({
+  id = '',
+  src: source = '',
+  callback = undefined,
+  styles = ['img'],
+}: {
+  id?: string;
+  src?: string;
+  callback?: EventListener;
+  styles?: string[];
+}): HTMLImageElement => {
+  const element: HTMLImageElement = document.createElement('img');
+  if (id) element.id = id;
+  if (source) element.src = source;
+  if (styles) element.classList.add(...styles);
+  if (callback) element.addEventListener('click', (event) => callback(event));
+  return element;
+};
+
 export const ul = (
   tag = 'ul',
   id = '',
