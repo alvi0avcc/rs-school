@@ -124,6 +124,18 @@ const carsBlock = (cars: AsyncRaceAPI.Car[]): HTMLElement[] => {
               id: `btn-remove--${index}`,
               text: 'REMOVE',
               attributes: { 'data-id': `${car.id}` },
+              callback: (event: Event) => {
+                console.dir(event.target);
+                if (event.target && event.target instanceof HTMLElement) {
+                  const buttonRemoveClick: HTMLElement = event.target;
+                  const id: string | undefined = buttonRemoveClick.dataset.id || undefined;
+                  if (id)
+                    AsyncRaceAPI.deleteCar(+id).then(() => {
+                      console.log(id);
+                      //TODO update DOM after delete car
+                    });
+                }
+              },
             }),
             create.label({ id: `btn-remove-${index}`, text: car.name }),
           ],
