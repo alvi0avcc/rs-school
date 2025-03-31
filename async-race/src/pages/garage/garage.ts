@@ -1,5 +1,10 @@
 import './garage.css';
+import flag from '../../../assets/flag.png';
+import carSvg from '../../../assets/car.svg';
+
 import * as create from '../../builder/elements';
+
+import * as AsyncRaceAPI from '../../api/api';
 
 export class Garage {
   private main: HTMLElement | undefined;
@@ -8,8 +13,6 @@ export class Garage {
 
   constructor() {
     this.main = undefined;
-
-    this.init();
   }
 
   public getView(): HTMLCollection {
@@ -19,34 +22,36 @@ export class Garage {
     return container.children;
   }
 
-  private init(): void {
-    this.setCarQuantity(0);
+  public async init(): Promise<void> {
+    if (!this.main) {
+      this.setCarQuantity(0);
 
-    this.main = create.section({
-      id: 'main',
-      tag: 'main',
-      styles: ['main', 'main-garage'],
-      children: [
-        create.section({
-          id: 'section-management',
-          tag: 'section',
-          styles: ['section-management'],
-          children: [
-            create.input({ styles: ['input', 'car-name'] }),
-            create.input({ type: 'color', value: '#00ff00', styles: ['input', 'car-color'] }),
-            create.button({ text: 'CREATE' }),
-            create.input({ styles: ['input', 'car-name'] }),
-            create.input({ type: 'color', value: '#ffffff', styles: ['input', 'car-color'] }),
-            create.button({ text: 'UPDATE' }),
-            create.button({ text: 'RACE', styles: ['button', 'btn-race'] }),
-            create.button({ text: 'RESET', styles: ['button', 'btn-reset'] }),
-            create.button({ text: 'GENERATE CARS', styles: ['button', 'btn-generate'] }),
-          ],
-        }),
-        this.getCarQuantity(),
-        this.getGarage(),
-      ],
-    });
+      this.main = create.section({
+        id: 'main',
+        tag: 'main',
+        styles: ['main', 'main-garage'],
+        children: [
+          create.section({
+            id: 'section-management',
+            tag: 'section',
+            styles: ['section-management'],
+            children: [
+              create.input({ styles: ['input', 'car-name'] }),
+              create.input({ type: 'color', value: '#00ff00', styles: ['input', 'car-color'] }),
+              create.button({ text: 'CREATE' }),
+              create.input({ styles: ['input', 'car-name'] }),
+              create.input({ type: 'color', value: '#ffffff', styles: ['input', 'car-color'] }),
+              create.button({ text: 'UPDATE' }),
+              create.button({ text: 'RACE', styles: ['button', 'btn-race'] }),
+              create.button({ text: 'RESET', styles: ['button', 'btn-reset'] }),
+              create.button({ text: 'GENERATE CARS', styles: ['button', 'btn-generate'] }),
+            ],
+          }),
+          this.getCarQuantity(),
+          await this.getGarage(),
+        ],
+      });
+    }
   }
 
   private setCarQuantity(quantity = 0): HTMLHeadingElement {
@@ -60,22 +65,89 @@ export class Garage {
     return this.carQuantity || this.setCarQuantity();
   }
 
-  private setGarage(): HTMLElement {
+  private async setGarage(): Promise<HTMLElement> {
+    const { cars, totalCount }: { cars: AsyncRaceAPI.Car[]; totalCount: number } =
+      await AsyncRaceAPI.getGarage({ _page: 1, _limit: 7 });
+
+    this.setCarQuantity(totalCount);
+
+    const paginationBlock: HTMLElement = create.section({
+      tag: 'section',
+      children: [
+        create.button({ id: `btn-prev`, text: 'PREV' }),
+        create.button({ id: `btn-next`, text: 'NEXT' }),
+      ],
+    });
+
     if (!this.garage)
       this.garage = create.section({
         id: 'section-garage',
         tag: 'section',
-        text: 'TO-DO - must be cars',
+        text: 'Page #1',
         styles: ['section', 'section-garage'],
-        children: [],
+        children: [...carsBlock(cars), paginationBlock],
       });
 
     return this.garage;
   }
 
-  private getGarage(): HTMLElement {
+  private async getGarage(): Promise<HTMLElement> {
     return this.garage || this.setGarage();
   }
 }
+
+// end class Garage
+
+const carsBlock = (cars: AsyncRaceAPI.Car[]): HTMLElement[] => {
+  return cars.map((car: AsyncRaceAPI.Car, index: number) => {
+    return create.section({
+      tag: 'article',
+      children: [
+        create.section({
+          tag: 'section',
+          id: `edit-btn-${index}`,
+          styles: ['section', 'section-edit-btn'],
+          children: [
+            create.button({ id: `btn-select-${index}`, text: 'SELECT' }),
+            create.button({ id: `btn-remove-${index}`, text: 'REMOVE' }),
+            create.label({ id: `btn-remove-${index}`, text: car.name }),
+          ],
+        }),
+        create.section({
+          tag: 'section',
+          id: `race-${index}`,
+          styles: ['section', 'section-race'],
+          children: [
+            create.section({
+              tag: 'section',
+              id: `move-btn-${index}`,
+              styles: ['move-btn'],
+              children: [
+                create.button({ id: `btn-start-${index}`, text: 'A' }),
+                create.button({ id: `btn-start-${index}`, text: 'B' }),
+              ],
+            }),
+            getCarSVG(index, car),
+            create.img({ id: `flag-${index}`, source: flag, styles: ['flag'] }),
+          ],
+        }),
+      ],
+    });
+  });
+};
+
+const getCarSVG = (index: number, car: AsyncRaceAPI.Car): HTMLElement => {
+  return create.svg({
+    id: `car-${index}`,
+    viewBox: '0 0 250 200',
+    styles: ['car'],
+    children: [
+      create.use({
+        href: `${carSvg}#car-icon`,
+        attributes: { fill: car.color },
+      }),
+    ],
+  });
+};
 
 export const garage = new Garage();

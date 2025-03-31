@@ -35,3 +35,49 @@
   grid-column: 3 / 5;
   width: 100%;
 }
+
+.section-edit-btn{
+  display: flex;
+  column-gap: 5px;
+  padding-bottom: 5px;
+}
+
+.section-edit-btn .label{
+  color: yellow;
+}
+
+.section-race{
+  display: flex;
+  height: 50px;
+  border-bottom-style: dashed;
+  margin-bottom: 10px;
+}
+
+.move-btn {
+  align-self: flex-start;
+}
+
+.move-btn .button{
+  background-color: transparent;
+  color: #00ff00;
+}
+
+.car{
+  align-self: flex-end;
+  height: 100%;
+}
+
+.svg-image{
+  height: 100%;
+}
+
+.car{
+  height: 100%;
+}
+
+.flag {
+  align-self: flex-end;
+  margin-right: 50px;
+  margin-left: auto;
+  height: 100%;
+}
