@@ -58,3 +58,12 @@ export const getGarage = async (
 
   return { cars, totalCount };
 };
+
+export const createCar = async (car: Omit<Car, 'id'>): Promise<Car> => {
+  const response = await fetch(`${BASE_URL}/garage`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(car),
+  });
+  return response.json();
+};
