@@ -228,7 +228,7 @@ export const svg = ({
   children?: SVGElement[];
   attributes?: Record<string, string>;
 }): HTMLElement => {
-  const element: SVGSVGElement = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+  const element: SVGElement = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
 
   if (id) element.id = id;
   if (viewBox) element.setAttribute('viewBox', viewBox);
@@ -297,12 +297,16 @@ export const svgImage = ({
 export const use = ({
   id = '',
   href = '',
+  width = '',
+  height = '',
   callback = undefined,
   styles = ['use'],
   attributes = undefined,
 }: {
   id?: string;
   href?: string;
+  width?: string;
+  height?: string;
   callback?: EventListener;
   styles?: string[];
   attributes?: Record<string, string>;
@@ -310,6 +314,8 @@ export const use = ({
   const element: SVGUseElement = document.createElementNS('http://www.w3.org/2000/svg', 'use');
   if (id) element.id = id;
   if (href) element.setAttribute('href', href);
+  if (width) element.setAttribute('width', width);
+  if (height) element.setAttribute('height', height);
   if (styles) element.classList.add(...styles);
   if (attributes)
     for (const [key, value] of Object.entries(attributes)) {
