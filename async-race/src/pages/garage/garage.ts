@@ -38,7 +38,14 @@ export class Garage {
             children: [
               create.input({ styles: ['input', 'car-name'] }),
               create.input({ type: 'color', value: '#00ff00', styles: ['input', 'car-color'] }),
-              create.button({ text: 'CREATE' }),
+              create.button({
+                text: 'CREATE',
+                callback: () => {
+                  AsyncRaceAPI.createCar({ name: 'new', color: '#e6e6fa' }).then(() =>
+                    this.setGarage()
+                  );
+                },
+              }),
               create.input({ styles: ['input', 'car-name'] }),
               create.input({ type: 'color', value: '#ffffff', styles: ['input', 'car-color'] }),
               create.button({ text: 'UPDATE' }),
@@ -79,7 +86,10 @@ export class Garage {
       ],
     });
 
-    if (!this.garage)
+    if (this.garage) {
+      this.garage.replaceChildren();
+      this.garage.append(...carsBlock(cars), paginationBlock);
+    } else {
       this.garage = create.section({
         id: 'section-garage',
         tag: 'section',
@@ -87,6 +97,7 @@ export class Garage {
         styles: ['section', 'section-garage'],
         children: [...carsBlock(cars), paginationBlock],
       });
+    }
 
     return this.garage;
   }
@@ -109,7 +120,11 @@ const carsBlock = (cars: AsyncRaceAPI.Car[]): HTMLElement[] => {
           styles: ['section', 'section-edit-btn'],
           children: [
             create.button({ id: `btn-select-${index}`, text: 'SELECT' }),
-            create.button({ id: `btn-remove-${index}`, text: 'REMOVE' }),
+            create.button({
+              id: `btn-remove--${index}`,
+              text: 'REMOVE',
+              attributes: { 'data-id': `${car.id}` },
+            }),
             create.label({ id: `btn-remove-${index}`, text: car.name }),
           ],
         }),
