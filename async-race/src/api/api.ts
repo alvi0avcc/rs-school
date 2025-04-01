@@ -72,3 +72,10 @@ export const deleteCar = async (id: number): Promise<void> => {
   const response = await fetch(`${BASE_URL}/garage/${id}`, { method: 'DELETE' });
   if (!response.ok) throw new Error('Car not found');
 };
+
+export const getCar = async (id: number): Promise<Car> => {
+  const response = await fetch(`${BASE_URL}/garage/${id}`, {
+    method: 'GET',
+  });
+  return response.json();
+};
