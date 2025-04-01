@@ -190,6 +190,56 @@ export const label = ({
   return label;
 };
 
+export const select = ({
+  id = '',
+  disabled = false,
+  callback = undefined,
+  styles = ['select'],
+  attributes = {},
+}: {
+  id?: string;
+  disabled?: boolean;
+  callback?: EventListener;
+  styles?: string[];
+  attributes?: Record<string, string>;
+}): HTMLSelectElement => {
+  const element: HTMLSelectElement = document.createElement('select');
+  if (id) element.id = id;
+  if (disabled) element.disabled = disabled;
+  if (styles) element.classList.add(...styles);
+  if (attributes)
+    for (const [key, value] of Object.entries(attributes)) {
+      element.setAttribute(key, value);
+    }
+  if (callback) element.addEventListener('change', (event) => callback(event));
+  return element;
+};
+
+export const options = ({
+  id = '',
+  disabled = false,
+  callback = undefined,
+  styles = ['option'],
+  attributes = {},
+}: {
+  id?: string;
+  disabled?: boolean;
+  callback?: EventListener;
+  styles?: string[];
+  attributes?: Record<string, string>;
+}): HTMLOptionElement => {
+  const element: HTMLOptionElement = document.createElement('option');
+  if (id) element.id = id;
+  if (disabled) element.disabled = disabled;
+  if (styles) element.classList.add(...styles);
+  if (attributes)
+    for (const [key, value] of Object.entries(attributes)) {
+      element.setAttribute(key, value);
+    }
+  if (callback) element.addEventListener('click', (event) => callback(event));
+  return element;
+};
+
 export const img = ({
   id = '',
   source = '',
