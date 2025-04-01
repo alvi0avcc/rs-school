@@ -88,14 +88,14 @@ export class Garage {
 
     if (this.garage) {
       this.garage.replaceChildren();
-      this.garage.append(...carsBlock(cars), paginationBlock);
+      this.garage.append(...this.carsBlock(cars), paginationBlock);
     } else {
       this.garage = create.section({
         id: 'section-garage',
         tag: 'section',
         text: 'Page #1',
         styles: ['section', 'section-garage'],
-        children: [...carsBlock(cars), paginationBlock],
+        children: [...this.carsBlock(cars), paginationBlock],
       });
     }
 
@@ -105,63 +105,64 @@ export class Garage {
   private async getGarage(): Promise<HTMLElement> {
     return this.garage || this.setGarage();
   }
-}
 
-// end class Garage
+  private carsBlock(cars: AsyncRaceAPI.Car[]): HTMLElement[] {
+    return cars.map((car: AsyncRaceAPI.Car, index: number) => {
+      return create.section({
+        tag: 'article',
+        children: [
+          this.btnSelectRemove(car, index),
+          create.section({
+            tag: 'section',
+            id: `race-${index}`,
+            styles: ['section', 'section-race'],
+            children: [
+              create.section({
+                tag: 'section',
+                id: `move-btn-${index}`,
+                styles: ['move-btn'],
+                children: [
+                  create.button({ id: `btn-start-${index}`, text: 'A' }),
+                  create.button({ id: `btn-start-${index}`, text: 'B' }),
+                ],
+              }),
+              getCarSVG(index, car),
+              create.img({ id: `flag-${index}`, source: flag, styles: ['flag'] }),
+            ],
+          }),
+        ],
+      });
+    });
+  }
 
-const carsBlock = (cars: AsyncRaceAPI.Car[]): HTMLElement[] => {
-  return cars.map((car: AsyncRaceAPI.Car, index: number) => {
+  private btnSelectRemove(car: AsyncRaceAPI.Car, index: number): HTMLElement {
     return create.section({
-      tag: 'article',
+      tag: 'section',
+      id: `edit-btn-${index}`,
+      styles: ['section', 'section-edit-btn'],
       children: [
-        create.section({
-          tag: 'section',
-          id: `edit-btn-${index}`,
-          styles: ['section', 'section-edit-btn'],
-          children: [
-            create.button({ id: `btn-select-${index}`, text: 'SELECT' }),
-            create.button({
-              id: `btn-remove--${index}`,
-              text: 'REMOVE',
-              attributes: { 'data-id': `${car.id}` },
-              callback: (event: Event) => {
-                console.dir(event.target);
-                if (event.target && event.target instanceof HTMLElement) {
-                  const buttonRemoveClick: HTMLElement = event.target;
-                  const id: string | undefined = buttonRemoveClick.dataset.id || undefined;
-                  if (id)
-                    AsyncRaceAPI.deleteCar(+id).then(() => {
-                      console.log(id);
-                      //TODO update DOM after delete car
-                    });
-                }
-              },
-            }),
-            create.label({ id: `btn-remove-${index}`, text: car.name }),
-          ],
+        create.button({ id: `btn-select-${index}`, text: 'SELECT' }),
+        create.button({
+          id: `btn-remove--${index}`,
+          text: 'REMOVE',
+          attributes: { 'data-id': `${car.id}` },
+          callback: (event: Event) => {
+            console.dir(event.target);
+            if (event.target && event.target instanceof HTMLElement) {
+              const buttonRemoveClick: HTMLElement = event.target;
+              const id: string | undefined = buttonRemoveClick.dataset.id || undefined;
+              if (id)
+                AsyncRaceAPI.deleteCar(+id).then(() => {
+                  this.setGarage();
+                });
+            }
+          },
         }),
-        create.section({
-          tag: 'section',
-          id: `race-${index}`,
-          styles: ['section', 'section-race'],
-          children: [
-            create.section({
-              tag: 'section',
-              id: `move-btn-${index}`,
-              styles: ['move-btn'],
-              children: [
-                create.button({ id: `btn-start-${index}`, text: 'A' }),
-                create.button({ id: `btn-start-${index}`, text: 'B' }),
-              ],
-            }),
-            getCarSVG(index, car),
-            create.img({ id: `flag-${index}`, source: flag, styles: ['flag'] }),
-          ],
-        }),
+        create.label({ id: `btn-remove-${index}`, text: car.name }),
       ],
     });
-  });
-};
+  }
+}
 
 const getCarSVG = (index: number, car: AsyncRaceAPI.Car): HTMLElement => {
   return create.svg({
