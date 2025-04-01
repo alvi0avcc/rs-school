@@ -153,7 +153,7 @@ export const input = ({
     for (const [key, value] of Object.entries(attributes)) {
       element.setAttribute(key, value);
     }
-  if (callback) element.addEventListener('click', (event) => callback(event));
+  if (callback) element.addEventListener('change', (event) => callback(event));
   return element;
 };
 
