@@ -128,6 +128,7 @@ export const input = ({
   placeholder = '',
   type = 'text',
   value = '',
+  list = '',
   disabled = false,
   callback = undefined,
   styles = ['input'],
@@ -136,6 +137,7 @@ export const input = ({
   id?: string;
   placeholder?: string;
   type?: 'text' | 'number' | 'color';
+  list?: string;
   value?: string;
   disabled?: boolean;
   callback?: EventListener;
@@ -146,6 +148,7 @@ export const input = ({
   if (id) element.id = id;
   if (placeholder) element.placeholder = placeholder;
   if (type) element.type = type;
+  if (list) element.setAttribute('list', list);
   if (value) element.value = value;
   if (disabled) element.disabled = disabled;
   if (styles) element.classList.add(...styles);
@@ -154,6 +157,28 @@ export const input = ({
       element.setAttribute(key, value);
     }
   if (callback) element.addEventListener('change', (event) => callback(event));
+  return element;
+};
+
+export const datalist = ({
+  id = '',
+  children = undefined,
+  styles = ['datalist'],
+  attributes = {},
+}: {
+  id?: string;
+  children?: HTMLElement[];
+  styles?: string[];
+  attributes?: Record<string, string>;
+}): HTMLDataListElement => {
+  const element: HTMLDataListElement = document.createElement('datalist');
+  if (id) element.id = id;
+  if (children) element.append(...children);
+  if (styles) element.classList.add(...styles);
+  if (attributes)
+    for (const [key, value] of Object.entries(attributes)) {
+      element.setAttribute(key, value);
+    }
   return element;
 };
 
@@ -217,12 +242,14 @@ export const select = ({
 
 export const options = ({
   id = '',
+  value = '',
   disabled = false,
   callback = undefined,
   styles = ['option'],
   attributes = {},
 }: {
   id?: string;
+  value: string;
   disabled?: boolean;
   callback?: EventListener;
   styles?: string[];
@@ -230,6 +257,7 @@ export const options = ({
 }): HTMLOptionElement => {
   const element: HTMLOptionElement = document.createElement('option');
   if (id) element.id = id;
+  if (value) element.value = value;
   if (disabled) element.disabled = disabled;
   if (styles) element.classList.add(...styles);
   if (attributes)
