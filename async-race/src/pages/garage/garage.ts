@@ -10,6 +10,8 @@ export class Garage {
   private main: HTMLElement | undefined;
   private carQuantity: HTMLHeadingElement | undefined;
   private garage: HTMLElement | undefined;
+  private carNameSelected: HTMLInputElement | undefined;
+  private carColorSelected: HTMLInputElement | undefined;
 
   constructor() {
     this.main = undefined;
@@ -42,14 +44,22 @@ export class Garage {
       styles: ['section-management'],
       children: [
         ...this.sectionManagementCreateCar(),
-        create.input({ styles: ['input', 'car-name'] }),
-        create.input({ type: 'color', value: '#ffffff', styles: ['input', 'car-color'] }),
-        create.button({ text: 'UPDATE' }),
+        ...this.sectionManagementUpdateCar(),
         create.button({ text: 'RACE', styles: ['button', 'btn-race'] }),
         create.button({ text: 'RESET', styles: ['button', 'btn-reset'] }),
         create.button({ text: 'GENERATE CARS', styles: ['button', 'btn-generate'] }),
       ],
     });
+  }
+
+  private sectionManagementUpdateCar(): HTMLElement[] {
+    this.carNameSelected = create.input({ styles: ['input', 'car-name'] });
+    this.carColorSelected = create.input({
+      type: 'color',
+      value: '#ffffff',
+      styles: ['input', 'car-color'],
+    });
+    return [this.carNameSelected, this.carColorSelected, create.button({ text: 'UPDATE' })];
   }
 
   private sectionManagementCreateCar(): HTMLElement[] {
@@ -174,21 +184,32 @@ export class Garage {
       id: `edit-btn-${index}`,
       styles: ['section', 'section-edit-btn'],
       children: [
-        create.button({ id: `btn-select-${index}`, text: 'SELECT' }),
+        create.button({
+          id: `btn-select-${index}`,
+          text: 'SELECT',
+          attributes: { 'data-id': `${car.id}` },
+          callback: async (event) => {
+            const id: number | undefined = checkEventTargetId(event);
+            if (id) {
+              const car = await AsyncRaceAPI.getCar(id);
+              if (car) {
+                if (this.carNameSelected) this.carNameSelected.value = car.name || '';
+                if (this.carColorSelected) this.carColorSelected.value = car.color;
+              }
+            }
+          },
+        }),
         create.button({
           id: `btn-remove--${index}`,
           text: 'REMOVE',
           attributes: { 'data-id': `${car.id}` },
           callback: (event: Event) => {
             console.dir(event.target);
-            if (event.target && event.target instanceof HTMLElement) {
-              const buttonRemoveClick: HTMLElement = event.target;
-              const id: string | undefined = buttonRemoveClick.dataset.id || undefined;
-              if (id)
-                AsyncRaceAPI.deleteCar(+id).then(() => {
-                  this.setGarage();
-                });
-            }
+            const id: number | undefined = checkEventTargetId(event);
+            if (id)
+              AsyncRaceAPI.deleteCar(id).then(() => {
+                this.setGarage();
+              });
           },
         }),
         create.label({ id: `btn-remove-${index}`, text: car.name || '' }),
@@ -215,6 +236,15 @@ const checkEventTarget = (event: Event): string | undefined => {
   if (event.target && event.target instanceof HTMLInputElement) {
     return event.target.value;
   }
+};
+
+const checkEventTargetId = (event: Event): number | undefined => {
+  let id: string | undefined;
+  if (event.target && event.target instanceof HTMLElement) {
+    const buttonSelectClick: HTMLElement = event.target;
+    id = buttonSelectClick.dataset.id || undefined;
+  }
+  return id ? +id : undefined;
 };
 
 export const garage = new Garage();
