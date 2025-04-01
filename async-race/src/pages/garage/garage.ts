@@ -30,35 +30,68 @@ export class Garage {
         id: 'main',
         tag: 'main',
         styles: ['main', 'main-garage'],
-        children: [
-          create.section({
-            id: 'section-management',
-            tag: 'section',
-            styles: ['section-management'],
-            children: [
-              create.input({ styles: ['input', 'car-name'] }),
-              create.input({ type: 'color', value: '#00ff00', styles: ['input', 'car-color'] }),
-              create.button({
-                text: 'CREATE',
-                callback: () => {
-                  AsyncRaceAPI.createCar({ name: 'new', color: '#e6e6fa' }).then(() =>
-                    this.setGarage()
-                  );
-                },
-              }),
-              create.input({ styles: ['input', 'car-name'] }),
-              create.input({ type: 'color', value: '#ffffff', styles: ['input', 'car-color'] }),
-              create.button({ text: 'UPDATE' }),
-              create.button({ text: 'RACE', styles: ['button', 'btn-race'] }),
-              create.button({ text: 'RESET', styles: ['button', 'btn-reset'] }),
-              create.button({ text: 'GENERATE CARS', styles: ['button', 'btn-generate'] }),
-            ],
-          }),
-          this.getCarQuantity(),
-          await this.getGarage(),
-        ],
+        children: [this.sectionManagement(), this.getCarQuantity(), await this.getGarage()],
       });
     }
+  }
+
+  private sectionManagement(): HTMLElement {
+    return create.section({
+      id: 'section-management',
+      tag: 'section',
+      styles: ['section-management'],
+      children: [
+        ...this.sectionManagementCreateCar(),
+        create.input({ styles: ['input', 'car-name'] }),
+        create.input({ type: 'color', value: '#ffffff', styles: ['input', 'car-color'] }),
+        create.button({ text: 'UPDATE' }),
+        create.button({ text: 'RACE', styles: ['button', 'btn-race'] }),
+        create.button({ text: 'RESET', styles: ['button', 'btn-reset'] }),
+        create.button({ text: 'GENERATE CARS', styles: ['button', 'btn-generate'] }),
+      ],
+    });
+  }
+
+  private sectionManagementCreateCar(): HTMLElement[] {
+    let carName: string, carColor: string;
+
+    return [
+      create.input({
+        list: 'car-names',
+        styles: ['input', 'car-name'],
+        callback: (event) => {
+          carName = checkEventTarget(event) || '';
+        },
+      }),
+      create.datalist({
+        id: 'car-names',
+        children: [
+          create.options({ value: 'Ford' }),
+          create.options({ value: 'BMW' }),
+          create.options({ value: 'Mercedes' }),
+          create.options({ value: 'VW' }),
+          create.options({ value: 'Fiat' }),
+          create.options({ value: 'GM' }),
+          create.options({ value: 'Lincoln' }),
+        ],
+      }),
+      create.input({
+        type: 'color',
+        value: '#00ff00',
+        styles: ['input', 'car-color'],
+        callback: (event) => {
+          carColor = checkEventTarget(event) || '';
+        },
+      }),
+      create.button({
+        text: 'CREATE',
+        callback: () => {
+          AsyncRaceAPI.createCar({ name: carName, color: carColor || '#00ff00' }).then(() =>
+            this.setGarage()
+          );
+        },
+      }),
+    ];
   }
 
   private setCarQuantity(quantity = 0): HTMLHeadingElement {
@@ -158,7 +191,7 @@ export class Garage {
             }
           },
         }),
-        create.label({ id: `btn-remove-${index}`, text: car.name }),
+        create.label({ id: `btn-remove-${index}`, text: car.name || '' }),
       ],
     });
   }
@@ -176,6 +209,12 @@ const getCarSVG = (index: number, car: AsyncRaceAPI.Car): HTMLElement => {
       }),
     ],
   });
+};
+
+const checkEventTarget = (event: Event): string | undefined => {
+  if (event.target && event.target instanceof HTMLInputElement) {
+    return event.target.value;
+  }
 };
 
 export const garage = new Garage();
