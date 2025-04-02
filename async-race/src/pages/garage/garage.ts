@@ -6,12 +6,15 @@ import * as create from '../../builder/elements';
 
 import * as AsyncRaceAPI from '../../api/api';
 
+const defaultCarColor = '#00ff00';
+
 export class Garage {
   private main: HTMLElement | undefined;
   private carQuantity: HTMLHeadingElement | undefined;
   private garage: HTMLElement | undefined;
   private carNameSelected: HTMLInputElement | undefined;
   private carColorSelected: HTMLInputElement | undefined;
+  private carIdSelected: number | undefined;
 
   constructor() {
     this.main = undefined;
@@ -53,13 +56,40 @@ export class Garage {
   }
 
   private sectionManagementUpdateCar(): HTMLElement[] {
-    this.carNameSelected = create.input({ styles: ['input', 'car-name'] });
+    let carName: string, carColor: string;
+
+    this.carNameSelected = create.input({
+      styles: ['input', 'car-name'],
+      callback: (event) => {
+        carName = checkEventTarget(event) || '';
+      },
+    });
     this.carColorSelected = create.input({
       type: 'color',
       value: '#ffffff',
+
+      callback: (event) => {
+        carColor = checkEventTarget(event) || '';
+      },
       styles: ['input', 'car-color'],
     });
-    return [this.carNameSelected, this.carColorSelected, create.button({ text: 'UPDATE' })];
+    return [
+      this.carNameSelected,
+      this.carColorSelected,
+      create.button({
+        text: 'UPDATE',
+        callback: () => {
+          carName = this.carNameSelected?.value || '';
+          carColor = this.carColorSelected?.value || defaultCarColor;
+
+          if (this.carIdSelected) {
+            AsyncRaceAPI.updateCar(this.carIdSelected, { name: carName, color: carColor }).then(
+              () => this.setGarage()
+            );
+          }
+        },
+      }),
+    ];
   }
 
   private sectionManagementCreateCar(): HTMLElement[] {
@@ -87,7 +117,7 @@ export class Garage {
       }),
       create.input({
         type: 'color',
-        value: '#00ff00',
+        value: defaultCarColor,
         styles: ['input', 'car-color'],
         callback: (event) => {
           carColor = checkEventTarget(event) || '';
@@ -96,7 +126,7 @@ export class Garage {
       create.button({
         text: 'CREATE',
         callback: () => {
-          AsyncRaceAPI.createCar({ name: carName, color: carColor || '#00ff00' }).then(() =>
+          AsyncRaceAPI.createCar({ name: carName, color: carColor || defaultCarColor }).then(() =>
             this.setGarage()
           );
         },
@@ -191,6 +221,7 @@ export class Garage {
           callback: async (event) => {
             const id: number | undefined = checkEventTargetId(event);
             if (id) {
+              this.carIdSelected = id;
               const car = await AsyncRaceAPI.getCar(id);
               if (car) {
                 if (this.carNameSelected) this.carNameSelected.value = car.name || '';
