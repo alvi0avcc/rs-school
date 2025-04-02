@@ -7,6 +7,8 @@ import * as create from '../../builder/elements';
 import * as AsyncRaceAPI from '../../api/api';
 
 const defaultCarColor = '#00ff00';
+const CarNames: string[] = ['Ford', 'BMW', 'Mercedes', 'VW', 'Fiat', 'GM', 'Lincoln'];
+const CarModels: string[] = ['Mustang', 'X6', 'C-Class', 'Golf', 'Panda', 'Corvette', 'Navigator'];
 
 export class Garage {
   private main: HTMLElement | undefined;
@@ -50,8 +52,23 @@ export class Garage {
         ...this.sectionManagementUpdateCar(),
         create.button({ text: 'RACE', styles: ['button', 'btn-race'] }),
         create.button({ text: 'RESET', styles: ['button', 'btn-reset'] }),
-        create.button({ text: 'GENERATE CARS', styles: ['button', 'btn-generate'] }),
+        this.btnGenerateHundredCars(),
       ],
+    });
+  }
+
+  private btnGenerateHundredCars(): HTMLElement {
+    return create.button({
+      text: 'GENERATE CARS',
+      styles: ['button', 'btn-generate'],
+      callback: async () => {
+        for (let index = 0; index < 100; index++)
+          await AsyncRaceAPI.createCar({
+            name: getRandomNameModel(),
+            color: getRandomHexColor(),
+          });
+        this.setGarage();
+      },
     });
   }
 
@@ -94,7 +111,6 @@ export class Garage {
 
   private sectionManagementCreateCar(): HTMLElement[] {
     let carName: string, carColor: string;
-
     return [
       create.input({
         list: 'car-names',
@@ -105,15 +121,7 @@ export class Garage {
       }),
       create.datalist({
         id: 'car-names',
-        children: [
-          create.options({ value: 'Ford' }),
-          create.options({ value: 'BMW' }),
-          create.options({ value: 'Mercedes' }),
-          create.options({ value: 'VW' }),
-          create.options({ value: 'Fiat' }),
-          create.options({ value: 'GM' }),
-          create.options({ value: 'Lincoln' }),
-        ],
+        children: CarNames.map((name: string) => create.options({ value: name })),
       }),
       create.input({
         type: 'color',
@@ -276,6 +284,16 @@ const checkEventTargetId = (event: Event): number | undefined => {
     id = buttonSelectClick.dataset.id || undefined;
   }
   return id ? +id : undefined;
+};
+
+const getRandomNameModel = (): string => {
+  return `${CarNames[Math.round(Math.random() * (CarNames.length - 1))]} ${CarModels[Math.round(Math.random() * (CarModels.length - 1))]}`;
+};
+
+const getRandomHexColor = (): string => {
+  return `#${Math.floor(Math.random() * 0xff_ff_ff)
+    .toString(16)
+    .padStart(6, '0')}`;
 };
 
 export const garage = new Garage();
