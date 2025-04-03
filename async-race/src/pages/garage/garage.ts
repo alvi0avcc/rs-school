@@ -17,9 +17,15 @@ export class Garage {
   private carNameSelected: HTMLInputElement | undefined;
   private carColorSelected: HTMLInputElement | undefined;
   private carIdSelected: number | undefined;
+  private pageNumber: number;
+  private pageLimitCars: number;
+  private carTotalCount: number;
 
   constructor() {
     this.main = undefined;
+    this.pageNumber = 1;
+    this.pageLimitCars = 7;
+    this.carTotalCount = 0;
   }
 
   public getView(): HTMLCollection {
@@ -143,6 +149,7 @@ export class Garage {
   }
 
   private setCarQuantity(quantity = 0): HTMLHeadingElement {
+    this.carTotalCount = quantity;
     if (!this.carQuantity)
       this.carQuantity = create.h({ tag: 'h1', align: 'left', styles: ['h1', 'h1-garage'] });
     this.carQuantity.textContent = `Garage (${quantity})`;
@@ -155,26 +162,41 @@ export class Garage {
 
   private async setGarage(): Promise<HTMLElement> {
     const { cars, totalCount }: { cars: AsyncRaceAPI.Car[]; totalCount: number } =
-      await AsyncRaceAPI.getGarage({ _page: 1, _limit: 7 });
+      await AsyncRaceAPI.getGarage({ _page: this.pageNumber, _limit: this.pageLimitCars });
 
     this.setCarQuantity(totalCount);
 
     const paginationBlock: HTMLElement = create.section({
       tag: 'section',
       children: [
-        create.button({ id: `btn-prev`, text: 'PREV' }),
-        create.button({ id: `btn-next`, text: 'NEXT' }),
+        create.button({
+          id: `btn-prev`,
+          text: 'PREV',
+          callback: () => {
+            if (this.pageNumber > 1) this.pageNumber--;
+            this.setGarage();
+          },
+        }),
+        create.button({
+          id: `btn-next`,
+          text: 'NEXT',
+          callback: () => {
+            if (this.pageNumber < this.carTotalCount / this.pageLimitCars) this.pageNumber++;
+            this.setGarage();
+          },
+        }),
       ],
     });
 
     if (this.garage) {
       this.garage.replaceChildren();
+      this.garage.textContent = `Page #${this.pageNumber}`;
       this.garage.append(...this.carsBlock(cars), paginationBlock);
     } else {
       this.garage = create.section({
         id: 'section-garage',
         tag: 'section',
-        text: 'Page #1',
+        text: `Page #${this.pageNumber}`,
         styles: ['section', 'section-garage'],
         children: [...this.carsBlock(cars), paginationBlock],
       });
