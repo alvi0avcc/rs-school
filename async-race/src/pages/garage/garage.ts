@@ -20,12 +20,18 @@ export class Garage {
   private pageNumber: number;
   private pageLimitCars: number;
   private carTotalCount: number;
+  private viewportWidth: number;
+  private carsForRace: HTMLElement[] | undefined;
 
   constructor() {
     this.main = undefined;
     this.pageNumber = 1;
     this.pageLimitCars = 7;
     this.carTotalCount = 0;
+    this.viewportWidth = window.innerWidth;
+    window.addEventListener('resize', () => {
+      this.viewportWidth = window.innerWidth;
+    });
   }
 
   public getView(): HTMLCollection {
@@ -211,6 +217,9 @@ export class Garage {
 
   private carsBlock(cars: AsyncRaceAPI.Car[]): HTMLElement[] {
     return cars.map((car: AsyncRaceAPI.Car, index: number) => {
+      const carSVG: HTMLElement = getCarSVG(index, car);
+      let carAnimated: Animation | undefined;
+
       return create.section({
         tag: 'article',
         children: [
@@ -225,11 +234,52 @@ export class Garage {
                 id: `move-btn-${index}`,
                 styles: ['move-btn'],
                 children: [
-                  create.button({ id: `btn-start-${index}`, text: 'A' }),
-                  create.button({ id: `btn-start-${index}`, text: 'B' }),
+                  create.button({
+                    id: `btn-start-${index}`,
+                    text: 'A',
+                    attributes: { 'data-id': `${car.id}` },
+                    callback: async (event) => {
+                      const id: number | undefined = checkEventTargetId(event);
+                      if (id) {
+                        await AsyncRaceAPI.controlEngine(id, 'started').then((response) => {
+                          console.log(response);
+                          if ('velocity' in response && 'distance' in response && carSVG) {
+                            carAnimated = carSVG.animate(
+                              [
+                                { transform: 'translateX(0)', offset: 0 },
+                                {
+                                  transform: `translateX(${this.viewportWidth - 50 - 60}px)`,
+                                  offset: 1,
+                                },
+                              ],
+                              {
+                                duration: (this.viewportWidth / response.velocity) * 1000,
+                                fill: 'forwards',
+                                easing: 'ease-in-out',
+                              }
+                            );
+                          }
+                        });
+                      }
+                    },
+                  }),
+                  create.button({
+                    id: `btn-start-${index}`,
+                    text: 'B',
+                    attributes: { 'data-id': `${car.id}` },
+                    callback: async (event) => {
+                      const id: number | undefined = checkEventTargetId(event);
+                      if (id) {
+                        await AsyncRaceAPI.controlEngine(id, 'stopped').then((response) => {
+                          console.log(response);
+                          carAnimated?.cancel();
+                        });
+                      }
+                    },
+                  }),
                 ],
               }),
-              getCarSVG(index, car),
+              carSVG,
               create.img({ id: `flag-${index}`, source: flag, styles: ['flag'] }),
             ],
           }),
@@ -284,6 +334,7 @@ const getCarSVG = (index: number, car: AsyncRaceAPI.Car): HTMLElement => {
     id: `car-${index}`,
     viewBox: '0 0 250 200',
     styles: ['car'],
+    attributes: { 'data-id': `${car.id}` },
     children: [
       create.use({
         href: `${carSvg}#car-icon`,
