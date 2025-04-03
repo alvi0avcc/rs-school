@@ -22,6 +22,11 @@ export interface QueryParameters {
   _order?: 'ASC' | 'DESC';
 }
 
+export interface EngineParameter {
+  velocity: number;
+  distance: number;
+}
+
 export type EngineStatus = 'started' | 'stopped' | 'drive';
 
 const BASE_URL = 'http://127.0.0.1:3000';
@@ -86,5 +91,21 @@ export const updateCar = async (id: number, car: Omit<Car, 'id'>): Promise<Car> 
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(car),
   });
+  return response.json();
+};
+
+export const controlEngine = async (
+  id: number,
+  status: EngineStatus
+): Promise<EngineParameter | { success: boolean }> => {
+  const response = await fetch(`${BASE_URL}/engine?id=${id}&status=${status}`, {
+    method: 'PATCH',
+  });
+
+  if (!response.ok) {
+    const error = await response.json();
+    throw new Error(error.message || 'Engine error');
+  }
+
   return response.json();
 };
