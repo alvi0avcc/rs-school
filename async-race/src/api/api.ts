@@ -102,10 +102,7 @@ export const controlEngine = async (
     method: 'PATCH',
   });
 
-  if (!response.ok) {
-    const error = await response.json();
-    throw new Error(error.message || 'Engine error');
-  }
+  if (!response.ok) return { success: false };
 
   return response.json();
 };
