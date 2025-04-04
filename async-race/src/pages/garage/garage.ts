@@ -5,6 +5,7 @@ import carSvg from '../../../assets/car.svg';
 import * as create from '../../builder/elements';
 
 import * as AsyncRaceAPI from '../../api/api';
+import { FlatESLint } from 'eslint/use-at-your-own-risk';
 
 const defaultCarColor = '#00ff00';
 const CarNames: string[] = ['Ford', 'BMW', 'Mercedes', 'VW', 'Fiat', 'GM', 'Lincoln'];
@@ -255,6 +256,29 @@ export class Garage {
                               {
                                 duration: (this.viewportWidth / response.velocity) * 1000,
                                 fill: 'forwards',
+                                easing: 'ease-in-out',
+                              }
+                            );
+                          }
+                        });
+                        //check engine
+                        AsyncRaceAPI.controlEngine(id, 'drive').then((response) => {
+                          if ('success' in response && response.success === false) {
+                            AsyncRaceAPI.controlEngine(id, 'stopped');
+                            carAnimated?.pause();
+
+                            carSVG.animate(
+                              [
+                                { transform: getComputedStyle(carSVG).transform, opacity: 1 },
+                                {
+                                  transform: `${getComputedStyle(carSVG).transform} scale(0.5)`,
+                                  opacity: 0.5,
+                                },
+                                { transform: getComputedStyle(carSVG).transform, opacity: 1 },
+                              ],
+                              {
+                                duration: 1000,
+                                iterations: 3,
                                 easing: 'ease-in-out',
                               }
                             );
