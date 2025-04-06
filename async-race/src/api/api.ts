@@ -1,3 +1,4 @@
+const BASE_URL = 'http://127.0.0.1:3000';
 export interface Car {
   id: number;
   name: string;
@@ -8,6 +9,12 @@ export interface Engine {
   velocity: number;
   distance: number;
 }
+export interface EngineParameter {
+  velocity: number;
+  distance: number;
+}
+
+export type EngineStatus = 'started' | 'stopped' | 'drive';
 
 export interface Winner {
   id: number;
@@ -21,15 +28,6 @@ export interface QueryParameters {
   _sort?: 'id' | 'wins' | 'time';
   _order?: 'ASC' | 'DESC';
 }
-
-export interface EngineParameter {
-  velocity: number;
-  distance: number;
-}
-
-export type EngineStatus = 'started' | 'stopped' | 'drive';
-
-const BASE_URL = 'http://127.0.0.1:3000';
 
 export const getGarage = async (
   parameters?: QueryParameters
@@ -116,3 +114,57 @@ export const controlEngine = async (
     return { success: false };
   }
 };
+
+export const getWinners = async (
+  parameters?: QueryParameters
+): Promise<{ winners: Winner[]; totalCount: number }> => {
+  const queryParameters = new URLSearchParams();
+
+  if (parameters) {
+    if (parameters._page) queryParameters.append('_page', parameters._page.toString());
+    if (parameters._limit) queryParameters.append('_limit', parameters._limit.toString());
+    if (parameters._sort) queryParameters.append('_sort', parameters._sort);
+    if (parameters._order) queryParameters.append('_order', parameters._order);
+  }
+
+  const queryString = queryParameters.toString();
+  const url = `${BASE_URL}/winners${queryString ? `?${queryString}` : ''}`;
+
+  const response = await fetch(url);
+
+  if (!response.ok) {
+    throw new Error(`Failed to fetch winners: ${response.statusText}`);
+  }
+
+  const totalCountHeader = response.headers.get('X-Total-Count');
+  const totalCount = totalCountHeader ? Number.parseInt(totalCountHeader, 10) : 0;
+
+  const winners: unknown = await response.json();
+
+  if (!Array.isArray(winners)) {
+    throw new TypeError('Invalid winners data format');
+  }
+
+  return {
+    winners: validatedWinners(winners),
+    totalCount,
+  };
+};
+
+const validatedWinners = (winners: Winner[]): Winner[] =>
+  winners.map((winner) => {
+    if (
+      typeof winner === 'object' &&
+      winner !== null &&
+      'id' in winner &&
+      'wins' in winner &&
+      'time' in winner
+    ) {
+      return {
+        id: Number(winner.id),
+        wins: Number(winner.wins),
+        time: Number(winner.time),
+      };
+    }
+    throw new Error('Invalid winner structure');
+  });
