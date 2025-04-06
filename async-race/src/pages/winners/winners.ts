@@ -14,6 +14,7 @@ export class Winners {
   private paginationBtn: HTMLElement | undefined;
   private pageNumber: number;
   private pageLimitWinners: number;
+  private winners: AsyncRaceAPI.Winner[] | undefined;
 
   constructor() {
     this.main = undefined;
@@ -33,6 +34,8 @@ export class Winners {
   }
 
   public async init(): Promise<void> {
+    await this.getWinners();
+
     if (!this.main) {
       this.main = create.section({
         id: 'main',
@@ -41,7 +44,6 @@ export class Winners {
         children: [this.title(), this.page(), await this.table(), this.pagination()],
       });
     }
-    await this.getWinners();
   }
 
   private title(): HTMLHeadingElement {
@@ -68,7 +70,116 @@ export class Winners {
   }
 
   private async table(): Promise<HTMLElement> {
-    return this.tableWinners || create.section({ tag: 'section' });
+    if (!this.tableWinners) {
+      this.tableWinners = create.section({
+        id: 'table-container',
+        tag: 'section',
+        children: [await this.innerTable()],
+      });
+    }
+    return this.tableWinners;
+  }
+
+  private async innerTable(): Promise<HTMLElement> {
+    return create.section({
+      id: 'table',
+      tag: 'table',
+      children: [this.tableHead(), await this.tableBody()],
+    });
+  }
+
+  private tableHead(): HTMLElement {
+    return create.section({
+      tag: 'thead',
+      children: [
+        create.section({
+          tag: 'tr',
+          children: [
+            create.section({ tag: 'th', text: 'Number' }),
+            create.section({ tag: 'th', text: 'Car' }),
+            create.section({ tag: 'th', text: 'Name' }),
+            create.section({ tag: 'th', text: 'Wins' }),
+            create.section({ tag: 'th', text: 'Best time (seconds)' }),
+          ],
+        }),
+      ],
+    });
+  }
+
+  private async tableBody(): Promise<HTMLElement> {
+    console.log('body -', this.winners);
+
+    if (!this.winners?.length) {
+      return this.createEmptyBody();
+    }
+
+    const getCar = async (winnerId: number): Promise<AsyncRaceAPI.Car> => {
+      try {
+        return await AsyncRaceAPI.getCar(winnerId);
+      } catch (error) {
+        console.error(`Failed to fetch car ${winnerId}:`, error);
+        return {
+          id: winnerId,
+          name: 'Unknown Car',
+          color: '#aaabbb',
+        };
+      }
+    };
+
+    const rows = await Promise.all(
+      this.winners.map(async (winner) => {
+        const car = await getCar(winner.id);
+        return this.createWinnerRow(winner, car);
+      })
+    );
+
+    return create.section({
+      tag: 'tbody',
+      children: rows,
+    });
+  }
+
+  private createEmptyBody(): HTMLElement {
+    return create.section({
+      tag: 'tbody',
+      children: [
+        create.section({
+          tag: 'tr',
+          children: [
+            create.section({
+              tag: 'td',
+              attributes: { colspan: '5' },
+              text: 'No winners yet',
+              styles: ['no-winners'],
+            }),
+          ],
+        }),
+      ],
+    });
+  }
+
+  private createWinnerRow(winner: AsyncRaceAPI.Winner, car: AsyncRaceAPI.Car): HTMLElement {
+    return create.section({
+      tag: 'tr',
+      children: [
+        create.section({ tag: 'td', text: winner.id.toString() }),
+        create.section({
+          tag: 'td',
+          children: [
+            create.section({
+              tag: 'div',
+              styles: ['car-icon'],
+              attributes: {
+                style: `background-color: ${car.color}`,
+              },
+            }),
+          ],
+        }),
+        create.section({ tag: 'td', text: car.name }),
+        create.section({ tag: 'td', text: winner.wins.toString() }),
+        create.section({ tag: 'td', text: winner.time.toFixed(2) }),
+      ],
+    });
   }
 
   private async getWinners(): Promise<void> {
@@ -77,6 +188,7 @@ export class Winners {
     console.log(winners);
     console.log(totalCount);
     this.winnersTotalQuantity = totalCount;
+    this.winners = winners;
     this.title();
   }
 
