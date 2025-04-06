@@ -2,16 +2,15 @@ import './app.css';
 
 import type { Route } from '../router/router';
 import { Router } from '../router/router';
-import * as create from '../builder/elements';
 
 import { header } from '../pages/header-nav/header-nav';
 import { garage } from '../pages/garage/garage';
-// import WinnersView from '../pages/winners';
+import { winners } from '../pages/winners/winners';
 import { notFoundView } from '../pages/404/404';
 
 const notFoundPage: Route = {
   path: '/404',
-  view: (root): void => {
+  view: (root: HTMLElement): void => {
     if (header) root.append(header);
     root.append(notFoundView());
   },
@@ -20,7 +19,7 @@ const notFoundPage: Route = {
 const routes: Route[] = [
   {
     path: '/',
-    view: async (root): Promise<void> => {
+    view: async (root: HTMLElement): Promise<void> => {
       if (header) root.append(header);
       await garage.init();
       root.append(...garage.getView());
@@ -28,9 +27,10 @@ const routes: Route[] = [
   },
   {
     path: '/winners',
-    view: async (root): Promise<void> => {
+    view: async (root: HTMLElement): Promise<void> => {
       if (header) root.append(header);
-      root.append(create.section({ tag: 'main', text: 'Winners Page. Loading...' }));
+      await winners.init();
+      root.append(...winners.getView());
     },
   },
   notFoundPage,
