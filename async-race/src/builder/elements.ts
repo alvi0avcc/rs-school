@@ -431,12 +431,40 @@ export const li = (
   return li;
 };
 
-export const dialog = (id = 'dialog'): HTMLDialogElement => {
-  const dialog: HTMLDialogElement = document.createElement('dialog');
-  dialog.id = id;
-  dialog.textContent = '';
-  dialog.classList.add('dialog');
-  return dialog;
+// export const dialog = (id = 'dialog'): HTMLDialogElement => {
+//   const dialog: HTMLDialogElement = document.createElement('dialog');
+//   dialog.id = id;
+//   dialog.textContent = '';
+//   dialog.classList.add('dialog');
+//   return dialog;
+// };
+
+export const dialog = ({
+  id = undefined,
+  text = '',
+  children = undefined,
+  callback = undefined,
+  styles = ['dialog'],
+  attributes = {},
+}: {
+  id?: string;
+  text?: string;
+  children?: HTMLElement[];
+  callback?: EventListener;
+  styles?: string[];
+  attributes?: Record<string, string>;
+}): HTMLDialogElement => {
+  const element: HTMLDialogElement = document.createElement('dialog');
+  if (id) element.id = id;
+  if (text) element.textContent = text;
+  if (styles) element.classList.add(...styles);
+  if (children) element.append(...children);
+  if (attributes)
+    for (const [key, value] of Object.entries(attributes)) {
+      element.setAttribute(key, value);
+    }
+  if (callback) element.addEventListener('click', (event) => callback(event));
+  return element;
 };
 
 export const form = (id = 'form'): HTMLFormElement => {

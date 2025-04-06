@@ -27,13 +27,16 @@ export class Garage {
         animation?: Animation | undefined;
       }[]
     | undefined;
-  private carsForRaceParam: (AsyncRaceAPI.Engine | undefined)[] | undefined;
+  // private carsForRaceParam: (AsyncRaceAPI.Engine | undefined)[] | undefined;
+  private haveWinner: boolean;
+  private winnerDialog: HTMLDialogElement | undefined;
 
   constructor() {
     this.main = undefined;
     this.pageNumber = 1;
     this.pageLimitCars = 7;
     this.carTotalCount = 0;
+    this.haveWinner = false;
     this.viewportWidth = window.innerWidth;
   }
 
@@ -43,6 +46,14 @@ export class Garage {
       container.append(this.main);
       window.addEventListener('resize', () => {
         this.viewportWidth = this.garage?.clientWidth || window.innerWidth;
+      });
+      globalThis.addEventListener('click', () => {
+        if (this.winnerDialog) {
+          this.winnerDialog.close();
+          this.winnerDialog.remove();
+          this.winnerDialog = undefined;
+          this.haveWinner = false;
+        }
       });
     }
 
@@ -295,7 +306,7 @@ export class Garage {
           },
         }),
         create.button({
-          id: `btn-remove--${index}`,
+          id: `btn-remove-${index}`,
           text: 'REMOVE',
           attributes: { 'data-id': `${car.id}` },
           callback: (event: Event) => {
@@ -307,7 +318,7 @@ export class Garage {
               });
           },
         }),
-        create.label({ id: `btn-remove-${index}`, text: car.name || '' }),
+        create.label({ id: `car-name-${index}`, text: car.name || '' }),
       ],
     });
   }
@@ -348,6 +359,8 @@ export class Garage {
         this.carsForRace &&
         this.carsForRace[index]
       ) {
+        const duration: number = this.viewportWidth / response.velocity; //sec
+        this.carsForRace[index].element?.setAttribute('data-time', `${duration}`);
         this.carsForRace[index].animation = this.carsForRace[index].element?.animate(
           [
             { transform: 'translateX(0)', offset: 0 },
@@ -357,7 +370,7 @@ export class Garage {
             },
           ],
           {
-            duration: (this.viewportWidth / response.velocity) * 1000,
+            duration: duration * 1000, //msec
             fill: 'forwards',
             easing: 'ease-in',
           }
@@ -413,7 +426,7 @@ export class Garage {
   };
 
   private async startRace(): Promise<void> {
-    this.carsForRaceParam = [];
+    // this.carsForRaceParam = [];
     if (this.carsForRace) {
       for (const index in this.carsForRace) {
         const car = this.carsForRace[index].element;
@@ -428,9 +441,18 @@ export class Garage {
           car.animation.play();
           car.animation.onfinish = (): void => {
             console.log('finish');
-            // const id: string | undefined = car.element?.dataset.id || undefined;
-            // if (id) AsyncRaceAPI.controlEngine(+id, 'stopped');
             //TODO add to winner
+            if (!this.haveWinner && this.main) {
+              const id: string | undefined = car.element?.dataset.id || undefined;
+              const name: string | undefined = car.element?.dataset.name || undefined;
+              const time: string | undefined = car.element?.dataset.time || undefined;
+              this.winnerDialog = create.dialog({
+                text: `${name} went first (${time ? Math.round(+time) : ''}s)!`,
+              });
+              this.main.append(this.winnerDialog);
+              this.winnerDialog.show();
+            }
+            this.haveWinner = true;
           };
         }
       }
@@ -448,7 +470,7 @@ const getCarSVG = (car: AsyncRaceAPI.Car): HTMLElement => {
     id: `car-${car.id}`,
     viewBox: '0 0 250 200',
     styles: ['car'],
-    attributes: { 'data-id': `${car.id}` },
+    attributes: { 'data-id': `${car.id}`, 'data-name': `${car.name}` },
     children: [
       create.use({
         href: `${carSvg}#car-icon`,

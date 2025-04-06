@@ -81,3 +81,14 @@
   margin-left: auto;
   height: 100%;
 }
+
+.dialog{
+  position: fixed;
+  color: yellow;
+  font-size: 2rem;
+  background-color: transparent;
+  text-shadow: red 1px 0 10px, red -1px 0 10px, red 0 1px 10px, red 0 -1px 10px ;
+  border: none;
+  justify-self: center;
+  top: 45%;
+}
