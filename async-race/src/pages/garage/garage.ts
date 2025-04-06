@@ -77,7 +77,17 @@ export class Garage {
             this.startRace();
           },
         }),
-        create.button({ text: 'RESET', styles: ['button', 'btn-reset'] }),
+        create.button({
+          text: 'RESET',
+          styles: ['button', 'btn-reset'],
+          callback: async () => {
+            for (const index in this.carsForRace) {
+              const car = this.carsForRace[+index].element;
+              const id: number | undefined = Number(car?.dataset.id) || undefined;
+              if (id) await this.carAnimatedStop(+index, id);
+            }
+          },
+        }),
         this.btnGenerateHundredCars(),
       ],
     });
