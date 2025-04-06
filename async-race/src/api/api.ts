@@ -97,12 +97,22 @@ export const updateCar = async (id: number, car: Omit<Car, 'id'>): Promise<Car> 
 export const controlEngine = async (
   id: number,
   status: EngineStatus
-): Promise<EngineParameter | { success: boolean }> => {
-  const response = await fetch(`${BASE_URL}/engine?id=${id}&status=${status}`, {
-    method: 'PATCH',
-  });
+): Promise<EngineParameter | { success: false }> => {
+  try {
+    const response = await fetch(`${BASE_URL}/engine?id=${id}&status=${status}`, {
+      method: 'PATCH',
+    });
 
-  if (!response.ok) return { success: false };
+    if (response.status >= 200 && response.status < 300) {
+      return await response.json();
+    }
 
-  return response.json();
+    if (status === 'drive' && response.status === 500) {
+      return { success: false };
+    }
+
+    return { success: false };
+  } catch {
+    return { success: false };
+  }
 };
