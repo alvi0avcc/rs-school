@@ -59,7 +59,12 @@ export class Winners {
   }
 
   private page(): HTMLHeadingElement {
-    return this.pageNo || create.h({ tag: 'h2', text: 'Page', align: 'left' });
+    if (this.pageNo) {
+      this.pageNo.textContent = `Page #${this.pageNumber}`;
+    } else {
+      this.pageNo = create.h({ tag: 'h2', text: `Page #${this.pageNumber}`, align: 'left' });
+    }
+    return this.pageNo;
   }
 
   private async table(): Promise<HTMLElement> {
