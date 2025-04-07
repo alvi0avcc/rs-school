@@ -170,9 +170,15 @@ const validatedWinners = (winners: Winner[]): Winner[] => {
 };
 
 export const getWinner = async (id: number): Promise<Winner | undefined> => {
-  const response = await fetch(`${BASE_URL}/winners/${id}`);
-  if (response.status === 404) return undefined;
-  return response.json();
+  try {
+    const response = await fetch(`${BASE_URL}/winners/${id}`);
+    if (!response.ok) {
+      throw new Error('Error: Winner not found');
+    }
+    return response.json();
+  } catch {
+    return undefined;
+  }
 };
 
 export const createWinner = async (
@@ -204,6 +210,7 @@ export const deleteWinner = async (id: number): Promise<void> => {
 
 export const addWin = async (carID: number, raceTime: number): Promise<Winner> => {
   const existingWinner: Winner | undefined = await getWinner(carID);
+
   if (existingWinner) {
     const updatedWinner: Winner = await updateWinner(carID, {
       wins: existingWinner.wins + 1,
