@@ -44,22 +44,21 @@ export const getGarage = async (
 
   const queryString = queryParameters.toString();
   const url = `${BASE_URL}/garage${queryString ? `?${queryString}` : ''}`;
+  try {
+    const response = await fetch(url);
 
-  const response = await fetch(url);
+    const totalCountHeader = response.headers.get('X-Total-Count');
+    const totalCount = totalCountHeader ? Number.parseInt(totalCountHeader, 10) : 0;
 
-  if (!response.ok) {
-    throw new Error(`HTTP error! status: ${response.status}`);
+    const cars: Car[] = await response.json();
+    if (!Array.isArray(cars)) {
+      throw new TypeError('Error: expected array of cars');
+    }
+
+    return { cars, totalCount };
+  } catch {
+    return { cars: [], totalCount: -1 };
   }
-
-  const totalCountHeader = response.headers.get('X-Total-Count');
-  const totalCount = totalCountHeader ? Number.parseInt(totalCountHeader, 10) : 0;
-
-  const cars: Car[] = await response.json();
-  if (!Array.isArray(cars)) {
-    throw new TypeError('Error: expected array of cars');
-  }
-
-  return { cars, totalCount };
 };
 
 export const createCar = async (car: Omit<Car, 'id'>): Promise<Car> => {

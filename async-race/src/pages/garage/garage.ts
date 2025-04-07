@@ -5,6 +5,7 @@ import carSvg from '../../../assets/car.svg';
 import * as create from '../../builder/elements';
 
 import * as AsyncRaceAPI from '../../api/api';
+import { winners } from '../winners/winners';
 
 const defaultCarColor = '#00ff00';
 const CarNames: string[] = ['Ford', 'BMW', 'Mercedes', 'VW', 'Fiat', 'GM', 'Lincoln'];
@@ -193,7 +194,9 @@ export class Garage {
     this.carTotalCount = quantity;
     if (!this.carQuantity)
       this.carQuantity = create.h({ tag: 'h1', align: 'left', styles: ['h1', 'h1-garage'] });
-    this.carQuantity.textContent = `Garage (${quantity})`;
+    if (quantity >= 0) this.carQuantity.textContent = `Garage (${quantity})`;
+    if (quantity === -1)
+      this.carQuantity.textContent = `The garage has been dismantled, check the connection with the server!`;
     return this.carQuantity;
   }
 
