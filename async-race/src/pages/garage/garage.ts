@@ -441,7 +441,6 @@ export class Garage {
           car.animation.play();
           car.animation.onfinish = (): void => {
             console.log('finish');
-            //TODO add to winner
             if (!this.haveWinner && this.main) {
               const id: string | undefined = car.element?.dataset.id || undefined;
               const name: string | undefined = car.element?.dataset.name || undefined;
@@ -451,8 +450,10 @@ export class Garage {
               });
               this.main.append(this.winnerDialog);
               this.winnerDialog.show();
+
+              this.haveWinner = true;
+              if (id && time) AsyncRaceAPI.addWin(+id, +time);
             }
-            this.haveWinner = true;
           };
         }
       }
