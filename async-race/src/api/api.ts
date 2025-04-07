@@ -151,8 +151,8 @@ export const getWinners = async (
   };
 };
 
-const validatedWinners = (winners: Winner[]): Winner[] =>
-  winners.map((winner) => {
+const validatedWinners = (winners: Winner[]): Winner[] => {
+  return winners.map((winner) => {
     if (
       typeof winner === 'object' &&
       winner !== null &&
@@ -168,3 +168,54 @@ const validatedWinners = (winners: Winner[]): Winner[] =>
     }
     throw new Error('Invalid winner structure');
   });
+};
+
+export const getWinner = async (id: number): Promise<Winner | undefined> => {
+  const response = await fetch(`${BASE_URL}/winners/${id}`);
+  if (response.status === 404) return undefined;
+  return response.json();
+};
+
+export const createWinner = async (
+  winner: Omit<Winner, 'id'> & { id: number }
+): Promise<Winner> => {
+  const response = await fetch(`${BASE_URL}/winners`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(winner),
+  });
+  if (!response.ok) throw new Error('Error creating winner');
+  return response.json();
+};
+
+export const updateWinner = async (id: number, winner: Omit<Winner, 'id'>): Promise<Winner> => {
+  const response = await fetch(`${BASE_URL}/winners/${id}`, {
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(winner),
+  });
+  if (!response.ok) throw new Error('Winner not found');
+  return response.json();
+};
+
+export const deleteWinner = async (id: number): Promise<void> => {
+  const response = await fetch(`${BASE_URL}/winners/${id}`, { method: 'DELETE' });
+  if (response.status === 404) console.log('Winner not found');
+};
+
+export const addWin = async (carID: number, raceTime: number): Promise<Winner> => {
+  const existingWinner: Winner | undefined = await getWinner(carID);
+  if (existingWinner) {
+    const updatedWinner: Winner = await updateWinner(carID, {
+      wins: existingWinner.wins + 1,
+      time: Math.min(existingWinner.time, raceTime),
+    });
+    return updatedWinner;
+  } else {
+    return await createWinner({
+      id: carID,
+      wins: 1,
+      time: raceTime,
+    });
+  }
+};
