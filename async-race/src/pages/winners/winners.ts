@@ -1,5 +1,4 @@
 import './winners.css';
-// import carSvg from '../../../assets/car.svg';
 
 import * as create from '../../builder/elements';
 
@@ -50,8 +49,6 @@ export class Winners {
   public async getWinners(): Promise<void> {
     const { winners, totalCount }: { winners: AsyncRaceAPI.Winner[]; totalCount: number } =
       await AsyncRaceAPI.getWinners({ _page: this.pageNumber, _limit: this.pageLimitWinners });
-    // console.log(winners);
-    // console.log(totalCount);
     this.winnersTotalQuantity = totalCount;
     this.winners = winners;
     this.title();
@@ -99,33 +96,13 @@ export class Winners {
     return create.section({
       id: 'table',
       tag: 'table',
-      children: [this.tableHead(), await this.tableBody()],
-    });
-  }
-
-  private tableHead(): HTMLElement {
-    return create.section({
-      tag: 'thead',
-      children: [
-        create.section({
-          tag: 'tr',
-          children: [
-            create.section({ tag: 'th', text: 'Number' }),
-            create.section({ tag: 'th', text: 'Car' }),
-            create.section({ tag: 'th', text: 'Name' }),
-            create.section({ tag: 'th', text: 'Wins' }),
-            create.section({ tag: 'th', text: 'Best time (seconds)' }),
-          ],
-        }),
-      ],
+      children: [tableHead(), await this.tableBody()],
     });
   }
 
   private async tableBody(): Promise<HTMLElement> {
-    console.log('body -', this.winners);
-
     if (!this.winners?.length) {
-      return this.createEmptyBody();
+      return createEmptyBody();
     }
 
     const getCar = async (winnerId: number): Promise<AsyncRaceAPI.Car> => {
@@ -151,25 +128,6 @@ export class Winners {
     return create.section({
       tag: 'tbody',
       children: rows,
-    });
-  }
-
-  private createEmptyBody(): HTMLElement {
-    return create.section({
-      tag: 'tbody',
-      children: [
-        create.section({
-          tag: 'tr',
-          children: [
-            create.section({
-              tag: 'td',
-              attributes: { colspan: '5' },
-              text: 'No winners yet',
-              styles: ['no-winners'],
-            }),
-          ],
-        }),
-      ],
     });
   }
 
@@ -228,5 +186,42 @@ export class Winners {
     );
   }
 }
+
+const tableHead = (): HTMLElement => {
+  return create.section({
+    tag: 'thead',
+    children: [
+      create.section({
+        tag: 'tr',
+        children: [
+          create.section({ tag: 'th', text: 'Number' }),
+          create.section({ tag: 'th', text: 'Car' }),
+          create.section({ tag: 'th', text: 'Name' }),
+          create.section({ tag: 'th', text: 'Wins' }),
+          create.section({ tag: 'th', text: 'Best time (seconds)' }),
+        ],
+      }),
+    ],
+  });
+};
+
+const createEmptyBody = (): HTMLElement => {
+  return create.section({
+    tag: 'tbody',
+    children: [
+      create.section({
+        tag: 'tr',
+        children: [
+          create.section({
+            tag: 'td',
+            attributes: { colspan: '5' },
+            text: 'No winners yet',
+            styles: ['no-winners'],
+          }),
+        ],
+      }),
+    ],
+  });
+};
 
 export const winners = new Winners();

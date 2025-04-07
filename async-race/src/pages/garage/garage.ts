@@ -5,7 +5,6 @@ import carSvg from '../../../assets/car.svg';
 import * as create from '../../builder/elements';
 
 import * as AsyncRaceAPI from '../../api/api';
-import { winners } from '../winners/winners';
 
 const defaultCarColor = '#00ff00';
 const CarNames: string[] = ['Ford', 'BMW', 'Mercedes', 'VW', 'Fiat', 'GM', 'Lincoln'];
@@ -28,7 +27,6 @@ export class Garage {
         animation?: Animation | undefined;
       }[]
     | undefined;
-  // private carsForRaceParam: (AsyncRaceAPI.Engine | undefined)[] | undefined;
   private haveWinner: boolean;
   private winnerDialog: HTMLDialogElement | undefined;
 
@@ -429,7 +427,6 @@ export class Garage {
   };
 
   private async startRace(): Promise<void> {
-    // this.carsForRaceParam = [];
     if (this.carsForRace) {
       for (const index in this.carsForRace) {
         const car = this.carsForRace[index].element;
