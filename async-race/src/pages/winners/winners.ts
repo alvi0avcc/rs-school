@@ -46,6 +46,17 @@ export class Winners {
     }
   }
 
+  public async getWinners(): Promise<void> {
+    const { winners, totalCount }: { winners: AsyncRaceAPI.Winner[]; totalCount: number } =
+      await AsyncRaceAPI.getWinners({ _page: this.pageNumber, _limit: this.pageLimitWinners });
+    // console.log(winners);
+    // console.log(totalCount);
+    this.winnersTotalQuantity = totalCount;
+    this.winners = winners;
+    this.title();
+    await this.table();
+  }
+
   private title(): HTMLHeadingElement {
     if (this.winnersQuantity) {
       this.winnersQuantity.textContent = `Winners (${this.winnersTotalQuantity || '0'})`;
@@ -70,7 +81,10 @@ export class Winners {
   }
 
   private async table(): Promise<HTMLElement> {
-    if (!this.tableWinners) {
+    if (this.tableWinners) {
+      this.tableWinners.replaceChildren();
+      this.tableWinners.append(await this.innerTable());
+    } else {
       this.tableWinners = create.section({
         id: 'table-container',
         tag: 'section',
@@ -180,16 +194,6 @@ export class Winners {
         create.section({ tag: 'td', text: winner.time.toFixed(2) }),
       ],
     });
-  }
-
-  private async getWinners(): Promise<void> {
-    const { winners, totalCount }: { winners: AsyncRaceAPI.Winner[]; totalCount: number } =
-      await AsyncRaceAPI.getWinners({ _page: this.pageNumber, _limit: this.pageLimitWinners });
-    console.log(winners);
-    console.log(totalCount);
-    this.winnersTotalQuantity = totalCount;
-    this.winners = winners;
-    this.title();
   }
 
   private pagination(): HTMLElement {

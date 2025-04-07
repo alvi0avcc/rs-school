@@ -455,7 +455,10 @@ export class Garage {
               this.winnerDialog.show();
 
               this.haveWinner = true;
-              if (id && time) AsyncRaceAPI.addWin(+id, +time);
+              if (id && time) {
+                AsyncRaceAPI.addWin(+id, +time);
+                AsyncRaceAPI.getWinners();
+              }
             }
           };
         }
