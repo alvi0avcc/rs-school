@@ -141,9 +141,9 @@ export class Winners {
     };
 
     const rows = await Promise.all(
-      this.winners.map(async (winner) => {
+      this.winners.map(async (winner, index) => {
         const car = await getCar(winner.id);
-        return this.createWinnerRow(winner, car);
+        return this.createWinnerRow(index, winner, car);
       })
     );
 
@@ -172,11 +172,15 @@ export class Winners {
     });
   }
 
-  private createWinnerRow(winner: AsyncRaceAPI.Winner, car: AsyncRaceAPI.Car): HTMLElement {
+  private createWinnerRow(
+    index: number,
+    winner: AsyncRaceAPI.Winner,
+    car: AsyncRaceAPI.Car
+  ): HTMLElement {
     return create.section({
       tag: 'tr',
       children: [
-        create.section({ tag: 'td', text: winner.id.toString() }),
+        create.section({ tag: 'td', text: `${(this.pageNumber - 1) * 10 + index + 1}` }),
         create.section({
           tag: 'td',
           children: [
@@ -206,18 +210,19 @@ export class Winners {
           create.button({
             id: `btn-prev`,
             text: 'PREV',
-            // callback: () => {
-            //   if (this.pageNumber > 1) this.pageNumber--;
-            //   this.setGarage();
-            // },
+            callback: () => {
+              if (this.pageNumber > 1) this.pageNumber--;
+              this.getWinners();
+            },
           }),
           create.button({
             id: `btn-next`,
             text: 'NEXT',
-            // callback: () => {
-            //   if (this.pageNumber < this.carTotalCount / this.pageLimitCars) this.pageNumber++;
-            //   this.setGarage();
-            // },
+            callback: () => {
+              if (this.pageNumber < this.winnersTotalQuantity / this.pageLimitWinners)
+                this.pageNumber++;
+              this.getWinners();
+            },
           }),
         ],
       })
