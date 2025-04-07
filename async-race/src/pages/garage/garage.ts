@@ -472,7 +472,7 @@ export class Garage {
   }
 }
 
-const getCarSVG = (car: AsyncRaceAPI.Car): HTMLElement => {
+export const getCarSVG = (car: AsyncRaceAPI.Car): HTMLElement => {
   return create.svg({
     id: `car-${car.id}`,
     viewBox: '0 0 250 200',

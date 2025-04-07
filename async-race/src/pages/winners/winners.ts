@@ -4,6 +4,7 @@ import './winners.css';
 import * as create from '../../builder/elements';
 
 import * as AsyncRaceAPI from '../../api/api';
+import { getCarSVG } from '../garage/garage';
 
 export class Winners {
   private main: HTMLElement | undefined;
@@ -187,9 +188,7 @@ export class Winners {
             create.section({
               tag: 'div',
               styles: ['car-icon'],
-              attributes: {
-                style: `background-color: ${car.color}`,
-              },
+              children: [getCarSVG(car)],
             }),
           ],
         }),
