@@ -22,11 +22,14 @@ export interface Winner {
   time: number;
 }
 
+export type Sort = 'id' | 'wins' | 'time';
+export type SortOrder = 'ASC' | 'DESC';
+
 export interface QueryParameters {
   _page?: number;
   _limit?: number;
-  _sort?: 'id' | 'wins' | 'time';
-  _order?: 'ASC' | 'DESC';
+  _sort?: Sort;
+  _order?: SortOrder;
 }
 
 export const getGarage = async (

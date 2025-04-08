@@ -15,6 +15,8 @@ export class Winners {
   private pageNumber: number;
   private pageLimitWinners: number;
   private winners: AsyncRaceAPI.Winner[] | undefined;
+  private sort: AsyncRaceAPI.Sort;
+  private sortOrder: AsyncRaceAPI.SortOrder;
 
   constructor() {
     this.main = undefined;
@@ -22,6 +24,8 @@ export class Winners {
     this.winnersTotalQuantity = 0;
     this.pageNumber = 1;
     this.pageLimitWinners = 10;
+    this.sort = 'id';
+    this.sortOrder = 'ASC';
   }
 
   public getView(): HTMLCollection {
@@ -48,7 +52,12 @@ export class Winners {
 
   public async getWinners(): Promise<void> {
     const { winners, totalCount }: { winners: AsyncRaceAPI.Winner[]; totalCount: number } =
-      await AsyncRaceAPI.getWinners({ _page: this.pageNumber, _limit: this.pageLimitWinners });
+      await AsyncRaceAPI.getWinners({
+        _page: this.pageNumber,
+        _limit: this.pageLimitWinners,
+        _sort: this.sort,
+        _order: this.sortOrder,
+      });
     this.winnersTotalQuantity = totalCount;
     this.winners = winners;
     this.page();
@@ -97,7 +106,7 @@ export class Winners {
     return create.section({
       id: 'table',
       tag: 'table',
-      children: [tableHead(), await this.tableBody()],
+      children: [this.tableHead(), await this.tableBody()],
     });
   }
 
@@ -186,25 +195,81 @@ export class Winners {
       })
     );
   }
-}
 
-const tableHead = (): HTMLElement => {
-  return create.section({
-    tag: 'thead',
-    children: [
-      create.section({
-        tag: 'tr',
-        children: [
-          create.section({ tag: 'th', text: 'Number' }),
-          create.section({ tag: 'th', text: 'Car' }),
-          create.section({ tag: 'th', text: 'Name' }),
-          create.section({ tag: 'th', text: 'Wins' }),
-          create.section({ tag: 'th', text: 'Best time (seconds)' }),
-        ],
-      }),
-    ],
-  });
-};
+  private tableHead = (): HTMLElement => {
+    const cellWins: HTMLElement = create.section({
+      tag: 'th',
+      text: 'Wins',
+      styles: ['th', 'sort'],
+      callback: () => {
+        this.toggleSortOrder('wins');
+      },
+    });
+
+    const cellTime: HTMLElement = create.section({
+      tag: 'th',
+      text: 'Best time (seconds)',
+      styles: ['th', 'sort'],
+      callback: () => this.toggleSortOrder('time'),
+    });
+
+    this.sortArrow(this.sort === 'wins' ? cellWins : cellTime);
+
+    return create.section({
+      tag: 'thead',
+      children: [
+        create.section({
+          tag: 'tr',
+          children: [
+            create.section({
+              tag: 'th',
+              text: 'Number',
+              styles: ['th', 'sort'],
+              callback: () => {
+                this.sort = 'id';
+                this.getWinners();
+              },
+            }),
+            create.section({ tag: 'th', text: 'Car' }),
+            create.section({ tag: 'th', text: 'Name' }),
+            cellWins,
+            cellTime,
+          ],
+        }),
+      ],
+    });
+  };
+
+  private sortArrow(element: HTMLElement): void {
+    if (this.sort === 'wins') element.textContent = `Wins ${this.sortOrder === 'ASC' ? '↓' : '↑'}`;
+    if (this.sort === 'time')
+      element.textContent = `Best time (seconds) ${this.sortOrder === 'ASC' ? '↓' : '↑'}`;
+  }
+
+  private toggleSortOrder(sort: AsyncRaceAPI.Sort): void {
+    if (this.sort === sort) {
+      switch (this.sortOrder) {
+        case 'ASC': {
+          this.sortOrder = 'DESC';
+          break;
+        }
+        case 'DESC': {
+          this.sortOrder = 'ASC';
+          break;
+        }
+        default: {
+          this.sortOrder = 'ASC';
+          break;
+        }
+      }
+    } else {
+      this.sort = sort;
+      this.sortOrder = 'ASC';
+    }
+
+    this.getWinners();
+  }
+}
 
 const createEmptyBody = (): HTMLElement => {
   return create.section({
