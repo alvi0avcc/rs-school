@@ -27,6 +27,10 @@ export class Garage {
         animation?: Animation | undefined;
       }[]
     | undefined;
+  private moveBtn: {
+    startBtn: HTMLButtonElement;
+    stopBtn: HTMLButtonElement;
+  }[] = [];
   private haveWinner: boolean;
   private winnerDialog: HTMLDialogElement | undefined;
 
@@ -84,6 +88,10 @@ export class Garage {
           text: 'RACE',
           styles: ['button', 'btn-race'],
           callback: () => {
+            for (const { startBtn, stopBtn } of this.moveBtn) {
+              startBtn.disabled = true;
+              stopBtn.disabled = false;
+            }
             this.startRace();
           },
         }),
@@ -94,6 +102,10 @@ export class Garage {
             for (const index in this.carsForRace) {
               const car = this.carsForRace[+index].element;
               const id: number | undefined = Number(car?.dataset.id) || undefined;
+              for (const { startBtn, stopBtn } of this.moveBtn) {
+                startBtn.disabled = false;
+                stopBtn.disabled = true;
+              }
               if (id) await this.carAnimatedStop(+index, id);
             }
           },
@@ -253,6 +265,7 @@ export class Garage {
 
   private carsBlock(cars: AsyncRaceAPI.Car[]): HTMLElement[] {
     this.carsForRace = [];
+    this.moveBtn = [];
     return cars.map((car: AsyncRaceAPI.Car, index: number) => {
       const carSVG: HTMLElement = getCarSVG(car);
 
@@ -345,6 +358,8 @@ export class Garage {
         this.carAnimatedStop(index, carID);
       },
     });
+    this.moveBtn.push({ startBtn: buttonA, stopBtn: buttonB });
+
     return create.section({
       tag: 'section',
       id: `move-btn-${index} `,
