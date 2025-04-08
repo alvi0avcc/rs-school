@@ -51,6 +51,7 @@ export class Winners {
       await AsyncRaceAPI.getWinners({ _page: this.pageNumber, _limit: this.pageLimitWinners });
     this.winnersTotalQuantity = totalCount;
     this.winners = winners;
+    this.page();
     this.title();
     await this.table();
   }
