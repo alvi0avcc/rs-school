@@ -208,26 +208,26 @@ export class Garage {
 
     this.setCarQuantity(totalCount);
 
+    const previousButton: HTMLButtonElement = create.button({
+      id: `btn-prev`,
+      text: 'PREV',
+      callback: () => {
+        if (this.pageNumber > 1) this.pageNumber--;
+        this.setGarage();
+      },
+    });
+    const nextButton: HTMLButtonElement = create.button({
+      id: `btn-next`,
+      text: 'NEXT',
+      callback: () => {
+        if (this.pageNumber < this.carTotalCount / this.pageLimitCars) this.pageNumber++;
+        this.setGarage();
+      },
+    });
+
     const paginationBlock: HTMLElement = create.section({
       tag: 'section',
-      children: [
-        create.button({
-          id: `btn-prev`,
-          text: 'PREV',
-          callback: () => {
-            if (this.pageNumber > 1) this.pageNumber--;
-            this.setGarage();
-          },
-        }),
-        create.button({
-          id: `btn-next`,
-          text: 'NEXT',
-          callback: () => {
-            if (this.pageNumber < this.carTotalCount / this.pageLimitCars) this.pageNumber++;
-            this.setGarage();
-          },
-        }),
-      ],
+      children: [previousButton, nextButton],
     });
 
     if (this.garage) {
