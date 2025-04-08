@@ -325,24 +325,31 @@ export class Garage {
   }
 
   private sectionMoveBtn(index: number, carID: number): HTMLElement {
+    const buttonA: HTMLButtonElement = create.button({
+      id: `btn-start-${index}`,
+      text: 'A',
+      attributes: { 'data-index': `${index} `, 'data-car-id': `${carID} ` },
+      callback: () => {
+        buttonA.disabled = true;
+        buttonB.disabled = false;
+        this.carAnimatedStart(index, carID);
+      },
+    });
+    const buttonB: HTMLButtonElement = create.button({
+      id: `btn-start-${index} `,
+      text: 'B',
+      attributes: { 'data-index': `${index} `, 'data-car-id': `${carID}`, disabled: 'true' },
+      callback: () => {
+        buttonA.disabled = false;
+        buttonB.disabled = true;
+        this.carAnimatedStop(index, carID);
+      },
+    });
     return create.section({
       tag: 'section',
       id: `move-btn-${index} `,
       styles: ['move-btn'],
-      children: [
-        create.button({
-          id: `btn-start-${index}`,
-          text: 'A',
-          attributes: { 'data-index': `${index} `, 'data-car-id': `${carID} ` },
-          callback: () => this.carAnimatedStart(index, carID),
-        }),
-        create.button({
-          id: `btn-start-${index} `,
-          text: 'B',
-          attributes: { 'data-index': `${index} `, 'data-car-id': `${carID} ` },
-          callback: () => this.carAnimatedStop(index, carID),
-        }),
-      ],
+      children: [buttonA, buttonB],
     });
   }
 
