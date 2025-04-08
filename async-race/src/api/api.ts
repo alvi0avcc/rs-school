@@ -71,8 +71,14 @@ export const createCar = async (car: Omit<Car, 'id'>): Promise<Car> => {
 };
 
 export const deleteCar = async (id: number): Promise<void> => {
-  const response = await fetch(`${BASE_URL}/garage/${id}`, { method: 'DELETE' });
-  if (!response.ok) throw new Error('Car not found');
+  try {
+    const response = await fetch(`${BASE_URL}/garage/${id}`, { method: 'DELETE' });
+    await deleteWinner(id);
+
+    if (!response.ok) throw new Error('Car not found');
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 export const getCar = async (id: number): Promise<Car> => {
@@ -175,6 +181,7 @@ export const getWinner = async (id: number): Promise<Winner | undefined> => {
     if (!response.ok) {
       throw new Error('Error: Winner not found');
     }
+
     return response.json();
   } catch {
     return undefined;
@@ -204,8 +211,12 @@ export const updateWinner = async (id: number, winner: Omit<Winner, 'id'>): Prom
 };
 
 export const deleteWinner = async (id: number): Promise<void> => {
-  const response = await fetch(`${BASE_URL}/winners/${id}`, { method: 'DELETE' });
-  if (response.status === 404) console.log('Winner not found');
+  try {
+    const response = await fetch(`${BASE_URL}/winners/${id}`, { method: 'DELETE' });
+    if (!response.ok) throw new Error('Winner not found');
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 export const addWin = async (carID: number, raceTime: number): Promise<Winner> => {
