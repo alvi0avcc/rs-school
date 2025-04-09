@@ -371,8 +371,7 @@ export class Garage {
       attributes: { 'data-index': `${index} `, 'data-car-id': `${carID} ` },
       callback: () => {
         buttonA.disabled = true;
-        buttonB.disabled = false;
-        this.carAnimatedStart(index, carID);
+        this.carAnimatedStart(index, carID, false, buttonB);
       },
     });
     const buttonB: HTMLButtonElement = create.button({
@@ -380,9 +379,8 @@ export class Garage {
       text: 'B',
       attributes: { 'data-index': `${index} `, 'data-car-id': `${carID}`, disabled: 'true' },
       callback: () => {
-        buttonA.disabled = false;
         buttonB.disabled = true;
-        this.carAnimatedStop(index, carID);
+        this.carAnimatedStop(index, carID, buttonA);
       },
     });
     this.moveBtn.push({ startBtn: buttonA, stopBtn: buttonB });
@@ -398,11 +396,12 @@ export class Garage {
   private carAnimatedStart = async (
     index: number,
     carID: number,
-    waitStart = false
+    waitStart = false,
+    activateStopButton?: HTMLButtonElement
   ): Promise<void> => {
     if (carID) {
       const response = await AsyncRaceAPI.controlEngine(carID, 'started');
-      console.log(response);
+      if (activateStopButton) activateStopButton.disabled = false;
       if (
         'velocity' in response &&
         'distance' in response &&
@@ -432,16 +431,21 @@ export class Garage {
     }
   };
 
-  private carAnimatedStop = async (index: number, carID: number): Promise<void> => {
+  private carAnimatedStop = async (
+    index: number,
+    carID: number,
+    activateStartButton?: HTMLButtonElement
+  ): Promise<void> => {
     if (carID) {
       await AsyncRaceAPI.controlEngine(carID, 'stopped').then(() => {
         if (this.carsForRace && this.carsForRace[index].element) {
-          console.log('stop');
           const allAnimations = this.carsForRace[index].element.getAnimations();
           for (const anim of allAnimations) anim.cancel();
         }
       });
     }
+    if (activateStartButton) activateStartButton.disabled = false;
+
     this.raceDialog.close();
   };
 
