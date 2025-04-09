@@ -35,8 +35,8 @@ export class Garage {
   private winnerDialog: HTMLDialogElement | undefined;
   private raceDialog: HTMLDialogElement;
   private raceStopped: boolean;
-  private raceButton: HTMLButtonElement;
-  private resetButton: HTMLButtonElement;
+  private raceButton: HTMLButtonElement | undefined;
+  private resetButton: HTMLButtonElement | undefined;
 
   constructor() {
     this.main = undefined;
@@ -51,8 +51,6 @@ export class Garage {
       styles: ['dialog', 'dialog-race'],
     });
     this.raceStopped = false;
-    this.raceButton = create.button({});
-    this.resetButton = create.button({});
     this.initBtnRaceReset();
   }
 
@@ -97,10 +95,7 @@ export class Garage {
         this.raceDialogModal(true);
         this.toggleButtonMove(true, true);
         if (this.raceButton) this.raceButton.disabled = true;
-        this.startRace().then(() => {
-          if (this.raceButton) this.raceButton.disabled = false;
-          this.toggleButtonMove(true);
-        });
+        this.startRace();
       },
     });
 
@@ -133,18 +128,17 @@ export class Garage {
   }
 
   private sectionManagement(): HTMLElement {
-    return create.section({
+    const section: HTMLElement = create.section({
       id: 'section-management',
       tag: 'section',
       styles: ['section-management'],
-      children: [
-        ...this.sectionManagementCreateCar(),
-        ...this.sectionManagementUpdateCar(),
-        this.raceButton,
-        this.resetButton,
-        this.btnGenerateHundredCars(),
-      ],
+      children: [...this.sectionManagementCreateCar(), ...this.sectionManagementUpdateCar()],
     });
+
+    if (this.raceButton && this.resetButton) section.append(this.raceButton, this.resetButton);
+    section.append(this.btnGenerateHundredCars());
+
+    return section;
   }
 
   private toggleButtonMove(startStop: boolean, all?: boolean): void {
@@ -528,6 +522,9 @@ export class Garage {
               this.winnerDialog.show();
 
               this.haveWinner = true;
+              if (this.raceButton) this.raceButton.disabled = false;
+              this.toggleButtonMove(true);
+
               if (id && time) {
                 AsyncRaceAPI.addWin(+id, +time);
                 AsyncRaceAPI.getWinners();
@@ -537,11 +534,16 @@ export class Garage {
         }
       }
 
+      this.carCheckEngineAll();
+    }
+  }
+
+  private carCheckEngineAll(): void {
+    if (this.carsForRace)
       for (const [index, car] of this.carsForRace.entries()) {
         const id: string | undefined = car.element?.dataset.id || undefined;
         if (id) this.carCheckEngine(index, +id);
       }
-    }
   }
 }
 
