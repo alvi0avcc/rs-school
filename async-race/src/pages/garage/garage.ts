@@ -33,6 +33,8 @@ export class Garage {
   }[] = [];
   private haveWinner: boolean;
   private winnerDialog: HTMLDialogElement | undefined;
+  private raceDialog: HTMLDialogElement;
+  private raceStopped: boolean;
 
   constructor() {
     this.main = undefined;
@@ -41,6 +43,12 @@ export class Garage {
     this.carTotalCount = 0;
     this.haveWinner = false;
     this.viewportWidth = window.innerWidth;
+    this.raceDialog = create.dialog({
+      id: 'race-dialog',
+      text: 'Preparing for race. Please wait',
+      styles: ['dialog', 'dialog-race'],
+    });
+    this.raceStopped = false;
   }
 
   public getView(): HTMLCollection {
@@ -76,7 +84,43 @@ export class Garage {
     }
   }
 
+  private raceDialogModal(startStop: boolean): void {
+    this.raceDialog.textContent = startStop
+      ? 'Preparing for race. Please wait'
+      : 'Stopping the cars. Please wait';
+    document.body.append(this.raceDialog);
+    this.raceDialog.showModal();
+  }
+
   private sectionManagement(): HTMLElement {
+    const raceButton: HTMLElement = create.button({
+      text: 'RACE',
+      styles: ['button', 'btn-race'],
+      callback: () => {
+        this.raceDialogModal(true);
+        this.toggleButtonMove(true);
+
+        this.startRace();
+      },
+    });
+    const resetButton: HTMLElement = create.button({
+      text: 'RESET',
+      styles: ['button', 'btn-reset'],
+      callback: async () => {
+        this.raceStopped = true;
+
+        for (const index in this.carsForRace) {
+          const car = this.carsForRace[+index].element;
+          const id: number | undefined = Number(car?.dataset.id) || undefined;
+
+          this.raceDialogModal(false);
+          this.toggleButtonMove(false);
+
+          if (id) await this.carAnimatedStop(+index, id);
+        }
+      },
+    });
+
     return create.section({
       id: 'section-management',
       tag: 'section',
@@ -84,35 +128,18 @@ export class Garage {
       children: [
         ...this.sectionManagementCreateCar(),
         ...this.sectionManagementUpdateCar(),
-        create.button({
-          text: 'RACE',
-          styles: ['button', 'btn-race'],
-          callback: () => {
-            for (const { startBtn, stopBtn } of this.moveBtn) {
-              startBtn.disabled = true;
-              stopBtn.disabled = false;
-            }
-            this.startRace();
-          },
-        }),
-        create.button({
-          text: 'RESET',
-          styles: ['button', 'btn-reset'],
-          callback: async () => {
-            for (const index in this.carsForRace) {
-              const car = this.carsForRace[+index].element;
-              const id: number | undefined = Number(car?.dataset.id) || undefined;
-              for (const { startBtn, stopBtn } of this.moveBtn) {
-                startBtn.disabled = false;
-                stopBtn.disabled = true;
-              }
-              if (id) await this.carAnimatedStop(+index, id);
-            }
-          },
-        }),
+        raceButton,
+        resetButton,
         this.btnGenerateHundredCars(),
       ],
     });
+  }
+
+  private toggleButtonMove(startStop: boolean): void {
+    for (const { startBtn, stopBtn } of this.moveBtn) {
+      startBtn.disabled = startStop;
+      stopBtn.disabled = !startStop;
+    }
   }
 
   private btnGenerateHundredCars(): HTMLElement {
@@ -415,6 +442,7 @@ export class Garage {
         }
       });
     }
+    this.raceDialog.close();
   };
 
   private carCheckEngine = async (index: number, id: number): Promise<void> => {
@@ -450,6 +478,7 @@ export class Garage {
 
   private async startRace(): Promise<void> {
     if (this.carsForRace) {
+      this.raceStopped = false;
       for (const index in this.carsForRace) {
         const car = this.carsForRace[index].element;
         if (car) {
@@ -461,9 +490,11 @@ export class Garage {
       for (const car of this.carsForRace) {
         if (car.animation) {
           car.animation.play();
+
+          this.raceDialog.close();
+
           car.animation.onfinish = (): void => {
-            console.log('finish');
-            if (!this.haveWinner && this.main) {
+            if (!this.raceStopped && !this.haveWinner && this.main) {
               const id: string | undefined = car.element?.dataset.id || undefined;
               const name: string | undefined = car.element?.dataset.name || undefined;
               const time: string | undefined = car.element?.dataset.time || undefined;

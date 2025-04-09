@@ -92,3 +92,17 @@
   justify-self: center;
   top: 45%;
 }
+
+.dialog.dialog-race {
+  position: fixed;
+  color: yellow;
+  font-size: 2rem;
+  text-shadow: red 1px 0 10px, red -1px 0 10px, red 0 1px 10px, red 0 -1px 10px;
+  border: none;
+  justify-self: center;
+  top: 45%;
+}
+
+.dialog-race::backdrop {
+  background: rgba(0, 0, 0, 0.7);
+}
