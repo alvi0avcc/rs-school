@@ -51,36 +51,9 @@ export class Garage {
       styles: ['dialog', 'dialog-race'],
     });
     this.raceStopped = false;
-
-    this.raceButton = create.button({
-      text: 'RACE',
-      styles: ['button', 'btn-race'],
-      callback: () => {
-        this.raceDialogModal(true);
-        this.toggleButtonMove(true);
-        this.raceButton.disabled = true;
-        this.startRace().then(() => (this.raceButton.disabled = false));
-      },
-    });
-
-    this.resetButton = create.button({
-      text: 'RESET',
-      styles: ['button', 'btn-reset'],
-      callback: async () => {
-        this.raceStopped = true;
-
-        for (const index in this.carsForRace) {
-          const car = this.carsForRace[+index].element;
-          const id: number | undefined = Number(car?.dataset.id) || undefined;
-
-          this.raceDialogModal(false);
-          this.toggleButtonMove(false);
-
-          if (id) await this.carAnimatedStop(+index, id);
-        }
-        this.raceButton.disabled = false;
-      },
-    });
+    this.raceButton = create.button({});
+    this.resetButton = create.button({});
+    this.initBtnRaceReset();
   }
 
   public getView(): HTMLCollection {
@@ -116,6 +89,41 @@ export class Garage {
     }
   }
 
+  private initBtnRaceReset(): void {
+    this.raceButton = create.button({
+      text: 'RACE',
+      styles: ['button', 'btn-race'],
+      callback: () => {
+        this.raceDialogModal(true);
+        this.toggleButtonMove(true, true);
+        if (this.raceButton) this.raceButton.disabled = true;
+        this.startRace().then(() => {
+          if (this.raceButton) this.raceButton.disabled = false;
+          this.toggleButtonMove(true);
+        });
+      },
+    });
+
+    this.resetButton = create.button({
+      text: 'RESET',
+      styles: ['button', 'btn-reset'],
+      callback: async () => {
+        this.raceStopped = true;
+
+        for (const index in this.carsForRace) {
+          const car = this.carsForRace[+index].element;
+          const id: number | undefined = Number(car?.dataset.id) || undefined;
+
+          this.raceDialogModal(false);
+          this.toggleButtonMove(false);
+
+          if (id) await this.carAnimatedStop(+index, id);
+        }
+        if (this.raceButton) this.raceButton.disabled = false;
+      },
+    });
+  }
+
   private raceDialogModal(startStop: boolean): void {
     this.raceDialog.textContent = startStop
       ? 'Preparing for race. Please wait'
@@ -125,34 +133,6 @@ export class Garage {
   }
 
   private sectionManagement(): HTMLElement {
-    // const raceButton: HTMLButtonElement = create.button({
-    //   text: 'RACE',
-    //   styles: ['button', 'btn-race'],
-    //   callback: () => {
-    //     this.raceDialogModal(true);
-    //     this.toggleButtonMove(true);
-    //     raceButton.disabled = true;
-    //     this.startRace();
-    //   },
-    // });
-    // const resetButton: HTMLElement = create.button({
-    //   text: 'RESET',
-    //   styles: ['button', 'btn-reset'],
-    //   callback: async () => {
-    //     this.raceStopped = true;
-
-    //     for (const index in this.carsForRace) {
-    //       const car = this.carsForRace[+index].element;
-    //       const id: number | undefined = Number(car?.dataset.id) || undefined;
-
-    //       this.raceDialogModal(false);
-    //       this.toggleButtonMove(false);
-
-    //       if (id) await this.carAnimatedStop(+index, id);
-    //     }
-    //   },
-    // });
-
     return create.section({
       id: 'section-management',
       tag: 'section',
@@ -167,10 +147,15 @@ export class Garage {
     });
   }
 
-  private toggleButtonMove(startStop: boolean): void {
+  private toggleButtonMove(startStop: boolean, all?: boolean): void {
     for (const { startBtn, stopBtn } of this.moveBtn) {
-      startBtn.disabled = startStop;
-      stopBtn.disabled = !startStop;
+      if (all) {
+        startBtn.disabled = startStop;
+        stopBtn.disabled = startStop;
+      } else {
+        startBtn.disabled = startStop;
+        stopBtn.disabled = !startStop;
+      }
     }
   }
 
@@ -484,7 +469,7 @@ export class Garage {
   private carCheckEngine = async (index: number, id: number): Promise<void> => {
     const response = await AsyncRaceAPI.controlEngine(id, 'drive');
     if ('success' in response && response.success === false) {
-      AsyncRaceAPI.controlEngine(id, 'stopped');
+      // AsyncRaceAPI.controlEngine(id, 'stopped');
       if (this.carsForRace && this.carsForRace[index].animation)
         this.carsForRace[index].animation.pause();
       if (this.carsForRace && this.carsForRace[index].element)
@@ -530,8 +515,10 @@ export class Garage {
           this.raceDialog.close();
 
           car.animation.onfinish = (): void => {
+            const id: string | undefined = car.element?.dataset.id || undefined;
+            if (id) AsyncRaceAPI.controlEngine(+id, 'stopped');
+
             if (!this.raceStopped && !this.haveWinner && this.main) {
-              const id: string | undefined = car.element?.dataset.id || undefined;
               const name: string | undefined = car.element?.dataset.name || undefined;
               const time: string | undefined = car.element?.dataset.time || undefined;
               this.winnerDialog = create.dialog({
@@ -552,7 +539,7 @@ export class Garage {
 
       for (const [index, car] of this.carsForRace.entries()) {
         const id: string | undefined = car.element?.dataset.id || undefined;
-        if (id) await this.carCheckEngine(index, +id);
+        if (id) this.carCheckEngine(index, +id);
       }
     }
   }
