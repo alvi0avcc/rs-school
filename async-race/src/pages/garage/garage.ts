@@ -419,7 +419,7 @@ export class Garage {
         this.carsForRace &&
         this.carsForRace[index]
       ) {
-        const duration: number = this.viewportWidth / response.velocity; //sec
+        const duration: number = (this.viewportWidth - 130) / response.velocity; //sec
         this.carsForRace[index].element?.setAttribute('data-time', `${duration}`);
         this.carsForRace[index].animation = this.carsForRace[index].element?.animate(
           [
