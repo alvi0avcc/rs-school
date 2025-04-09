@@ -66,7 +66,7 @@ export class Garage {
           this.winnerDialog.close();
           this.winnerDialog.remove();
           this.winnerDialog = undefined;
-          this.haveWinner = false;
+          // this.haveWinner = false;
         }
       });
     }
@@ -493,6 +493,8 @@ export class Garage {
 
   private async startRace(): Promise<void> {
     if (this.carsForRace) {
+      this.haveWinner = false;
+
       this.raceStopped = false;
       for (const index in this.carsForRace) {
         const car = this.carsForRace[index].element;
