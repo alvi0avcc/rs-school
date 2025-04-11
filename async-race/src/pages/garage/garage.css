@@ -5,8 +5,7 @@
 .section-management{
   display: grid;
   grid-template-columns: 100px 100px 40px 100px;
-  row-gap: 10px;
-  column-gap: 5px;
+  gap: 10px 5px;
 }
 
 .section-management .car-name{
@@ -49,8 +48,8 @@
 .section-race{
   display: flex;
   height: 50px;
-  border-bottom-style: dashed;
   margin-bottom: 10px;
+  border-bottom-style: dashed;
 }
 
 .move-btn {
@@ -58,8 +57,8 @@
 }
 
 .move-btn .button{
+  color: #0f0;
   background-color: transparent;
-  color: #00ff00;
 }
 
 .car{
@@ -71,38 +70,41 @@
   height: 100%;
 }
 
-.car{
-  height: 100%;
-}
-
 .flag {
   align-self: flex-end;
+  height: 100%;
   margin-right: 50px;
   margin-left: auto;
-  height: 100%;
 }
 
 .dialog{
   position: fixed;
-  color: yellow;
-  font-size: 2rem;
-  background-color: transparent;
-  text-shadow: red 1px 0 10px, red -1px 0 10px, red 0 1px 10px, red 0 -1px 10px ;
-  border: none;
-  justify-self: center;
   top: 45%;
+
+  justify-self: center;
+
+  border: none;
+
+  font-size: 2rem;
+  color: yellow;
+  text-shadow: red 1px 0 10px, red -1px 0 10px, red 0 1px 10px, red 0 -1px 10px ;
+
+  background-color: transparent;
 }
 
 .dialog.dialog-race {
   position: fixed;
-  color: yellow;
-  font-size: 2rem;
-  text-shadow: red 1px 0 10px, red -1px 0 10px, red 0 1px 10px, red 0 -1px 10px;
-  border: none;
-  justify-self: center;
   top: 45%;
+
+  justify-self: center;
+
+  border: none;
+
+  font-size: 2rem;
+  color: yellow;
+  text-shadow: red 1px 0 10px, red -1px 0 10px, red 0 1px 10px, red 0 -1px 10px;
 }
 
 .dialog-race::backdrop {
-  background: rgba(0, 0, 0, 0.7);
+  background: rgb(0 0 0 / 70%);
 }
