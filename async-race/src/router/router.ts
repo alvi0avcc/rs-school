@@ -37,7 +37,6 @@ export class Router {
 
   private async handleRouteChange(): Promise<void> {
     const path = getCurrentHashPath();
-    console.log(path);
 
     const matchingRoute = this.routes.find((route) => route.path === path);
 

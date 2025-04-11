@@ -66,7 +66,6 @@ export class Garage {
           this.winnerDialog.close();
           this.winnerDialog.remove();
           this.winnerDialog = undefined;
-          // this.haveWinner = false;
         }
       });
     }
@@ -362,7 +361,6 @@ export class Garage {
           text: 'REMOVE',
           attributes: { 'data-id': `${car.id}` },
           callback: (event: Event) => {
-            console.dir(event.target);
             const id: number | undefined = checkEventTargetId(event);
             if (id)
               AsyncRaceAPI.deleteCar(id).then(() => {
@@ -464,7 +462,6 @@ export class Garage {
   private carCheckEngine = async (index: number, id: number): Promise<void> => {
     const response = await AsyncRaceAPI.controlEngine(id, 'drive');
     if ('success' in response && response.success === false) {
-      // AsyncRaceAPI.controlEngine(id, 'stopped');
       if (this.carsForRace && this.carsForRace[index].animation)
         this.carsForRace[index].animation.pause();
       if (this.carsForRace && this.carsForRace[index].element)

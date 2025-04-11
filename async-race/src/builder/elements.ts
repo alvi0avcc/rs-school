@@ -431,14 +431,6 @@ export const li = (
   return li;
 };
 
-// export const dialog = (id = 'dialog'): HTMLDialogElement => {
-//   const dialog: HTMLDialogElement = document.createElement('dialog');
-//   dialog.id = id;
-//   dialog.textContent = '';
-//   dialog.classList.add('dialog');
-//   return dialog;
-// };
-
 export const dialog = ({
   id = undefined,
   text = '',
