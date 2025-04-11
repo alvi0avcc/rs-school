@@ -7,6 +7,7 @@ import * as create from '../../builder/elements';
 import * as AsyncRaceAPI from '../../api/api';
 
 const defaultCarColor = '#00ff00';
+const carStopOffsetRight = 130; //px
 const CarNames: string[] = ['Ford', 'BMW', 'Mercedes', 'VW', 'Fiat', 'GM', 'Lincoln'];
 const CarModels: string[] = ['Mustang', 'X6', 'C-Class', 'Golf', 'Panda', 'Corvette', 'Navigator'];
 
@@ -23,9 +24,9 @@ export class Garage {
   private viewportWidth: number;
   private carsForRace:
     | {
-        element: SVGElement | undefined;
-        animation?: Animation | undefined;
-      }[]
+      element: SVGElement | undefined;
+      animation?: Animation | undefined;
+    }[]
     | undefined;
   private moveBtn: {
     startBtn: HTMLButtonElement;
@@ -424,7 +425,7 @@ export class Garage {
           [
             { transform: 'translateX(0)', offset: 0 },
             {
-              transform: `translateX(${this.viewportWidth - 130}px)`,
+              transform: `translateX(${this.viewportWidth - carStopOffsetRight}px)`,
               offset: 1,
             },
           ],
