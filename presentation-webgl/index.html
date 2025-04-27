@@ -1,0 +1,286 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>reveal.js</title>
+
+		<link rel="stylesheet" href="reset.css">
+		<link rel="stylesheet" href="reveal.css">
+		<link rel="stylesheet" href="theme/black.css">
+
+		<!-- Theme used for syntax highlighted code -->
+		<link rel="stylesheet" href="plugin/highlight/monokai.css">
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+				<section>
+					<h1>WebGL</h1>
+					<p>Этой статьёй хочется облегчить порог вхождения в чистый WebGL, дать начальное представление и подсказать, куда
+						двигаться
+						дальше.</p>
+				</section>
+				
+				<section>
+					<section>
+						<h2>WebGL (Web Graphics Library)</h2>
+						<p>программная библиотека для языка JavaScript</p>
+						<a href="https://www.khronos.org/">https://www.khronos.org/</a>
+					</section>
+				
+					<section>
+						<h2>https://www.khronos.org/</h2>
+						<img src="assets/kronos.png">
+					</section>
+				</section>
+				
+				<section>
+					<h1>WebGL</h1>
+					<p>WebGL, в отличие от Javascript, имеет высокий порог вхождения, его до сих пор мало кто использует, а ещё меньше
+						тех, кто
+						об этом пишет.</p>
+					<p><a href="https://developer.mozilla.org/ru/docs/Web/API/WebGL_API">https://developer.mozilla.org</a></p>
+				</section>
+				
+				<section>
+					<h1>WebGL</h1>
+					<p>Технология WebGL позволяет рисовать графику в браузере, используя возможности видеокарты</p>
+					<p><a href="https://www.youtube.com/watch?v=-P28LKWTzrI">Mythbusters Demo GPU versus CPU</a></p>
+				</section>
+				
+				<section>
+					<section>
+						<h2>WebGL</h2>
+						<p>Если вы думаете, что WebGL рисует 3D, вы ошибаетесь. WebGL ничего не знает о 3D</p>
+						<p>всё что он умеет делать, это рисовать треугольники</p>
+					</section>
+				
+					<section>
+						<h3>WebGL - Как нарисовать треугольник</h3>
+						<p>В отличие от OpenGL, в WebGL для отрисовки используются только шейдеры.</p>
+						<p>Шейдер — это программа, выполняемая на видеокарте и использующая язык GLSL.</p>
+					</section>
+				
+					<section>
+						<h3>WebGL - шейдеры</h3>
+						<p>Всего есть два вида шейдеров: вершинный и фрагментый</p>
+						<p>Если вершинный шейдер определяет геометрию фигуры, то фрагментный — её цвет</p>
+						<img src="assets/triangles.png" alt="">
+					</section>
+				
+				</section>
+				
+				<section>
+					<section>
+
+						<h2>GLSL</h2>
+						<p>OpenGL Shading Language</p>
+						<p>язык высокого уровня для программирования шейдеров.</p>
+					</section>
+
+						<section>
+						<p>Рассмотрим код шейдеров для треугольника:</p>
+				
+						<p>Пример вершинного шейдера:</p>
+						<pre><code data-trim data-noescape data-line-numbers>
+				              attribute vec3 a_position;
+				              attribute vec3 a_color;
+				              uniform vec3 u_position;
+				              varying vec3 v_color;
+				              
+				              void main(void) {
+				              v_color = a_color;
+				              gl_Position = vec4(u_position + a_position, 1.0);
+				              }
+				            </code></pre>
+					</section>
+
+						<section>
+
+						<p>Пример фрагментного шейдера:</p>
+				
+						<pre><code data-trim data-noescape data-line-numbers>
+				                        precision mediump float;
+				                        varying vec3 v_сolor;
+				                        
+				                        void main(void) {
+				                        gl_FragColor = vec4(v_color.rgb, 1.0);
+				                        }
+				          </code></pre>
+				</section>
+
+				<section>
+				
+					<p>Шейдеры имеют три типа переменных:</p>
+				
+					<ul>
+						<li>attributes</li>
+						<li>uniforms</li>
+						<li>varying</li>
+					</ul>
+				</section>
+
+				<section>
+				
+					<p>Значения varying переменных внутри треугольника вычисляются
+					на основе значений этих переменных в вершинах</p>
+				
+					<img src="assets/varying.png" alt="">
+
+				</section>
+
+
+				</section>
+				
+				<section>
+				
+					<p>получим контекст WebGL</p>
+				
+					<pre><code data-trim data-noescape data-line-numbers>
+						var gl = canvas.getContext(‘webgl’);
+					</code></pre>
+
+					<pre><code data-trim data-noescape data-line-numbers>
+												var vertexShader = gl.createShader(gl.VERTEX_SHADER);
+												gl.shaderSource(
+													vertexShader,
+													document.getElementById('vertexShader').text);
+												gl.compileShader(vertexShader);
+												
+												var fragmentShader = gl.createShader(gl.FRAGMENT_SHADER);
+												gl.shaderSource(
+													fragmentShader,
+													document.getElementById('fragmentShader').text);
+												gl.compileShader(fragmentShader);
+											</code></pre>
+
+											<pre><code data-trim data-noescape data-line-numbers>
+																		var program = gl.createProgram();
+																		gl.attachShader(program, vertexShader);
+																		gl.attachShader(program, fragmentShader);
+																		gl.linkProgram(program);
+																	</code></pre>
+				
+				</section>
+
+				<section>
+					<section>
+						<p>uniform-переменные связываются напрямую с переменными из js</p>
+					
+						<ul>
+							<li>буфер вершин</li>
+							<li>буфер цветов</li>
+						</ul>
+						
+						<br>
+
+						<img src="assets/buffer.png" alt="">
+						
+					</section>
+
+						<section>
+							<p>особенностей буфера </p>
+						
+							<ul>
+								<li>данные в буфер передаются одним массивом без вложенности</li>
+								<li>передаваться должны только типизированные массивы</li>
+								<li>какой буфер будет использоваться</li>
+							</ul>
+						
+							<pre><code data-trim data-noescape data-line-numbers>
+								var vertexBuffer = gl.createBuffer();
+								var vertices = [0, 0, 0, 0.5, 1, 0, 1, 0, 0];
+								gl.bindBuffer(gl.ARRAY_BUFFER, vertexBuffer);
+								gl.bufferData(
+									gl.ARRAY_BUFFER,
+									new Float32Array(vertices),
+									gl.STATIC_DRAW
+									);
+							</code></pre>
+						
+						</section>
+
+						<section>
+							<p>нарисовать треугольник</p>
+						
+							<pre><code data-trim data-noescape data-line-numbers>
+													// Получим местоположение переменных в программе шейдеров
+													var uPosition = gl.getUniformLocation(program, 'u_position');
+													var aPosition = gl.getAttribLocation(program, 'a_position');
+													var aColor = gl.getAttribLocation(program, 'a_color');
+													
+													// Укажем какую шейдерную программу мы намерены далее использовать
+													gl.useProgram(program);
+													
+													// Передаем в uniform-переменную положение треугольника
+													gl.uniform3fv(uPosition, [0, 0, 0]);
+													
+													// Связываем данные цветов
+													gl.bindBuffer(gl.ARRAY_BUFFER, colorBuffer);
+													gl.enableVertexAttribArray(aColor);
+													// Вторым аргументом передаём размерность, RGB имеет 3 компоненты
+													gl.vertexAttribPointer(aColor, 3, gl.FLOAT, false, 0, 0);
+													
+													// И вершин
+													gl.bindBuffer(gl.ARRAY_BUFFER, vertexBuffer);
+													gl.enableVertexAttribArray(aPosition);
+													gl.vertexAttribPointer(aPosition, 3, gl.FLOAT, false, 0, 0);
+													
+													// Очищаем сцену, закрашивая её в белый цвет
+													gl.clearColor(1.0, 1.0, 1.0, 1.0);
+													gl.clear(gl.COLOR_BUFFER_BIT);
+													
+													// Рисуем треугольник
+													// Третьим аргументом передаём количество вершин геометрии
+													gl.drawArrays(gl.TRIANGLES, 0, 3);
+							</code></pre>
+						
+						</section>
+
+						<section>
+							<p>Наш треугольник готов</p>
+						
+							
+						<img src="assets/triangle-result.png" alt="">
+							<br>
+
+
+						<a href="https://jsfiddle.net/Trufi/r36cw20t/">Полный код примера можно
+							посмотреть здесь</a>
+						
+						</section>
+
+				</section>
+
+				<section>
+					<p>Получаем вращающийся куб:</p>
+				
+					<br>
+
+					<iframe src="https://jsfiddle.net/Trufi/r36cw20t/embedded/result/" frameborder="0"></iframe>
+				
+				</section>
+				
+				</section>
+			</div>
+		</div>
+
+		<script src="reveal.js"></script>
+		<script src="plugin/notes/notes.js"></script>
+		<script src="plugin/markdown/markdown.js"></script>
+		<script src="plugin/highlight/highlight.js"></script>
+		<script>
+			// More info about initialization & config:
+			// - https://revealjs.com/initialization/
+			// - https://revealjs.com/config/
+			Reveal.initialize({
+				hash: true,
+
+				// Learn about plugins: https://revealjs.com/plugins/
+				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes ]
+			});
+		</script>
+	</body>
+</html>
