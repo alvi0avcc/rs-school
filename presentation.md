@@ -1,6 +1,6 @@
 # Presentation "WebGL"
 
-- **YouTube video**: [Presentation video on YouTube]()
+- **YouTube video**: [Presentation video on YouTube](https://youtu.be/pYW6ODutVWU)
 - **Reveal.js presentation**: [Presentation slides](https://alvi0avcc.github.io/rs-school/presentation-webgl/)
 - **Presentation transcript**: [transcript](https://alvi0avcc.github.io/rs-school/presentation-webgl/transcript-en.md)
 - **Additional info**: 
